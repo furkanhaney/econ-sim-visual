@@ -20,6 +20,7 @@ namespace EconSimVisual.Panels
         public void Update()
         {
             GridBankReserves.SetData(CentralBank.Accounts.Values);
+            LblCurrentCash.Content = "Current Cash: " + CentralBank.Cash.FormatMoney();
         }
 
         public void Initialize()

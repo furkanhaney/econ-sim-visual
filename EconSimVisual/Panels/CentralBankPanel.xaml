@@ -28,7 +28,8 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Content="Annual Rate:" Margin="10"></Label>
+                    <Label x:Name="LblCurrentCash" Margin="20,10,0,10"  Content="Current Cash:" Grid.Column="2"></Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Annual Rate:" Margin="10"></Label>
                     <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
                     <DataGrid Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" x:Name="GridBankReserves" ColumnWidth="*">
                         <DataGrid.Columns>
