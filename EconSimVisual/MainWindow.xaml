@@ -1,0 +1,16 @@
+﻿<Window x:Class="EconSimVisual.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EconSimVisual"
+        mc:Ignorable="d"
+        Title="Starting Conditions" Height="350" Width="525" FontSize="12">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="20">
+            <CheckBox Margin="10,10">UnitPrice Taker</CheckBox>
+            <CheckBox Margin="10,10">Monetary Independence</CheckBox>
+            <Button Content="Start" Margin="20" Background="White"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

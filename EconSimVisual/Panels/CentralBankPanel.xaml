@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.CentralBankPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="960">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Bank Reserves">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Content="Annual Rate:" Margin="10"></Label>
+                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
+                    <DataGrid Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" x:Name="GridBankReserves" ColumnWidth="*">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Bank" Binding="{Binding Owner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Interest" Binding="{Binding AvailableCredit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

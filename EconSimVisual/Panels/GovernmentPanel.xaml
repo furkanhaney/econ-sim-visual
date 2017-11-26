@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.GovernmentPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EconSimVisual"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="960">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Finances">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="1" Grid.Column="1" Margin="10" Content="Current Amount"></Label>
+                    <Label Grid.Row="1" Grid.Column="2" Margin="10" Content="Last Amount"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10" Content="Taxes:"></Label>
+                    <Label Grid.Row="3" Grid.Column="0" Margin="10" Content="Welfare:"></Label>
+                    <Label Grid.Row="4" Grid.Column="0" Margin="10" Content="Net:"></Label>
+
+                    <Label x:Name="LblTaxesCurrent"  Grid.Row="2" Foreground="Green" Grid.Column="1" Margin="10" Content="$0"></Label>
+                    <Label x:Name="LblTaxesLast" Grid.Row="2" Foreground="Green" Grid.Column="2" Margin="10" Content="$0"></Label>
+                    <Label x:Name="LblWelfareCurrent" Grid.Row="3" Foreground="Red" Grid.Column="1" Margin="10" Content="$0"></Label>
+                    <Label x:Name="LblWelfareLast" Grid.Row="3" Foreground="Red" Grid.Column="2" Margin="10" Content="$0"></Label>
+                    <Label x:Name="LblNetCurrent" Grid.Row="4" Grid.Column="1" Content="$0" Margin="10"></Label>
+                    <Label x:Name="LblNetLast" Grid.Row="4" Grid.Column="2" Content="$0" Margin="10"></Label>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Wage Programs">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Content="Program" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Wage Paid" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" Content="Threshold" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="3" Content="Current Expenses" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="4" Content="Last Expenses" Margin="10"></Label>
+
+
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10,0" Content="Universal Income:" ToolTip="Income paid to every single person in the town."></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10,0" Content="Unemployment Wage:" ToolTip="Income paid to unemployed persons in the town."></Label>
+                    <Label Grid.Row="3" Grid.Column="0" Margin="10,0" Content="Low Income Support:" ToolTip="Income paid to low income persons in the town."></Label>
+
+                    <xctk:DoubleUpDown ValueChanged="AdjustPrograms" x:Name="UpDownUniversalIncome" Style="{StaticResource Currency}" Grid.Row="1" Grid.Column="1" Margin="5"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown ValueChanged="AdjustPrograms" x:Name="UpDownUnemploymentWage" Style="{StaticResource Currency}" Grid.Row="2" Grid.Column="1" Margin="5"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown ValueChanged="AdjustPrograms" x:Name="UpDownLowIncomeSupport" Style="{StaticResource Currency}" Grid.Row="3" Grid.Column="1" Margin="5"></xctk:DoubleUpDown>
+
+                    <xctk:DoubleUpDown ValueChanged="AdjustPrograms"  x:Name="UpDownLowIncomeSupportThreshold" Style="{StaticResource Currency}" Grid.Row="3" Grid.Column="2" Margin="5"></xctk:DoubleUpDown>
+
+                    <Label x:Name="LblCurrentExpensesUniversalIncome"  Grid.Row="1" Grid.Column="3" Content="0.00$" Margin="10,0"></Label>
+                    <Label x:Name="LblCurrentExpensesUnemploymentWage" Grid.Row="2" Grid.Column="3" Content="0.00$" Margin="10,0"></Label>
+                    <Label x:Name="LblCurrentExpensesLowIncomeSupport" Grid.Row="3" Grid.Column="3" Content="0.00$" Margin="10,0"></Label>
+
+                    <Label x:Name="LblLastExpensesUniversalIncome"  Grid.Row="1" Grid.Column="4" Content="0.00$" Margin="10,0"></Label>
+                    <Label x:Name="LblLastExpensesUnemploymentWage" Grid.Row="2" Grid.Column="4" Content="0.00$" Margin="10,0"></Label>
+                    <Label x:Name="LblLastExpensesLowIncomeSupport" Grid.Row="3" Grid.Column="4" Content="0.00$" Margin="10,0"></Label>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Taxes">
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Taxes" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Tax Rate" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" Content="Current Revenue" Margin="10"></Label>
+                    <Label Grid.Row="0" Grid.Column="3" Content="Last Revenue" Margin="10"></Label>
+
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10" >Income:</Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10">Corporate:</Label>
+                    <Label Grid.Row="3" Grid.Column="0" Margin="10">Sales:</Label>
+                    <Label Grid.Row="4" Grid.Column="0" Margin="10">Property:</Label>
+                    <Label Grid.Row="5" Grid.Column="0" Margin="10">Capital:</Label>
+                    <Label Grid.Row="6" Grid.Column="0" Margin="10">Estate:</Label>
+                    <Label Grid.Row="7" Grid.Column="0" Margin="10">Dividends:</Label>
+
+                    <xctk:DoubleUpDown x:Name="UpDownIncomeTaxRate"  Grid.Row="1" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownCorporateTaxRate" Grid.Row="2" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownSalesTaxRate" Grid.Row="3" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownPropertyTaxRate" Grid.Row="4" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownCapitalGainsTaxRate" Grid.Row="5" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownEstateTaxRate" Grid.Row="6" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown x:Name="UpDownDividendTaxRate" Grid.Row="7" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
+
+                    <Label Grid.Row="1" Grid.Column="2" Margin="10" x:Name="LblIncomeTaxCurrent">Income:</Label>
+                    <Label Grid.Row="2" Grid.Column="2" Margin="10" x:Name="LblCorporateTaxCurrent">Corporate:</Label>
+                    <Label Grid.Row="3" Grid.Column="2" Margin="10" x:Name="LblSalesTaxCurrent">Sales:</Label>
+                    <Label Grid.Row="4" Grid.Column="2" Margin="10" x:Name="LblPropertyTaxCurrent">Property:</Label>
+                    <Label Grid.Row="5" Grid.Column="2" Margin="10" x:Name="LblCapitalGainsTaxCurrent">Capital:</Label>
+                    <Label Grid.Row="6" Grid.Column="2" Margin="10" x:Name="LblEstateTaxCurrent">Estate:</Label>
+                    <Label Grid.Row="7" Grid.Column="2" Margin="10" x:Name="LblDividendTaxCurrent">Dividends:</Label>
+
+                    <Label Grid.Row="1" Grid.Column="3" Margin="10" x:Name="LblIncomeTaxLast">Income:</Label>
+                    <Label Grid.Row="2" Grid.Column="3" Margin="10" x:Name="LblCorporateTaxLast">Corporate:</Label>
+                    <Label Grid.Row="3" Grid.Column="3" Margin="10" x:Name="LblSalesTaxLast">Sales:</Label>
+                    <Label Grid.Row="4" Grid.Column="3" Margin="10" x:Name="LblPropertyTaxLast">Property:</Label>
+                    <Label Grid.Row="5" Grid.Column="3" Margin="10" x:Name="LblCapitalGainsTaxLast">Capital:</Label>
+                    <Label Grid.Row="6" Grid.Column="3" Margin="10" x:Name="LblEstateTaxLast">Estate:</Label>
+                    <Label Grid.Row="7" Grid.Column="3" Margin="10" x:Name="LblDividendTaxLast">Dividends:</Label>
+
+                    <lvc:PieChart DisableAnimations="False" FontSize="24" x:Name="PieChartTaxes" LegendLocation="Bottom" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500" Hoverable="False" DataTooltip="{x:Null}">
+                    </lvc:PieChart>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Debt">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Bond Type"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Face Value"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" Content="UnitPrice"></Label>
+                    <Label Grid.Row="0" Grid.Column="3" Content="Maturity"></Label>
+                    <Label Grid.Row="0" Grid.Column="4" Content="Yield"></Label>
+                    <Label Grid.Row="0" Grid.Column="5" Content="Daily Count"></Label>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Discount Bond" Margin="10"></Label>
+                    <xctk:DoubleUpDown Value="1000" Increment="1" ValueChanged="AdjustBonds" x:Name="UpDownFaceValue1"  Style="{StaticResource Currency}" Grid.Row="1" Grid.Column="1"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown Value="950" Increment="1" ValueChanged="AdjustBonds" x:Name="UpDownPrice1" Style="{StaticResource Currency}" Grid.Row="1" Grid.Column="2"></xctk:DoubleUpDown>
+                    <ComboBox Width="160" SelectionChanged="AdjustBonds" x:Name="CmbMaturity1" ItemStringFormat="0 Days"  Grid.Row="1" Grid.Column="3"></ComboBox>
+                    <Label x:Name="LblYield1" Grid.Row="1" Grid.Column="4" Content="9.45%" Margin="10" Width="100"></Label>
+                    <xctk:IntegerUpDown x:Name="UpDownBondLimit" Value="0" Minimum="0" Grid.Row="1" Grid.Column="5" Margin="10" ValueChanged="AdjustBonds"></xctk:IntegerUpDown>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Issued Bonds">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="LblTotalDebt" Margin="10" Content="Total Debt:"></Label>
+                    <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="GridIssuedBonds" ColumnWidth="*">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Owner" Binding="{Binding Owner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Maturity" Binding="{Binding MaturityDays, StringFormat='0 days'}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Face" Binding="{Binding FaceValue, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Count" Binding="{Binding Count, StringFormat='###,##0'}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

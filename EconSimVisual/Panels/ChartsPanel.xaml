@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.ChartsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EconSimVisual"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="480" d:DesignWidth="960">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Economy">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Content="Indicator:" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+                    <ComboBox x:Name="CmbIndicator" Width="240" Grid.Row="0" Grid.Column="1" SelectedIndex="0" SelectionChanged="CmbIndicator_SelectionChanged"/>
+                    <Label Content="Time Frame:" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+                    <ComboBox x:Name="CmbEconomicTimeFrame" ItemStringFormat="0 Days"  Width="240" Grid.Row="0" Grid.Column="3" SelectedIndex="0" SelectionChanged="CmbEconomicTimeFrame_SelectionChanged"/>
+
+                    <wpf:CartesianChart x:Name="ChartEconomy" Series="{Binding GoodSeries}" Grid.Row="1" Grid.ColumnSpan="5" Grid.Column="0">
+                        <wpf:CartesianChart.AxisY>
+                            <wpf:Axis x:Name="AxisEconomyY"></wpf:Axis>
+                        </wpf:CartesianChart.AxisY>
+                        <wpf:CartesianChart.AxisX>
+                            <wpf:Axis x:Name="AxisEconomyX"></wpf:Axis>
+                        </wpf:CartesianChart.AxisX>
+                    </wpf:CartesianChart>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Markets">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Content="Good:" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+                    <ComboBox x:Name="CmbGood"  Width="240" Grid.Row="0" Grid.Column="1" SelectedIndex="0" SelectionChanged="CmbGood_SelectionChanged" />
+                    <Label Content="Metric:" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+                    <ComboBox x:Name="CmbGoodMetric"  Width="240" Grid.Row="0" Grid.Column="3" SelectedIndex="0" SelectionChanged="CmbGood_SelectionChanged" />
+                    <Label Content="Time Frame:" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+                    <ComboBox x:Name="CmbGoodTimeFrame" ItemStringFormat="0 Days"  Width="240" Grid.Row="0" Grid.Column="5" SelectedIndex="0" SelectionChanged="CmbGood_SelectionChanged" />
+
+                    <wpf:CartesianChart x:Name="ChartGoods" Series="{Binding GoodSeries}" Grid.Row="1" Grid.ColumnSpan="7" Grid.Column="0">
+                        <wpf:CartesianChart.AxisY>
+                            <wpf:Axis x:Name="AxisGoodsY"></wpf:Axis>
+                        </wpf:CartesianChart.AxisY>
+                        <wpf:CartesianChart.AxisX>
+                            <wpf:Axis x:Name="AxisGoodsX"></wpf:Axis>
+                        </wpf:CartesianChart.AxisX>
+                    </wpf:CartesianChart>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

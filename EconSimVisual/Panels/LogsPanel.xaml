@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.LogsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EconSimVisual"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Margin="10" Content="Filters:"></Label>
+        <xctk:CheckComboBox x:Name="FilterComboBox" Grid.Row="0" Grid.Column="1" ItemSelectionChanged="UpdateLogs"></xctk:CheckComboBox>
+        <Label Content="Time Frame:" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,0,0" MinWidth="0"></Label>
+        <ComboBox x:Name="CmbLogsTimeFrame" ItemStringFormat="0 Days"  Width="240" Grid.Row="0" Grid.Column="3" SelectedIndex="0" SelectionChanged="UpdateLogs"/>
+        <Button x:Name="BtnClearLogs"  Grid.Row="0" Grid.Column="5" Content="Clear All" Click="ClearLogs"></Button>
+        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" x:Name="GridLogs">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Date" Binding="{Binding Date, StringFormat='Day 0'}"></DataGridTextColumn>
+                <DataGridTextColumn Width="4*" Header="Message" Binding="{Binding Message}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Type" Binding="{Binding Type}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Created" Binding="{Binding Created}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.AgentsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EconSimVisual"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="960">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Citizens">
+                <DataGrid x:Name="GridCitizens" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FirstName}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Surname" Binding="{Binding LastName}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Hunger" Binding="{Binding Hunger}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1.5*" Header="Workplace" Binding="{Binding Workplace}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Net Worth" Binding="{Binding NetWorth, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Net Income" Binding="{Binding NetIncome, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Salary" Binding="{Binding Salary, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Dividends" Binding="{Binding Dividends, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Manufacturers">
+                <DataGrid x:Name="GridManufacturers" ColumnWidth="*">
+                    <DataGrid.Columns>
+
+                        <!-- Sales Columns -->
+                        <DataGridTextColumn Header="Goods" Binding="{Binding GoodsUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="UnitPrices" Binding="{Binding PricesUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Sales" Binding="{Binding SalesUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Stocks" Binding="{Binding StocksUI, StringFormat='0.00'}"></DataGridTextColumn>
+
+                        <!-- Production Columns -->
+                        <DataGridTextColumn Header="MRL" Binding="{Binding MarginalRevenueLabor, StringFormat='$0.00'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="MRC" Binding="{Binding MarginalRevenueCapital, StringFormat='$0.00'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Wage" Binding="{Binding Labor.AverageWage, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Workers" Binding="{Binding Labor.LaborCount}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Capital" Binding="{Binding Capital, StringFormat='0.00'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Output" Binding="{Binding ActualOutput, StringFormat='0.00'}"></DataGridTextColumn>
+
+                        <!-- Accounting Columns -->
+                        <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Money" Binding="{Binding Money, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Assets" Binding="{Binding Assets, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Liabilities" Binding="{Binding Liabilities, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Equity" Binding="{Binding NetWorth, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Revenues" Binding="{Binding Revenues, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Expenses" Binding="{Binding Expenses, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Profits" Binding="{Binding Profits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Grocers">
+                <DataGrid x:Name="GridGrocers" ColumnWidth="*">
+                    <DataGrid.Columns>
+
+                        <!-- Sales Columns -->
+                        <DataGridTextColumn Width="2.5*" Header="Goods" Binding="{Binding GoodsUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="2.5*" Header="UnitPrices" Binding="{Binding PricesUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="2.5*"  Header="Sales" Binding="{Binding SalesUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="2.5*"  Header="Stocks" Binding="{Binding StocksUI, StringFormat='0.00'}"></DataGridTextColumn>
+
+                        <!-- Accounting Columns -->
+                        <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Money" Binding="{Binding Money, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Assets" Binding="{Binding Assets, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Liabilities" Binding="{Binding Liabilities, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Equity" Binding="{Binding NetWorth, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Revenues" Binding="{Binding Revenues, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Expenses" Binding="{Binding Expenses, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Profits" Binding="{Binding Profits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Commercial Banks">
+                <DataGrid x:Name="GridPrivateBanks" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <!-- Business Columns -->
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Accounts" Binding="{Binding Accounts.Count}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Deposits" Binding="{Binding Deposits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Loans" Binding="{Binding Loans, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Res. Ratio" Binding="{Binding ReserveRatio, StringFormat=0.00%}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Save Rate" Binding="{Binding SavingsRate, StringFormat=0.000%}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Credit Rate" Binding="{Binding CreditRate, StringFormat=0.000%}"></DataGridTextColumn>
+
+                        <!-- Accounting Columns -->
+                        <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Reserves" Binding="{Binding Money, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Securities" Binding="{Binding Securities, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Assets" Binding="{Binding Assets, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Liabilities" Binding="{Binding Liabilities, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Equity" Binding="{Binding NetWorth, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Revenues" Binding="{Binding Revenues, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Expenses" Binding="{Binding Expenses, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Profits" Binding="{Binding Profits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

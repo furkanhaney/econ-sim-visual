@@ -1,0 +1,9 @@
+﻿<Application x:Class="EconSimVisual.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EconSimVisual"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <local:DoubleToMoneyConverter x:Key="MoneyConverter"></local:DoubleToMoneyConverter>
+    </Application.Resources>
+</Application>

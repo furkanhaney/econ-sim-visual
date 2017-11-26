@@ -1,0 +1,148 @@
+﻿<Window x:Class="EconSimVisual.SimulationScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xtk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:EconSimVisual"
+        xmlns:panels="clr-namespace:EconSimVisual.Panels"
+        mc:Ignorable="d"
+        Title="EconSim 0.1.0" FontSize="24" Height="763.634" Width="1625.266" WindowState="Maximized" x:ClassModifier="internal" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <DockPanel.LayoutTransform>
+            <ScaleTransform ScaleX="1" ScaleY="1" CenterX=".5" CenterY=".5" />
+        </DockPanel.LayoutTransform>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"  x:Name="LblDay" Margin="10" DockPanel.Dock="Left">Day 1</Label>
+            <Label Grid.Column="1" x:Name="LblPopulation" Margin="10" DockPanel.Dock="Left">Population:</Label>
+            <Label Grid.Column="2"  x:Name="LblGdp" Margin="10" DockPanel.Dock="Left">GDP:</Label>
+            <Label Grid.Column="3" x:Name="LblLand"  Margin="10" DockPanel.Dock="Left">Land:</Label>
+            <Label Grid.Column="4" x:Name="LblTreasury" Margin="10" DockPanel.Dock="Left">Treasury:</Label>
+            <Button Grid.Column="6" x:Name="BtnProgress" Margin="10" DockPanel.Dock="Right" Content="   Progress   " Click="BtnProgress_Click"/>
+            <ComboBox x:Name="CmbSimDays" Grid.Column="7" Width="120" SelectedIndex="0">
+                <ComboBox.Items>
+                    <ComboBoxItem>1 Day</ComboBoxItem>
+                    <ComboBoxItem>7 Days</ComboBoxItem>
+                    <ComboBoxItem>30 Days</ComboBoxItem>
+                    <ComboBoxItem>90 Days</ComboBoxItem>
+                </ComboBox.Items>
+            </ComboBox>
+        </Grid>
+        <DockPanel DockPanel.Dock="Left">
+            <Label x:Name="LblJobs" Content="Available Jobs:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblAvgIncome" Content="Average Income:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblAvgWealth" Content="Average Wealth:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblAvgHunger" Content="Average Hunger:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblIncomeGini" Content="Income Gini:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblWealthGini" Content="Wealth Gini:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblTotalCash" Content="Total Cash:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblMoneySupply" Content="Money Supply:" DockPanel.Dock="Top"></Label>
+            <Label Width="270" x:Name="LblUnemployment" Content="Unemployment:" DockPanel.Dock="Top"></Label>
+        </DockPanel>
+        <TabControl x:Name="TabControlMain" DockPanel.Dock="Bottom" Margin="10">
+            <TabItem Header="Markets">
+                <panels:MarketsPanel x:Name="MarketsPanel"></panels:MarketsPanel>
+            </TabItem>
+            <TabItem Header="Agents">
+                <panels:AgentsPanel x:Name="AgentsPanel"></panels:AgentsPanel>
+            </TabItem>
+            <TabItem Header="Charts">
+                <panels:ChartsPanel x:Name="ChartsPanel"></panels:ChartsPanel>
+            </TabItem>
+            <TabItem Header="Government">
+                <panels:GovernmentPanel x:Name="GovernmentPanel"></panels:GovernmentPanel>
+            </TabItem>
+            <TabItem Header="Central Bank">
+                <panels:CentralBankPanel x:Name="CentralBankPanel"></panels:CentralBankPanel>
+            </TabItem>
+            <TabItem Header="Logs">
+                <panels:LogsPanel x:Name="LogsPanel"></panels:LogsPanel>
+            </TabItem>
+            <TabItem Header="Technical">
+                <panels:TechnicalPanel x:Name="TechnicalPanel"></panels:TechnicalPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
