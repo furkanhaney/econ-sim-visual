@@ -44,7 +44,7 @@ namespace EconSimVisual.Simulation.Government
         {
             Summaries.Add(new TaxSummary
             {
-                Day = Simulation.Town.Town.Day,
+                Day = Entity.Day,
                 Rates = Rates,
                 Revenues = CurrentRevenues.Clone()
             });

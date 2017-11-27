@@ -1,5 +1,5 @@
 ﻿using EconSimVisual.Simulation.Government;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
 {
@@ -22,7 +22,7 @@ namespace EconSimVisual.Panels
     {
         private readonly Func<LiveCharts.ChartPoint, string> labelPoint = chartPoint => chartPoint.Y.FormatMoney() + " (" + chartPoint.Participation.ToString("0.00%") + ")";
 
-        private Government Government => Town.Current.Agents.Government;
+        private Government Government => SimulationScreen.Town.Agents.Government;
         private int chartsLastUpdated = 0;
 
         public GovernmentPanel()
@@ -106,7 +106,7 @@ namespace EconSimVisual.Panels
             var name = ((DoubleUpDown)sender).Name;
             var value = (double)((DoubleUpDown)sender).Value;
             var taxType = name.Substring(6, name.Length - 13).ToEnum<TaxType>();
-            Town.Current.Agents.Government.Taxes.Rates[taxType] = value;
+            SimulationScreen.Town.Agents.Government.Taxes.Rates[taxType] = value;
         }
 
         private void InitializeTaxPieChart()
@@ -119,7 +119,7 @@ namespace EconSimVisual.Panels
             chartsLastUpdated = Entity.Day;
             foreach (TaxType taxType in EnumUtils.GetValues<TaxType>())
             {
-                var value = Town.Current.Agents.Government.Taxes.LastRevenues[taxType];
+                var value = SimulationScreen.Town.Agents.Government.Taxes.LastRevenues[taxType];
                 var series = PieChartTaxes.Series.Where(o => o.Title.Equals(taxType.ToString())).ToList();
 
                 if (value == 0)
@@ -163,7 +163,7 @@ namespace EconSimVisual.Panels
         {
             var label = (Label)FindName("Lbl" + taxType + "TaxLast");
             if (label != null)
-                label.Content = Town.Current.Agents.Government.Taxes.LastRevenues[taxType]
+                label.Content = SimulationScreen.Town.Agents.Government.Taxes.LastRevenues[taxType]
                     .FormatMoney();
         }
 
@@ -171,7 +171,7 @@ namespace EconSimVisual.Panels
         {
             var label = (Label)FindName("Lbl" + taxType + "TaxCurrent");
             if (label != null)
-                label.Content = Town.Current.Agents.Government.Taxes.CurrentRevenues[taxType]
+                label.Content = SimulationScreen.Town.Agents.Government.Taxes.CurrentRevenues[taxType]
                     .FormatMoney();
         }
     }

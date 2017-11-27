@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using EconSimVisual.Extensions;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
 {
@@ -16,10 +16,10 @@ namespace EconSimVisual.Panels
 
         public void Update()
         {
-            GridBankAccounts.SetData(Town.Current.Agents.Banks.SelectMany(o => o.Accounts.Values));
-            GridCommodities.SetData(Town.Current.Trade.TradeLogs.Last());
-            GridNewBonds.SetData(Town.Current.Trade.BondExchange.PrimaryBonds);
-            GridOldBonds.SetData(Town.Current.Trade.BondExchange.SecondaryBonds);
+            GridBankAccounts.SetData(SimulationScreen.Town.Agents.Banks.SelectMany(o => o.Accounts.Values));
+            GridCommodities.SetData(SimulationScreen.Town.Trade.TradeLogs.Last());
+            GridNewBonds.SetData(SimulationScreen.Town.Trade.BondExchange.PrimaryBonds);
+            GridOldBonds.SetData(SimulationScreen.Town.Trade.BondExchange.SecondaryBonds);
         }
 
         public void Initialize()

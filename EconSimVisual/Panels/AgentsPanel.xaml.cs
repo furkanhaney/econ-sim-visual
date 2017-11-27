@@ -1,5 +1,5 @@
 ﻿using EconSimVisual.Extensions;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
 {
@@ -8,6 +8,8 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class AgentsPanel : IPanel
     {
+        private static PolityAgents Agents => SimulationScreen.Town.Agents;
+
         public AgentsPanel()
         {
             InitializeComponent();
@@ -15,10 +17,10 @@ namespace EconSimVisual.Panels
 
         public void Update()
         {
-            GridCitizens.SetData(Town.Current.Agents.Population);
-            GridManufacturers.SetData(Town.Current.Agents.Manufacturers);
-            GridGrocers.SetData(Town.Current.Agents.Grocers);
-            GridPrivateBanks.SetData(Town.Current.Agents.Banks);
+            GridCitizens.SetData(Agents.Population);
+            GridManufacturers.SetData(Agents.Manufacturers);
+            GridGrocers.SetData(Agents.Grocers);
+            GridPrivateBanks.SetData(Agents.Banks);
         }
 
         public void Initialize()

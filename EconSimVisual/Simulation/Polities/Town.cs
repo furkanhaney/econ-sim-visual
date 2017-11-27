@@ -5,37 +5,32 @@ using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
 using log4net;
 
-namespace EconSimVisual.Simulation.Town
+namespace EconSimVisual.Simulation.Polities
+
 {
-    internal class Town : Entity
+    // Smallest political structure
+    internal class Town : Polity
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public Town()
+        public Town(ITownInitializer initializer)
         {
-            Agents = new AgentManager(this);
-            Economy = new EconomyTracker(this);
+            Agents = initializer.GetAgents();
+            Economy = new PolityEconomy(this);
             Trade = new TradeManager(this);
             TownLogger = new Logger();
         }
 
-        public static Town Current { get; set; }
-
         public Logger TownLogger { get; }
-        public AgentManager Agents { get; }
-        public EconomyTracker Economy { get; }
         public TradeManager Trade { get; }
 
         public List<JobListing> JobsAvailable { get; set; } = new List<JobListing>();
 
-        public void Tick()
+        public override void Tick()
         {
-            log.Debug("Tick()");
-            Day++;
             Trade.FirstTick();
-            Agents.Tick();
+            base.Tick();
             Trade.LastTick();
-            Economy.Tick();
         }
     }
 }

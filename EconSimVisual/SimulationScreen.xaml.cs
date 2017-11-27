@@ -1,6 +1,8 @@
 ﻿using System.IO;
+using EconSimVisual.Initializers;
+using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual
 {
@@ -17,10 +19,14 @@ namespace EconSimVisual
 
     internal partial class SimulationScreen
     {
+        public static World World { get; private set; }
+        public static Town Town { get; private set; }
+
         public SimulationScreen()
         {
             File.WriteAllText(@"D:\logs.txt", "");
-            Town = Town.Current = new Initializer().Initialize();
+            World = new World(new WorldInitializer());
+            Town = (Town)World.TopPolities[0];
             InitializeGui();
             SimInitialized = true;
             Progress();
@@ -33,7 +39,6 @@ namespace EconSimVisual
         }
 
         public static bool SimInitialized { get; set; }
-        public Town Town { get; }
         private IEnumerable<IPanel> AllPanels
         {
             get
@@ -85,7 +90,7 @@ namespace EconSimVisual
         {
             var econ = Town.Economy;
 
-            LblDay.Content = "Date: " + FormatUtils.ToDate(Town.Day).Format();
+            LblDay.Content = "Date: " + FormatUtils.ToDate(Entity.Day).Format();
             LblPopulation.Content = "Population: " + Town.Agents.Population.Count.ToString("###,##0");
             LblGdp.Content = "GDP: " + econ.NominalGdp.FormatMoney();
             LblTreasury.Content = "Treasury: " + Town.Agents.Government.Cash.FormatMoney();

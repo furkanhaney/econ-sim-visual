@@ -10,7 +10,7 @@ using EconSimVisual.Simulation.Information;
 using EconSimVisual.Simulation.Securities.Exchanges;
 using MoreLinq;
 
-namespace EconSimVisual.Simulation.Town
+namespace EconSimVisual.Simulation.Polities
 {
     internal class TradeManager
     {

@@ -1,4 +1,4 @@
-﻿using EconSimVisual.Simulation.Town;
+﻿using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
 {
@@ -31,14 +31,14 @@ namespace EconSimVisual.Panels
         {
             var filters = FilterComboBox.SelectedItems;
             var timeFrame = (int)CmbLogsTimeFrame.SelectedItem;
-            var logs = Town.Current.TownLogger.GetLogs(filters, timeFrame);
+            var logs = SimulationScreen.Town.TownLogger.GetLogs(filters, timeFrame);
             GridLogs.SetData(logs);
-            BtnClearLogs.Content = "Clear (" + Town.Current.TownLogger.Count.ToString("###,##0") + ")";
+            BtnClearLogs.Content = "Clear (" + SimulationScreen.Town.TownLogger.Count.ToString("###,##0") + ")";
         }
 
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
-            Town.Current.TownLogger.Clear();
+            SimulationScreen.Town.TownLogger.Clear();
             UpdateLogs(null, null);
         }
     }

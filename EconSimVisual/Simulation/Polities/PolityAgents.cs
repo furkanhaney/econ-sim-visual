@@ -1,26 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
 
-namespace EconSimVisual.Simulation.Town
+namespace EconSimVisual.Simulation.Polities
 {
-    internal class AgentManager
+    internal abstract class PolityAgents
     {
-        public AgentManager(Town town)
-        {
-            Town = town;
-        }
-
         public Government.Government Government { get; set; }
         public CentralBank CentralBank { get; set; }
-
-        public List<Person> Population { get; set; } = new List<Person>();
-        public List<Manufacturer> Manufacturers { get; set; } = new List<Manufacturer>();
-        public List<Grocer> Grocers { get; set; } = new List<Grocer>();
-        public List<CommercialBank> Banks { get; set; } = new List<CommercialBank>();
-
+        public abstract List<Person> Population { get; }
+        public abstract List<Manufacturer> Manufacturers { get; }
+        public abstract List<Grocer> Grocers { get; }
+        public abstract List<CommercialBank> Banks { get; }
         public List<Business> Businesses
         {
             get
@@ -44,8 +37,6 @@ namespace EconSimVisual.Simulation.Town
             }
         }
 
-        private Town Town { get; }
-
         public void Tick()
         {
             FirstTick();
@@ -65,6 +56,7 @@ namespace EconSimVisual.Simulation.Town
                 b.FirstTick();
             Government.FirstTick();
         }
+
         private void LastTick()
         {
             foreach (var m in Manufacturers.Shuffle())

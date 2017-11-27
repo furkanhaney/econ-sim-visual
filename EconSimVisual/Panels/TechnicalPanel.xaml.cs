@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
+using EconSimVisual.Simulation.Polities;
 using EconSimVisual.Simulation.Securities;
-using EconSimVisual.Simulation.Town;
 using Microsoft.VisualBasic.Devices;
 
 namespace EconSimVisual.Panels
@@ -48,7 +48,7 @@ namespace EconSimVisual.Panels
 
         private void Test_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (var asset in Town.Current.Agents.Banks.SelectMany(o => o.OwnedAssets))
+            foreach (var asset in SimulationScreen.Town.Agents.Banks.SelectMany(o => o.OwnedAssets))
             {
                 var bond = (Bond)asset;
                 MessageBox.Show(bond.Owner + " " + bond.FaceValue + " " + bond.Count);

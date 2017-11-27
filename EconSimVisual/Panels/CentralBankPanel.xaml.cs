@@ -1,5 +1,5 @@
 ﻿using EconSimVisual.Extensions;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
 {
@@ -15,7 +15,7 @@ namespace EconSimVisual.Panels
             InitializeComponent();
         }
 
-        private static CentralBank CentralBank => Town.Current.Agents.CentralBank;
+        private static CentralBank CentralBank => SimulationScreen.Town.Agents.CentralBank;
 
         public void Update()
         {

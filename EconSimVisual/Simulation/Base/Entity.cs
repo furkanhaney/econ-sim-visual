@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using EconSimVisual.Simulation.Government;
+using EconSimVisual.Simulation.Polities;
 using log4net;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -45,16 +46,16 @@ namespace EconSimVisual.Simulation.Base
         protected virtual string CustomName { get; set; }
 
         protected static Random Random { get; set; } = new Random();
-        protected static Town.Town Town => Simulation.Town.Town.Current;
-        protected static Government.Government Government => Town.Agents.Government;
-        protected static List<Person> Citizens => Town.Agents.Population;
-        protected static Taxes Taxes => Government.Taxes;
+        public Town Town => SimulationScreen.Town;
+        protected Government.Government Government => Town.Agents.Government;
+        protected List<Person> Citizens => Town.Agents.Population;
+        protected Taxes Taxes => Government.Taxes;
 
         protected int Id { get; set; } = TotalCount++;
 
         public static void Assert(bool condition) => Debug.Assert(condition);
 
-        public static void Log(string message, LogType type) => Town.TownLogger.Log(message, type);
+        public void Log(string message, LogType type) => Town.TownLogger.Log(message, type);
 
         public override string ToString() => Name;
     }

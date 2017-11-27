@@ -7,7 +7,7 @@ using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
 using EconSimVisual.Simulation.Information;
-using EconSimVisual.Simulation.Town;
+using EconSimVisual.Simulation.Polities;
 using LiveCharts;
 using LiveCharts.Wpf;
 
@@ -44,11 +44,11 @@ namespace EconSimVisual.Panels
 
         private static ChartValues<double> GetGoodValues(Good good, PropertyInfo prop, int days = 30)
         {
-            return new ChartValues<double>(Town.Current.Trade.TradeLogs.Select(o => (double)prop.GetValue(o.First(k => k.Good == good), null)).Reverse().Take(days).Reverse());
+            return new ChartValues<double>(SimulationScreen.Town.Trade.TradeLogs.Select(o => (double)prop.GetValue(o.First(k => k.Good == good), null)).Reverse().Take(days).Reverse());
         }
         private static ChartValues<double> GetEconomicValues(PropertyInfo prop, int days = 30)
         {
-            return new ChartValues<double>(Town.Current.Economy.EconomicReports.Select(o => (double)prop.GetValue(o, null)).Reverse().Take(days).Reverse());
+            return new ChartValues<double>(SimulationScreen.Town.Economy.EconomicReports.Select(o => (double)prop.GetValue(o, null)).Reverse().Take(days).Reverse());
         }
         private static List<string> CreateChartLabels(int maxCount)
         {
@@ -84,11 +84,11 @@ namespace EconSimVisual.Panels
         }
         private static double GetGoodValue(Good good, PropertyInfo prop)
         {
-            return (double)prop.GetValue(Town.Current.Trade.TradeLogs.Last().First(o => o.Good == good), null);
+            return (double)prop.GetValue(SimulationScreen.Town.Trade.TradeLogs.Last().First(o => o.Good == good), null);
         }
         private static double GetEconomicValue(PropertyInfo prop)
         {
-            return (double)prop.GetValue(Town.Current.Economy.EconomicReports.Last(), null);
+            return (double)prop.GetValue(SimulationScreen.Town.Economy.EconomicReports.Last(), null);
         }
 
         public void ReadGoodInputs(out Good good, out PropertyInfo prop, out int timeFrame)

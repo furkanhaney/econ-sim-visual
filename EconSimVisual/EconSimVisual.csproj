@@ -99,6 +99,8 @@
     <Compile Include="Extensions\LoggerHelper.cs" />
     <Compile Include="Extensions\RandomUtils.cs" />
     <Compile Include="Extensions\WPFUtils.cs" />
+    <Compile Include="Initializers\TownInitializer.cs" />
+    <Compile Include="Initializers\WorldInitializer.cs" />
     <Compile Include="Panels\AgentsPanel.xaml.cs">
       <DependentUpon>AgentsPanel.xaml</DependentUpon>
     </Compile>
@@ -124,7 +126,14 @@
     <Compile Include="Panels\TechnicalPanel.xaml.cs">
       <DependentUpon>TechnicalPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\Polities\ITownInitializer.cs" />
+    <Compile Include="Simulation\Polities\PolityAgents.cs" />
+    <Compile Include="Simulation\Polities\ProperPolity.cs" />
+    <Compile Include="Simulation\Polities\TownAgents.cs" />
+    <Compile Include="Simulation\Polities\World.cs" />
     <Compile Include="Simulation\Government\GovernmentFinances.cs" />
+    <Compile Include="Simulation\Polities\Polity.cs" />
+    <Compile Include="Simulation\Polities\IWorldInitializer.cs" />
     <Compile Include="Simulation\Securities\Exchanges\BondExchange.cs" />
     <Compile Include="Simulation\Securities\Exchanges\Exchange.cs" />
     <Compile Include="Simulation\Securities\Exchanges\StockExchange.cs" />
@@ -133,16 +142,16 @@
     <Compile Include="Simulation\Base\Agent.cs" />
     <Compile Include="Simulation\Base\IBank.cs" />
     <Compile Include="Simulation\Securities\SecurityTransfer.cs" />
-    <Compile Include="Simulation\Town\AgentManager.cs" />
+    <Compile Include="Simulation\Polities\ProperPolityAgents.cs" />
     <Compile Include="Simulation\Helpers\BankAccount.cs" />
     <Compile Include="Simulation\Agents\CentralBank.cs" />
     <Compile Include="Simulation\Base\IAsset.cs" />
     <Compile Include="Simulation\Agents\CommercialBank.cs" />
-    <Compile Include="Simulation\Town\EconomyTracker.cs" />
+    <Compile Include="Simulation\Polities\PolityEconomy.cs" />
     <Compile Include="Simulation\Helpers\Labor.cs" />
     <Compile Include="Simulation\Helpers\Owners.cs" />
     <Compile Include="Simulation\Government\TaxSummary.cs" />
-    <Compile Include="Simulation\Town\TradeManager.cs" />
+    <Compile Include="Simulation\Polities\TradeManager.cs" />
     <Compile Include="Simulation\Government\Welfare.cs" />
     <Compile Include="Simulation\Managers\CommercialBankManager.cs" />
     <Compile Include="Simulation\Managers\GrocerManager.cs" />
@@ -161,7 +170,6 @@
     <Compile Include="Simulation\Information\GoodSummary.cs" />
     <Compile Include="Simulation\Government\Government.cs" />
     <Compile Include="Simulation\Agents\Grocer.cs" />
-    <Compile Include="Extensions\Initializer.cs" />
     <Compile Include="Extensions\Logger.cs" />
     <Compile Include="Simulation\Helpers\JobListing.cs" />
     <Compile Include="Simulation\Helpers\ManufacturingProcess.cs" />
@@ -176,7 +184,7 @@
     <Compile Include="Simulation\Securities\Stock.cs" />
     <Compile Include="Simulation\Government\Taxes.cs" />
     <Compile Include="Extensions\Tools.cs" />
-    <Compile Include="Simulation\Town\Town.cs" />
+    <Compile Include="Simulation\Polities\Town.cs" />
     <Compile Include="Simulation\Information\Transaction.cs" />
     <Compile Include="Simulation\Agents\Vendor.cs" />
     <Compile Include="Simulation\Helpers\Worker.cs" />
