@@ -152,8 +152,7 @@
                     <Label Grid.Row="6" Grid.Column="3" Margin="10" x:Name="LblEstateTaxLast">Estate:</Label>
                     <Label Grid.Row="7" Grid.Column="3" Margin="10" x:Name="LblDividendTaxLast">Dividends:</Label>
 
-                    <lvc:PieChart DisableAnimations="False" FontSize="24" x:Name="PieChartTaxes" LegendLocation="Bottom" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500" Hoverable="False" DataTooltip="{x:Null}">
-                    </lvc:PieChart>
+                    <local:PieChart x:Name="PieChartTaxes" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Debt">

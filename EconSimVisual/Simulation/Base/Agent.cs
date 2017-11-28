@@ -23,7 +23,8 @@ namespace EconSimVisual.Simulation.Base
         public double Cash { get; set; }
         public double InventoryValue => Goods.Sum(o => o.Value * Town.Trade.GetLastPrice(o.Key));
         public double AvailableFunds => Cash + BankAccounts.Sum(o => o.AvailableCredit);
-        public double Money => Cash + BankAccounts.GetPositives().Sum(o => o.Balance);
+        public double Money => Cash + Deposits;
+        public double Deposits => BankAccounts.GetPositives().Sum(o => o.Balance);
         public double Securities => OwnedAssets.Where(o => o is Security).Sum(o => ((Security)o).Value);
         public double BaseAssets => Money + OwnedAssets.Sum(o => o.Value) + InventoryValue;
         public double BaseLiabilities => -BankAccounts.GetNegatives().Sum(o => o.Balance);

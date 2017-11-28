@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:EconSimVisual"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="960">
     <UserControl.Resources>
@@ -15,7 +17,39 @@
     </UserControl.Resources>
     <Grid>
         <TabControl>
+            <TabItem Header="Money Supply">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="LblCash" FontSize="32" HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="0" Content="Cash: $1.2m"></Label>
+                    <Label x:Name="LblDeposits" FontSize="32" HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1" Content="Deposits: $1.2m"></Label>
+                    <Label x:Name="LblMoney" FontSize="32"  HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="2" Content="Money: $1.2m"></Label>
+                    <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="0" x:Name="PieChartCash"/>
+                    <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="1" x:Name="PieChartDeposits"/>
+                    <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="2" x:Name="PieChartMoney"/>
+                </Grid>
+            </TabItem>
             <TabItem Header="Bank Reserves">
+                <Grid>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Annual Rate:" Margin="10"></Label>
+                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
+                    <DataGrid Margin="10" x:Name="GridBankReserves" ColumnWidth="*">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Bank" Binding="{Binding Owner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Interest" Binding="{Binding AvailableCredit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Tools">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -26,18 +60,19 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label x:Name="LblCurrentCash" Margin="20,10,0,10"  Content="Current Cash:" Grid.Column="2"></Label>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Annual Rate:" Margin="10"></Label>
+                    
+                    <Label Grid.Row="0" Grid.Column="0" Content="Required Reserve Rate:" Margin="10"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Discount Rate:" Margin="10"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Reserve Interest Rate:" Margin="10"></Label>
+
                     <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
-                    <DataGrid Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" x:Name="GridBankReserves" ColumnWidth="*">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Bank" Binding="{Binding Owner}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Interest" Binding="{Binding AvailableCredit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="1" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="2" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
                 </Grid>
             </TabItem>
         </TabControl>

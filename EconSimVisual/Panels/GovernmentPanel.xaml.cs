@@ -1,4 +1,5 @@
-﻿using EconSimVisual.Simulation.Government;
+﻿using System.Collections.Generic;
+using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Panels
@@ -20,10 +21,7 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class GovernmentPanel : IPanel
     {
-        private readonly Func<LiveCharts.ChartPoint, string> labelPoint = chartPoint => chartPoint.Y.FormatMoney() + " (" + chartPoint.Participation.ToString("0.00%") + ")";
-
         private Government Government => SimulationScreen.Town.Agents.Government;
-        private int chartsLastUpdated = 0;
 
         public GovernmentPanel()
         {
@@ -38,7 +36,6 @@ namespace EconSimVisual.Panels
                 var updown = (DoubleUpDown)FindName("UpDown" + taxType + "TaxRate");
                 updown.ValueChanged += TaxesChanged;
             }
-            InitializeTaxPieChart();
         }
 
         public void Update()
@@ -51,7 +48,7 @@ namespace EconSimVisual.Panels
                 UpdateLastRevenue(taxType);
                 UpdateCurrentRevenue(taxType);
             }
-            if (Entity.IsPeriodStart || Entity.Day - chartsLastUpdated > 30)
+            if (Entity.IsPeriodStart || Entity.Day - PieChartTaxes.LastUpdated > 30)
                 UpdateTaxPieChart();
 
             GridIssuedBonds.SetData(Government.Debt.IssuedBonds);
@@ -109,43 +106,16 @@ namespace EconSimVisual.Panels
             SimulationScreen.Town.Agents.Government.Taxes.Rates[taxType] = value;
         }
 
-        private void InitializeTaxPieChart()
-        {
-            PieChartTaxes.Series = new SeriesCollection();
-        }
-
         private void UpdateTaxPieChart()
         {
-            chartsLastUpdated = Entity.Day;
-            foreach (TaxType taxType in EnumUtils.GetValues<TaxType>())
+            var list = new List<PieChartPoint>();
+            foreach (var taxType in EnumUtils.GetValues<TaxType>())
             {
+                var name = taxType.ToString().SplitCamelCase();
                 var value = SimulationScreen.Town.Agents.Government.Taxes.LastRevenues[taxType];
-                var series = PieChartTaxes.Series.Where(o => o.Title.Equals(taxType.ToString())).ToList();
-
-                if (value == 0)
-                {
-                    if (series.Any()) PieChartTaxes.Series.Remove(series.First());
-                }
-                else
-                {
-                    if (series.Any())
-                        series.First().Values = new ChartValues<double> { value };
-                    else
-                        PieChartTaxes.Series.Add(GetTaxPieSeries(taxType, value));
-                }
+                list.Add(new PieChartPoint { Name = name, Value = value });
             }
-        }
-
-        private PieSeries GetTaxPieSeries(TaxType taxType, double value)
-        {
-            return new PieSeries
-            {
-                Title = taxType.ToString(),
-                DataLabels = true,
-                Values = new ChartValues<double> { value },
-                LabelPoint = labelPoint,
-                FontSize = 18
-            };
+            PieChartTaxes.Update(list);
         }
 
         private void UpdateWelfareExpenses(Welfare welfare)
