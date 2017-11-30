@@ -6,7 +6,7 @@ namespace EconSimVisual.Simulation.Government
     {
         public Government()
         {
-            TargetCash = 200000;
+            TargetCash = 250000;
             Taxes = new Taxes();
             Welfare = new Welfare();
             Debt = new GovernmentDebt(this);
@@ -28,6 +28,7 @@ namespace EconSimVisual.Simulation.Government
         {
             Taxes.LastTick();
             Welfare.Tick();
+            base.LastTick();
         }
     }
 }

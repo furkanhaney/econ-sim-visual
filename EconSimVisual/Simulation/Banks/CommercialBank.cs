@@ -19,7 +19,7 @@ namespace EconSimVisual.Simulation.Banks
 
         private static int count = 1;
         private readonly int id = count++;
-        protected override string DefaultName => "IBank" + id;
+        protected override string DefaultName => "Bank" + id;
         public double InterestRate { get; set; } = 0.001;
         public double RateSpread { get; set; } = 3;
         public double MinimumPaymentConstant { get; set; } = 20;
@@ -53,15 +53,6 @@ namespace EconSimVisual.Simulation.Banks
             agent.BankAccounts.Add(account);
         }
 
-        public void CloseAccount(Agent agent)
-        {
-            Assert(HasAccount(agent));
-            Assert(Accounts[agent].Balance == 0);
-
-            agent.BankAccounts.Remove(Accounts[agent]);
-            Accounts.Remove(agent);
-        }
-
         public bool HasAccount(Agent agent)
         {
             return Accounts.ContainsKey(agent);
@@ -70,7 +61,8 @@ namespace EconSimVisual.Simulation.Banks
         public override void FirstTick()
         {
             Manager.Manage();
-            CollectMinimumPayments();
+            if (IsPeriodStart)
+                CollectMinimumPayments();
             ApplyRates();
             base.FirstTick();
         }

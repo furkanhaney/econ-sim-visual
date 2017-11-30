@@ -1,4 +1,7 @@
-﻿namespace EconSimVisual.Simulation.Managers
+﻿using System.Collections.Generic;
+using System.Windows;
+
+namespace EconSimVisual.Simulation.Managers
 {
     using System;
     using System.Linq;
@@ -71,34 +74,46 @@
                 Manufacturer.BuyCapital(1);
         }
 
-        // TODO Improve and refactor
+        // TODO Improve
         private void ManageLabor()
         {
-            var otherJobs = Town.JobsAvailable.Where(o => o.Business != Manufacturer).ToList();
-            var pay = Math.Min(Manufacturer.MarginalRevenueLabor, otherJobs.Count == 0 ? double.MaxValue : otherJobs.Median(o => o.GrossPay) * 1.5);
+            HandleJobOffers();
+            HandleOverPaidWorkers();
+        }
 
-            if (Manufacturer.MarginalRevenueLabor > 0)
-                if (Town.JobsAvailable.Count(o => o.Business == Manufacturer) == 0)
-                    Town.JobsAvailable.Add(new JobListing { Business = Manufacturer, GrossPay = pay });
-                else
-                    Town.JobsAvailable.First(o => o.Business == Manufacturer).GrossPay = pay;
-            else
-                Town.JobsAvailable.RemoveAll(o => o.Business == Manufacturer);
-
-
-            if (Manufacturer.Labor.LaborCount > 0)
+        private void HandleJobOffers()
+        {
+            //var otherJobs = Town.JobsAvailable.Where(o => o.Business != Manufacturer).ToList();
+            //var pay = Math.Min(Manufacturer.MarginalRevenueLabor, otherJobs.Count == 0 ? double.MaxValue : otherJobs.Median(o => o.GrossPay) * 1.5);
+            if (Manufacturer.MarginalRevenueLabor < 0)
             {
-                var workers = Manufacturer.Labor.Workers.Where(w => w.Tenure >= 10);
-                if (workers.Any())
-                {
-                    var mostPaid = workers.MaxBy(w => w.Wage);
-                    if (Manufacturer.MarginalRevenueLabor * 1.1 < mostPaid.Wage && Manufacturer.Labor.LaborCount > 1)
-                        Manufacturer.Labor.Fire(mostPaid);
-                }
+                Town.JobsAvailable.RemoveAll(o => o.Business == Manufacturer);
+                return;
             }
 
-            if (Manufacturer.Labor.LaborCount > 1 && RandomUtils.GetRandomDouble() < 0.1)
-                Manufacturer.Labor.Fire(Manufacturer.Labor.Workers.GetRandom());
+            var pay = Math.Max(1, Manufacturer.MarginalRevenueLabor);
+            UpdateJobOffer(pay);
+        }
+
+        private void UpdateJobOffer(double pay)
+        {
+            if (Town.JobsAvailable.Count(o => o.Business == Manufacturer) == 0)
+                Town.JobsAvailable.Add(new JobListing { Business = Manufacturer, GrossPay = pay });
+            else
+                Town.JobsAvailable.First(o => o.Business == Manufacturer).GrossPay = pay;
+        }
+
+        private void HandleOverPaidWorkers()
+        {
+            var overpaidWorkers = GetOverpaidWorkers();
+            if (overpaidWorkers.Count > 0)
+                Manufacturer.Labor.Fire(overpaidWorkers.MaxBy(o => o.Wage));
+        }
+
+        private ICollection<Worker> GetOverpaidWorkers()
+        {
+            var workers = Manufacturer.Labor.Workers.Where(w => w.Tenure >= 10);
+            return workers.Where(o => Manufacturer.MarginalRevenueLabor * 1.1 < o.Wage).ToList();
         }
 
         private double CalculateCostOfCapital()

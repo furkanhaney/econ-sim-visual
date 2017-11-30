@@ -24,13 +24,13 @@ namespace EconSimVisual.Simulation.Banks
             {
                 double value = 0;
                 if (Owner is Simulation.Government.Government)
-                    value = 500 * K;
+                    value = 0;
                 if (Owner is Business)
-                    value = 100 * K;
+                    value = 500 * K;
                 if (Owner is Person)
                     value = 0;
                 if (Owner is CommercialBank)
-                    value = 250 * K;
+                    value = 0;
                 return value;
             }
         }
@@ -73,6 +73,13 @@ namespace EconSimVisual.Simulation.Banks
             }
             else
                 Log(Bank + " could not carry out withdrawal request.", LogType.NonPayment);
+        }
+
+        public void Close()
+        {
+            Assert(Balance > 0);
+            Owner.BankAccounts.Remove(this);
+            Bank.Accounts.Remove(Owner);
         }
 
         private void TransferCash(Agent agent, double amount)

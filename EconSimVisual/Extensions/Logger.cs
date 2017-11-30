@@ -47,5 +47,5 @@ namespace EconSimVisual.Extensions
         }
     }
 
-    internal enum LogType { Hiring, NonPayment, Error, FinancialTransaction, Securities }
+    internal enum LogType { Hiring, NonPayment, Error, FinancialTransaction, Securities, Death, Birth }
 }

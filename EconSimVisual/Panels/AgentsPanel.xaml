@@ -84,7 +84,7 @@
                         <!-- Business Columns -->
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Accounts" Binding="{Binding Accounts.Count}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="CheckingBalance" Binding="{Binding Deposits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Deposits" Binding="{Binding Deposits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Loans" Binding="{Binding Loans, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Res. Ratio" Binding="{Binding ReserveRatio, StringFormat=0.00%}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Save Rate" Binding="{Binding SavingsRate, StringFormat=0.00%}"></DataGridTextColumn>

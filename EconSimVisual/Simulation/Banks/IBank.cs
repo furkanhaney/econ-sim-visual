@@ -11,7 +11,6 @@ namespace EconSimVisual.Simulation.Banks
         double Loans { get; }
 
         void OpenAccount(Agent agent);
-        void CloseAccount(Agent agent);
         bool HasAccount(Agent agent);
     }
 }

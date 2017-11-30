@@ -220,6 +220,5 @@ namespace EconSimVisual.Panels
             AxisX = axisX;
             AxisY = axisY;
         }
-
     }
 }

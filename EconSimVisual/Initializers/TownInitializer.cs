@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Banks;
@@ -24,13 +25,14 @@ namespace EconSimVisual.Initializers
             CreatePopulation(100, 1000);
             CreateGovernment(500000);
             CreateCentralBank(200000);
-            CreateBanks(4, 250000);
+            CreateBanks(1, 250000);
             CreateGrocers(2, 50000);
             CreateManufacturers();
 
             CreateStocks();
             CreateBankAccounts();
             SetInitialPrices();
+            SetInitialInventories();
 
             return Agents;
         }
@@ -128,26 +130,31 @@ namespace EconSimVisual.Initializers
                 Agents.Banks.GetRandom().OpenAccount(person);
             foreach (var bank in Agents.Banks)
                 Agents.CentralBank.OpenAccount(bank);
+            Agents.CentralBank.OpenAccount(Agents.Government);
         }
 
         private void SetInitialPrices()
         {
             foreach (var m in Agents.Manufacturers.Where(o => o.Produces(Good.Capital)))
-                m.Prices[Good.Capital] = 500;
+                m.Prices[Good.Capital] = 1000;
+        }
+
+        private void SetInitialInventories()
+        {
+            foreach (var m in Agents.Manufacturers)
+                foreach (var good in m.Process.Outputs.Concat(m.Process.Inputs))
+                    m.Goods[good.Good] = 10 + 1000 * m.Process.ProductionConstant;
         }
 
         private static Manufacturer CreateManufacturer(string processName, double initialCash = 50000)
         {
             var m = new Manufacturer(ManufacturingProcess.Get(processName))
             {
-                Capital = 100,
+                Capital = 500,
                 Land = 1,
                 Cash = initialCash
             };
-            if (!processName.Equals("Capital"))
-                m.Goods[m.Process.Outputs[0].Good] = 2000;
             return m;
         }
-
     }
 }

@@ -88,9 +88,7 @@
 
         private void Produce()
         {
-            var output = MaximalOutput;
-            foreach (var input in Process.Inputs)
-                output = Math.Min(output, Goods[input.Good] / input.Amount);
+            var output = Process.Inputs.Select(input => Goods[input.Good] / input.Amount).Concat(new[] {MaximalOutput}).Min();
             ActualOutput = output;
             foreach (var i in Process.Inputs)
                 Goods[i.Good] -= i.Amount * output;

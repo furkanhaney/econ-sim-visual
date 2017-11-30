@@ -1,4 +1,5 @@
-﻿using EconSimVisual.Simulation.Government;
+﻿using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Government;
 
 namespace EconSimVisual.Simulation.Agents
 {
@@ -41,6 +42,12 @@ namespace EconSimVisual.Simulation.Agents
         public override void FirstTick()
         {
             UpdateStats();
+            if (Hunger > 40)
+            {
+                Die("starvation");
+                return;
+            }
+
             ManageConsumption();
             ManageEmployment();
             base.FirstTick();
@@ -100,6 +107,31 @@ namespace EconSimVisual.Simulation.Agents
             }
         }
 
+        private void Die(string cause)
+        {
+            Log(this + " has died of " + cause + "!", LogType.Death);
+            if (IsWorking)
+                Workplace.Labor.Quit(this);
+            Town.Agents.Population.Remove(this);
+            HandleInheritance();
+        }
+
+        private void HandleInheritance()
+        {
+            foreach (var asset in OwnedAssets.ToList())
+                asset.Owner = Government;
+            foreach (var account in BankAccounts.ToList())
+            {
+                if (account.Balance > 0)
+                    account.Withdraw(account.Balance);
+                account.Close();
+            }
+            foreach (var good in EnumUtils.GetValues<Good>())
+                if (Goods[good] > 0)
+                    Transfer(Government, good, Goods[good]);
+
+            PayCash(Government, Cash);
+        }
     }
 
     public enum Gender { Male, Female }

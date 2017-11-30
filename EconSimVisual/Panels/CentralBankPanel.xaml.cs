@@ -26,7 +26,7 @@ namespace EconSimVisual.Panels
         {
             GridBankReserves.SetData(CentralBank.Accounts.Values);
             LblCash.Content = "Cash: " + SimulationScreen.Town.Economy.TotalCash.FormatMoney();
-            LblDeposits.Content = "CheckingBalance: " + SimulationScreen.Town.Economy.TotalDeposits.FormatMoney();
+            LblDeposits.Content = "Deposits: " + SimulationScreen.Town.Economy.TotalDeposits.FormatMoney();
             LblMoney.Content = "Money: " + SimulationScreen.Town.Economy.MoneySupply.FormatMoney();
 
             UpdateCharts();

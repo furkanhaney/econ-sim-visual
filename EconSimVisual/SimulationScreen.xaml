@@ -71,7 +71,7 @@
             <TabItem Header="Government">
                 <panels:GovernmentPanel x:Name="GovernmentPanel"></panels:GovernmentPanel>
             </TabItem>
-            <TabItem Header="Central IBank">
+            <TabItem Header="Central Bank">
                 <panels:CentralBankPanel x:Name="CentralBankPanel"></panels:CentralBankPanel>
             </TabItem>
             <TabItem Header="Logs">
