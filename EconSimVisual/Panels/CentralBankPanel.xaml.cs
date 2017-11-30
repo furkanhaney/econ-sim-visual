@@ -36,24 +36,24 @@ namespace EconSimVisual.Panels
         {
             PieChartCash.Update(new List<PieChartPoint>()
             {
-                new PieChartPoint{Name="Businesses", Value=Agents.Businesses.Sum(o => o.Cash)},
+                new PieChartPoint{Name="Businesses", Value=Agents.NonBankBusinesses.Sum(o => o.Cash)},
+                new PieChartPoint{Name="Banks", Value = Agents.Banks.Sum(o => o.Cash)},
                 new PieChartPoint{Name="Citizens", Value=Agents.Population.Sum(o => o.Cash)},
-                new PieChartPoint{Name="Government", Value=Agents.Government.Cash},
-                new PieChartPoint{Name="Central IBank", Value = Agents.CentralBank.Cash}
+                new PieChartPoint{Name="Government", Value=Agents.Government.Cash}
             });
             PieChartDeposits.Update(new List<PieChartPoint>()
             {
-                new PieChartPoint{Name="Businesses", Value=Agents.Businesses.Sum(o => o.CheckingBalance)},
+                new PieChartPoint{Name="Businesses", Value=Agents.NonBankBusinesses.Sum(o => o.CheckingBalance)},
+                new PieChartPoint{Name="Banks", Value = Agents.Banks.Sum(o => o.CheckingBalance)},
                 new PieChartPoint{Name="Citizens", Value=Agents.Population.Sum(o => o.CheckingBalance)},
-                new PieChartPoint{Name="Government", Value=Agents.Government.CheckingBalance},
-                new PieChartPoint{Name="Central IBank", Value = Agents.CentralBank.CheckingBalance}
+                new PieChartPoint{Name="Government", Value=Agents.Government.CheckingBalance}
             });
             PieChartMoney.Update(new List<PieChartPoint>()
             {
-                new PieChartPoint{Name="Businesses", Value=Agents.Businesses.Sum(o => o.Money)},
+                new PieChartPoint{Name="Businesses", Value=Agents.NonBankBusinesses.Sum(o => o.Money)},
+                new PieChartPoint{Name="Banks", Value = Agents.Banks.Sum(o => o.Money)},
                 new PieChartPoint{Name="Citizens", Value=Agents.Population.Sum(o => o.Money)},
-                new PieChartPoint{Name="Government", Value=Agents.Government.Money},
-                new PieChartPoint{Name="Central IBank", Value = Agents.CentralBank.Money}
+                new PieChartPoint{Name="Government", Value=Agents.Government.Money}
             });
         }
 

@@ -27,7 +27,7 @@ namespace EconSimVisual.Simulation.Base
             Goods = CollectionsExtensions.InitializeDictionary<Good>();
         }
 
-        public IBalanceSheet BalanceSheet { get; }
+        public IBalanceSheet BalanceSheet { get; protected set; }
         public IList<IAsset> OwnedAssets { get; }
         public IList<BankAccount> BankAccounts { get; }
         public IDictionary<Good, double> Goods { get; }
@@ -35,20 +35,20 @@ namespace EconSimVisual.Simulation.Base
         public double Money => Cash + CheckingBalance;
         public double CheckingBalance => BankAccounts.GetPositives().Sum(o => o.Balance);
         public double TargetCash { get; set; }
-        public bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
-        public bool CanPayCash(double amount)
+        public virtual bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
+        public virtual bool CanPayCash(double amount)
         {
             if (amount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(amount));
             return Cash >= amount;
         }
-        public bool CanPayCredit(double amount)
+        public virtual bool CanPayCredit(double amount)
         {
             if (amount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(amount));
             return BankAccounts.Count > 0 && BankAccounts.Max(o => o.AvailableCredit) >= amount;
         }
-        public void Pay(Agent payee, double amount)
+        public virtual void Pay(Agent payee, double amount)
         {
             if (!CanPay(amount))
                 throw new Exception(this + " has " + Money.FormatMoney() + " and cannot pay " + amount.FormatMoney() + ".");
@@ -57,12 +57,12 @@ namespace EconSimVisual.Simulation.Base
             else
                 PayCredit(payee, amount);
         }
-        public void PayCash(Agent payee, double amount)
+        public virtual void PayCash(Agent payee, double amount)
         {
             Cash -= amount;
             payee.Cash += amount;
         }
-        public void PayCredit(Agent payee, double amount)
+        public virtual void PayCredit(Agent payee, double amount)
         {
             foreach (var account in BankAccounts.OrderBy(o => GetWithdrawalLoss(o, amount)))
                 if (account.AvailableCredit >= amount)

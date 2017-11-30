@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Banks
@@ -9,7 +11,7 @@ namespace EconSimVisual.Simulation.Banks
     {
         public CentralBank()
         {
-            TargetCash = 100000;
+            BalanceSheet = new CentralBankBalanceSheet(this);
         }
 
         protected override string DefaultName => "CentralBank";
@@ -38,6 +40,18 @@ namespace EconSimVisual.Simulation.Banks
         public override void ManageFinances()
         {
 
+        }
+
+        public override bool CanPay(double amount) => true;
+        public override bool CanPayCash(double amount) => true;
+        public override bool CanPayCredit(double amount) => true;
+        public override void Pay(Agent payee, double amount)
+        {
+            PayCash(payee, amount);
+        }
+        public override void PayCredit(Agent payee, double amount)
+        {
+            throw new Exception();
         }
     }
 }

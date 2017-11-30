@@ -129,6 +129,7 @@
     <Compile Include="PieChart.xaml.cs">
       <DependentUpon>PieChart.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\Accounting\CentralBankBalanceSheet.cs" />
     <Compile Include="Simulation\Accounting\IBalanceSheet.cs" />
     <Compile Include="Simulation\Accounting\BalanceSheet.cs" />
     <Compile Include="Simulation\Banks\BankFinances.cs" />

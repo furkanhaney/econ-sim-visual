@@ -46,7 +46,7 @@ namespace EconSimVisual.Simulation.Helpers
 
         public void Hire(Person person, double wage)
         {
-            Log(this + " hired " + person, LogType.Hiring);
+            Log(Business + " hired " + person, LogType.Hiring);
             Workers.Add(new Worker
             {
                 Person = person,
@@ -58,14 +58,14 @@ namespace EconSimVisual.Simulation.Helpers
         public void Fire(Worker worker)
         {
             RemoveWorker(worker);
-            Log(this + " fired " + worker.Person + ".", LogType.Hiring);
+            Log(Business + " fired " + worker.Person + ".", LogType.Hiring);
 
         }
 
         public void Quit(Person person)
         {
             RemoveWorker(Workers.First(o => o.Person == person));
-            Log(person + " quit " + this + ".", LogType.Hiring);
+            Log(person + " quit " + Business + ".", LogType.Hiring);
         }
 
         private void PayWage(Worker worker)

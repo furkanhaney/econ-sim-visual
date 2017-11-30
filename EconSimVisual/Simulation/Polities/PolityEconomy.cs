@@ -19,9 +19,9 @@ namespace EconSimVisual.Simulation.Polities
 
         public double IncomeGini => Citizens.Select(o => o.NetIncome).Gini();
         public double WealthGini => Citizens.Select(o => o.NetWorth).Gini();
-        public double TotalCash => Polity.Agents.All.Sum(o => o.Cash);
+        public double TotalCash => Polity.Agents.All.Sum(o => o.Cash) - Polity.Agents.CentralBank.Cash;
         public double TotalDeposits => Polity.Agents.All.Sum(o => o.CheckingBalance);
-        public double MoneySupply => Polity.Agents.All.Sum(o => o.Money);
+        public double MoneySupply => Polity.Agents.All.Sum(o => o.Money) - Polity.Agents.CentralBank.Money;
         public double Unemployment => (double)Citizens.Count(o => !o.IsWorking) / Citizens.Count;
         public double AverageHunger => Polity.Agents.Population.Average(o => o.Hunger);
         public double MeanIncome => Citizens.Average(o => o.NetIncome);

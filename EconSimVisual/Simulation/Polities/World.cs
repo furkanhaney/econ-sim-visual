@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Polities
 {
@@ -8,11 +9,10 @@ namespace EconSimVisual.Simulation.Polities
         {
             TopPolities.AddRange(initializer.GetPolities());
         }
-        public int Day { get; private set; }
         public List<Polity> TopPolities { get; } = new List<Polity>();
         public void Tick()
         {
-            Day++;
+            Entity.Day++;
             foreach (var polity in TopPolities)
                 polity.Tick();
         }

@@ -38,6 +38,17 @@ namespace EconSimVisual.Simulation.Polities
             }
         }
 
+        public List<Business> NonBankBusinesses
+        {
+            get
+            {
+                var businesses = new List<Business>();
+                businesses.AddRange(Manufacturers.Select(o => (Business)o));
+                businesses.AddRange(Grocers.Select(o => (Business)o));
+                return businesses;
+            }
+        }
+
         public void Tick()
         {
             FirstTick();

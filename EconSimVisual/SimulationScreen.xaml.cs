@@ -58,7 +58,7 @@ namespace EconSimVisual
             ChartsPanel.ReadEconomicInputs(out var prop2, out var timeFrame2);
             for (var i = 0; i < days; i++)
             {
-                Town.Tick();
+                World.Tick();
                 ChartsPanel.GoodsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(good, prop1));
                 ChartsPanel.EconomicsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(prop2));
             }
