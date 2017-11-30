@@ -1,12 +1,14 @@
-﻿namespace EconSimVisual.Simulation.Base
+﻿using System.Collections.Generic;
+using EconSimVisual.Simulation.Base;
+
+namespace EconSimVisual.Simulation.Banks
 {
-    using System.Collections.Generic;
-
-    using Helpers;
-
     internal interface IBank
     {
         Dictionary<Agent, BankAccount> Accounts { get; }
+
+        double Deposits { get; }
+        double Loans { get; }
 
         void OpenAccount(Agent agent);
         void CloseAccount(Agent agent);

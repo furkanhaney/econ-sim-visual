@@ -19,9 +19,6 @@
         }
 
         public double Capital { get; set; }
-        public double CapitalValue => Capital * Town.Trade.GetLastPrice(Good.Capital);
-        public double CapitalDepreciation => CapitalValue * CapitalDepreciationRate;
-        public override double Assets => BaseAssets + CapitalValue;
         protected override string DefaultName => Process.Name + " Manufacturer";
         public ManufacturingProcess Process { get; set; }
         public double MaximalOutput => Process.GetMaximumOutput(Labor.LaborCount, Capital, Land);

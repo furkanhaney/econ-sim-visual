@@ -29,20 +29,20 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label x:Name="LblCash" FontSize="32" HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="0" Content="Cash: $1.2m"></Label>
-                    <Label x:Name="LblDeposits" FontSize="32" HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1" Content="Deposits: $1.2m"></Label>
+                    <Label x:Name="LblDeposits" FontSize="32" HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1" Content="CheckingBalance: $1.2m"></Label>
                     <Label x:Name="LblMoney" FontSize="32"  HorizontalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="2" Content="Money: $1.2m"></Label>
                     <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="0" x:Name="PieChartCash"/>
                     <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="1" x:Name="PieChartDeposits"/>
                     <local:PieChart Margin="100,0,100,100" Grid.Row="1" Grid.Column="2" x:Name="PieChartMoney"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Bank Reserves">
+            <TabItem Header="IBank Reserves">
                 <Grid>
                     <Label Grid.Row="0" Grid.Column="0" Content="Annual Rate:" Margin="10"></Label>
                     <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
                     <DataGrid Margin="10" x:Name="GridBankReserves" ColumnWidth="*">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Bank" Binding="{Binding Owner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="IBank" Binding="{Binding Owner}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Interest" Binding="{Binding AvailableCredit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         </DataGrid.Columns>

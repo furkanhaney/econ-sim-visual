@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
-using EconSimVisual.Simulation.Helpers;
 
-namespace EconSimVisual.Simulation.Agents
+namespace EconSimVisual.Simulation.Banks
 {
     internal class CentralBank : Agent, IBank
     {
@@ -13,6 +14,8 @@ namespace EconSimVisual.Simulation.Agents
 
         protected override string DefaultName => "CentralBank";
         public Dictionary<Agent, BankAccount> Accounts { get; } = new Dictionary<Agent, BankAccount>();
+        public double Deposits => Accounts.Values.GetPositives().Sum(o => o.Balance);
+        public double Loans => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
         public double ReserveRatio { get; private set; } = 0.2;
 
         public void OpenAccount(Agent agent)

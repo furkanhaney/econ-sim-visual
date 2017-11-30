@@ -129,6 +129,10 @@
     <Compile Include="PieChart.xaml.cs">
       <DependentUpon>PieChart.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\Accounting\IBalanceSheet.cs" />
+    <Compile Include="Simulation\Accounting\BalanceSheet.cs" />
+    <Compile Include="Simulation\Banks\BankFinances.cs" />
+    <Compile Include="Simulation\Helpers\FinancialRatios.cs" />
     <Compile Include="Simulation\Polities\ITownInitializer.cs" />
     <Compile Include="Simulation\Polities\PolityAgents.cs" />
     <Compile Include="Simulation\Polities\ProperPolity.cs" />
@@ -143,13 +147,13 @@
     <Compile Include="Simulation\Government\GovernmentDebt.cs" />
     <Compile Include="Simulation\Managers\BusinessManager.cs" />
     <Compile Include="Simulation\Base\Agent.cs" />
-    <Compile Include="Simulation\Base\IBank.cs" />
+    <Compile Include="Simulation\Banks\IBank.cs" />
     <Compile Include="Simulation\Securities\SecurityTransfer.cs" />
     <Compile Include="Simulation\Polities\ProperPolityAgents.cs" />
-    <Compile Include="Simulation\Helpers\BankAccount.cs" />
-    <Compile Include="Simulation\Agents\CentralBank.cs" />
+    <Compile Include="Simulation\Banks\BankAccount.cs" />
+    <Compile Include="Simulation\Banks\CentralBank.cs" />
     <Compile Include="Simulation\Base\IAsset.cs" />
-    <Compile Include="Simulation\Agents\CommercialBank.cs" />
+    <Compile Include="Simulation\Banks\CommercialBank.cs" />
     <Compile Include="Simulation\Polities\PolityEconomy.cs" />
     <Compile Include="Simulation\Helpers\Labor.cs" />
     <Compile Include="Simulation\Helpers\Owners.cs" />

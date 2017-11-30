@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
+using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Helpers;
 using EconSimVisual.Simulation.Polities;

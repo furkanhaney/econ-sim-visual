@@ -36,6 +36,7 @@ namespace EconSimVisual.Simulation.Agents
         }
         public double Dividends => OwnedAssets.Where(a => a is Stock).Sum(a => ((Stock)a).Dividends);
         public double Salary => Workplace?.Labor.Workers.First(o => o.Person == this).Wage ?? 0;
+        public double NetWorth => BalanceSheet.TotalEquity;
 
         public override void FirstTick()
         {

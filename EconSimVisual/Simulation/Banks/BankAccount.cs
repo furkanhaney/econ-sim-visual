@@ -3,9 +3,10 @@ using System.Reflection;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
+using EconSimVisual.Simulation.Helpers;
 using log4net;
 
-namespace EconSimVisual.Simulation.Helpers
+namespace EconSimVisual.Simulation.Banks
 {
     internal class BankAccount : Entity
     {

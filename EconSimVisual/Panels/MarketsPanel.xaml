@@ -47,10 +47,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Bank Accounts">
+            <TabItem Header="IBank Accounts">
                 <DataGrid x:Name="GridBankAccounts" ColumnWidth="*">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Bank" Binding="{Binding Bank.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="IBank" Binding="{Binding Bank.Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Owner" Binding="{Binding Owner}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Limit" Binding="{Binding CreditLimit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>

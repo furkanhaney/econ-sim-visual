@@ -1,4 +1,6 @@
 ﻿using System;
+using EconSimVisual.Simulation.Accounting;
+using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Simulation.Base
@@ -17,20 +19,21 @@ namespace EconSimVisual.Simulation.Base
     /// </summary>
     internal abstract class Agent : Entity
     {
-        public IList<IAsset> OwnedAssets { get; set; } = new List<IAsset>();
-        public IList<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
-        public IDictionary<Good, double> Goods { get; set; } = CollectionsExtensions.InitializeDictionary<Good>();
+        protected Agent()
+        {
+            BalanceSheet = new BalanceSheet(this);
+            OwnedAssets = new List<IAsset>();
+            BankAccounts = new List<BankAccount>();
+            Goods = CollectionsExtensions.InitializeDictionary<Good>();
+        }
+
+        public IBalanceSheet BalanceSheet { get; }
+        public IList<IAsset> OwnedAssets { get; }
+        public IList<BankAccount> BankAccounts { get; }
+        public IDictionary<Good, double> Goods { get; }
         public double Cash { get; set; }
-        public double InventoryValue => Goods.Sum(o => o.Value * Town.Trade.GetLastPrice(o.Key));
-        public double AvailableFunds => Cash + BankAccounts.Sum(o => o.AvailableCredit);
-        public double Money => Cash + Deposits;
-        public double Deposits => BankAccounts.GetPositives().Sum(o => o.Balance);
-        public double Securities => OwnedAssets.Where(o => o is Security).Sum(o => ((Security)o).Value);
-        public double BaseAssets => Money + OwnedAssets.Sum(o => o.Value) + InventoryValue;
-        public double BaseLiabilities => -BankAccounts.GetNegatives().Sum(o => o.Balance);
-        public virtual double Assets => BaseAssets;
-        public virtual double Liabilities => BaseLiabilities;
-        public double NetWorth => Assets - Liabilities;
+        public double Money => Cash + CheckingBalance;
+        public double CheckingBalance => BankAccounts.GetPositives().Sum(o => o.Balance);
         public double TargetCash { get; set; }
         public bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
         public bool CanPayCash(double amount)

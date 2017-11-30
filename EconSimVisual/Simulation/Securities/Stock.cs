@@ -7,7 +7,7 @@ namespace EconSimVisual.Simulation.Securities
 
     internal class Stock : Security
     {
-        public double Dividends => Count * ((Business)Issuer).Owners.DividendAmount;
+        public double Dividends => Count * ((Business)Issuer).Owners.Dividends;
 
         public override Security Clone()
         {

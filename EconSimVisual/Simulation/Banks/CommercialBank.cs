@@ -1,13 +1,12 @@
-﻿namespace EconSimVisual.Simulation.Agents
+﻿using System.Collections.Generic;
+using System.Linq;
+using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Agents;
+using EconSimVisual.Simulation.Base;
+using EconSimVisual.Simulation.Managers;
+
+namespace EconSimVisual.Simulation.Banks
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Extensions;
-    using Base;
-    using Helpers;
-    using Managers;
-
     /// <summary>
     ///     Businesses that that take deposits and provide loans.
     /// </summary>
@@ -20,7 +19,7 @@
 
         private static int count = 1;
         private readonly int id = count++;
-        protected override string DefaultName => "Bank" + id;
+        protected override string DefaultName => "IBank" + id;
         public double InterestRate { get; set; } = 0.001;
         public double RateSpread { get; set; } = 3;
         public double MinimumPaymentConstant { get; set; } = 20;
@@ -33,16 +32,13 @@
         public double Deposits => Accounts.Values.GetPositives().Sum(o => o.Balance);
         public double Loans => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
         public override double Revenues => LastInterestRevenues;
-        public override double Expenses => LastInterestExpenses + LastDefaultCosts;
+        public override double Expenses => LastInterestExpenses;
         public override double Profits => Revenues - Expenses;
-        public override double Assets => BaseAssets + Loans;
-        public override double Liabilities => BaseLiabilities + Deposits;
         public double InterestRevenues { get; set; }
         public double InterestExpenses { get; set; }
-        public double DefaultCosts { get; set; }
         public double LastInterestRevenues { get; set; }
         public double LastInterestExpenses { get; set; }
-        public double LastDefaultCosts { get; set; }
+
         public Dictionary<Agent, BankAccount> Accounts { get; } = new Dictionary<Agent, BankAccount>();
 
         public void OpenAccount(Agent agent)
@@ -83,11 +79,9 @@
         {
             LastInterestRevenues = InterestRevenues;
             LastInterestExpenses = InterestExpenses;
-            LastDefaultCosts = DefaultCosts;
 
             InterestRevenues = 0;
             InterestExpenses = 0;
-            DefaultCosts = 0;
 
             base.ResetStats();
         }
@@ -98,12 +92,12 @@
                 if (account.Balance >= 0)
                 {
                     InterestExpenses += account.Balance * SavingsRate;
-                    account.Balance *= 1 + SavingsRate;
+                    account.Balance *= 1 + Finance.ConvertRate(SavingsRate, Finance.AnnualToDaily);
                 }
                 else
                 {
                     InterestRevenues += -account.Balance * CreditRate;
-                    account.Balance *= 1 + CreditRate;
+                    account.Balance *= 1 + Finance.ConvertRate(CreditRate, Finance.AnnualToDaily);
                 }
         }
 
@@ -121,6 +115,5 @@
                         " to " + this + ".", LogType.NonPayment);
             }
         }
-
     }
 }

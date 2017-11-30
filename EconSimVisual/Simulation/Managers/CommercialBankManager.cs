@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Securities;
 using MoreLinq;
 
@@ -32,17 +33,19 @@ namespace EconSimVisual.Simulation.Managers
             ManageBonds();
         }
 
+        private double MinReserves => Bank.Deposits * Town.Agents.CentralBank.ReserveRatio;
+        private double TargetMinReserves => Math.Max(targetCash, MinReserves * 1.5);
+        private double TargetMaxReserves => Math.Max(targetCash, MinReserves * 2.0);
+
+
         private void ManageBonds()
         {
-            var minReserves = Bank.Deposits * Town.Agents.CentralBank.ReserveRatio;
-            var targetMin = Math.Max(targetCash, minReserves * 1.5);
-            var targetMax = Math.Max(targetCash, minReserves * 2.0);
-            var targetAvg = (targetMin + targetMax) / 2;
+            var targetAvg = (TargetMinReserves + TargetMaxReserves) / 2;
 
             RemoveCurrentBonds();
-            if (Bank.Reserves > targetMax)
+            if (Bank.Reserves > TargetMaxReserves)
                 BuyBonds(Bank.Reserves - targetAvg);
-            else if (Bank.Reserves < targetMin)
+            else if (Bank.Reserves < TargetMinReserves)
                 SellBonds(targetAvg - Bank.Reserves);
         }
 
@@ -105,15 +108,15 @@ namespace EconSimVisual.Simulation.Managers
 
         private void ManageRates()
         {
-            if (Bank.Reserves > 0.6)
-                Bank.InterestRate /= 1.02;
-            if (Bank.Reserves < 0.4)
-                Bank.InterestRate *= 1.02;
-            if (Bank.InterestRate < 0.0001)
-                Bank.InterestRate = 0.0001;
-            if (Bank.InterestRate > 0.0025)
-                Bank.InterestRate = 0.0025;
-            Bank.SavingsRate = 0;
+            if (Bank.Reserves > TargetMaxReserves)
+                Bank.InterestRate /= 1.01;
+            if (Bank.Reserves < TargetMinReserves)
+                Bank.InterestRate *= 1.01;
+            if (Bank.InterestRate < 0.001)
+                Bank.InterestRate = 0.001;
+            if (Bank.InterestRate > 0.8)
+                Bank.InterestRate = 0.8;
+            Bank.SavingsRate = Bank.InterestRate;
             Bank.CreditRate = Bank.InterestRate * Bank.RateSpread;
         }
     }
