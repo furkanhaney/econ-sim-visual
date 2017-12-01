@@ -1,4 +1,6 @@
-﻿namespace EconSimVisual.Simulation.Securities
+﻿using EconSimVisual.Simulation.Helpers;
+
+namespace EconSimVisual.Simulation.Securities
 {
     using Extensions;
 
@@ -13,7 +15,7 @@
         {
             MakePayment();
             Owner.OwnedAssets.Remove(this);
-            ((Government.Government)Issuer).Debt.IssuedBonds.Remove(this);
+            (Issuer as IBondIssuer).Bonds.Issued.Remove(this);
         }
 
         public override Security Clone()

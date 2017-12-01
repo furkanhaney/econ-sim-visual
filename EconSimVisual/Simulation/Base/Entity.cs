@@ -20,16 +20,12 @@ namespace EconSimVisual.Simulation.Base
 
         static Entity()
         {
-            ConsumerGoods.Add(Good.Potato);
-            ConsumerGoods.Add(Good.Squash);
-            //ConsumerGoods.Add(Good.Bread);
-            //ConsumerGoods.Add(Good.Beer);
-            ConsumerGoods.Add(Good.Luxury1);
-            ConsumerGoods.Add(Good.Luxury2);
-
             Foods.Add(Good.Potato);
             Foods.Add(Good.Squash);
             Foods.Add(Good.Bread);
+
+            ConsumerGoods.AddRange(Foods);
+            ConsumerGoods.Add(Good.Beer);
         }
 
         protected const double K = 1000, M = K * K, B = K * K * K;

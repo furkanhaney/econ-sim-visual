@@ -62,14 +62,11 @@ namespace EconSimVisual.Initializers
             var manufacturers = new List<Manufacturer>()
             {
                 CreateManufacturer("Potato"),
-                CreateManufacturer("Potato"),
                 CreateManufacturer("Squash"),
-                CreateManufacturer("Squash"),
-                CreateManufacturer("Luxury1"),
-                CreateManufacturer("Luxury1"),
-                CreateManufacturer("Luxury2"),
-                CreateManufacturer("Luxury2"),
-                CreateManufacturer("Capital"),
+                CreateManufacturer("Wheat"),
+                CreateManufacturer("Flour"),
+                CreateManufacturer("Bread"),
+                CreateManufacturer("Beer"),
                 CreateManufacturer("Capital")
             };
             Agents.Manufacturers.AddRange(manufacturers);

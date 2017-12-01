@@ -111,7 +111,7 @@ namespace EconSimVisual.Simulation.Polities
             }
             else if (buyer is Vendor)
             {
-                var manufacturers = Town.Agents.Manufacturers.Where(m => m.Produces(good) && m.Goods[good] >= amount).ToList();
+                var manufacturers = Town.Agents.Manufacturers.Where(m => m.Produces(good) && m.Goods[good] >= amount && m != buyer).ToList();
                 if (manufacturers.Count > 0)
                     return manufacturers.MinBy(m => m.Prices[good]);
             }

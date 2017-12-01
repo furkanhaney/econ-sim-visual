@@ -31,11 +31,15 @@ namespace EconSimVisual.Simulation.Helpers
             get { return LaborCount == 0 ? 0 : Workers.Average(o => o.Wage); }
         }
         public double WagesPaid { get; set; }
+        public double UnpaidWages => Workers.Sum(o => o.UnpaidWages);
 
         public void PayWages()
         {
-            foreach (var worker in Workers)
+            foreach (var worker in Workers.Shuffle())
+            {
                 PayWage(worker);
+                worker.Tenure++;
+            }
         }
 
         public void ResetStats()
@@ -70,18 +74,24 @@ namespace EconSimVisual.Simulation.Helpers
 
         private void PayWage(Worker worker)
         {
-            var wage = worker.Wage;
-            var tax = Taxes.GetAmount(worker.Wage, TaxType.Income);
-            if (Business.CanPay(wage))
-            {
-                Business.Pay(worker.Person, wage);
-                if (tax > 0)
-                    Taxes.Pay(Business, tax, TaxType.Income);
-                WagesPaid += wage;
-            }
+            // Current wage
+            if (Business.CanPay(worker.Wage))
+                PayWageAmount(worker, worker.Wage);
             else
-                Log(this + " has defaulted on paying wages.", LogType.NonPayment);
-            worker.Tenure++;
+                worker.UnpaidWages += worker.Wage;
+
+            // Past wages
+            if (worker.UnpaidWages > 0 && Business.CanPay(worker.UnpaidWages))
+                PayWageAmount(worker, worker.UnpaidWages);
+        }
+
+        private void PayWageAmount(Worker worker, double amount)
+        {
+            var tax = Taxes.GetAmount(amount, TaxType.Income);
+            Business.Pay(worker.Person, amount);
+            if (tax > 0)
+                Taxes.Pay(Business, tax, TaxType.Income);
+            WagesPaid += amount;
         }
 
         private void RemoveWorker(Worker worker)

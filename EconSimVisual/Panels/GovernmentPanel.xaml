@@ -155,7 +155,7 @@
                     <local:PieChart x:Name="PieChartTaxes" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Debt">
+            <TabItem Header="Bonds">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -201,7 +201,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition ></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label x:Name="LblTotalDebt" Margin="10" Content="Total Debt:"></Label>
+                    <Label x:Name="LblTotalDebt" Margin="10" Content="Total Bonds:"></Label>
                     <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="GridIssuedBonds" ColumnWidth="*">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Owner" Binding="{Binding Owner}"></DataGridTextColumn>

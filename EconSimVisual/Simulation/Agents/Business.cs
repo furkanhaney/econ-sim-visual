@@ -1,6 +1,7 @@
 ﻿using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Managers;
+using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Simulation.Agents
 {
@@ -13,14 +14,17 @@ namespace EconSimVisual.Simulation.Agents
     /// <summary>
     ///     A profit-maximing agent
     /// </summary>
-    internal abstract class Business : Agent
+    internal abstract class Business : Agent, IBondIssuer
     {
         protected Business()
         {
             Labor = new Labor(this);
             Owners = new Owners(this);
+            Ratios = new FinancialRatios(this);
+            Bonds = new Bonds(this);
         }
 
+        public FinancialRatios Ratios { get; }
         public BusinessManager Manager { get; set; }
         public Labor Labor { get; }
         public Owners Owners { get; }
@@ -36,10 +40,10 @@ namespace EconSimVisual.Simulation.Agents
 
         public override void FirstTick()
         {
+            if (Bonds.Exchange == null)
+                Bonds.Exchange = Town.Trade.BondExchange;
             Manager.Manage();
             Labor.PayWages();
-            if (IsPeriodStart)
-                ResetStats();
         }
 
         public override void LastTick()
@@ -48,6 +52,7 @@ namespace EconSimVisual.Simulation.Agents
             {
                 PayCorporateTax();
                 Owners.PayDividends();
+                ResetStats();
             }
             base.LastTick();
         }
@@ -69,5 +74,7 @@ namespace EconSimVisual.Simulation.Agents
             else
                 Log(this + " could not pay corporate taxes.", LogType.NonPayment);
         }
+
+        public Bonds Bonds { get; }
     }
 }

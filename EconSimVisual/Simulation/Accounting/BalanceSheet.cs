@@ -27,7 +27,7 @@ namespace EconSimVisual.Simulation.Accounting
 
         // Summary
         public double TotalAssets => CashEquivalents + Securities + OtherAssets + Inventory + Equipment + Loans;
-        public double TotalLiabilities => Debt + Deposits;
+        public double TotalLiabilities => Debt + Deposits + Bonds;
         public double TotalEquity => TotalAssets - TotalLiabilities;
 
         // Assets
@@ -39,7 +39,11 @@ namespace EconSimVisual.Simulation.Accounting
         public double Loans => Agent is IBank bank ? bank.Loans : 0;
 
         // Liabilities
-        public double Debt => -Agent.BankAccounts.GetNegatives().Sum(o => o.Balance);
+        public double Debt => -Agent.BankAccounts.GetNegatives().Sum(o => o.Balance) + WageDebt;
+        public double Bonds => Agent is IBondIssuer a ? a.Bonds.TotalAmount : 0;
         public double Deposits => Agent is IBank bank ? bank.Deposits : 0;
+
+        // Details
+        private double WageDebt => Agent is Business b ? b.Labor.UnpaidWages : 0;
     }
 }

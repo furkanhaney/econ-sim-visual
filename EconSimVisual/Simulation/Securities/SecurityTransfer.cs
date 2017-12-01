@@ -72,7 +72,7 @@ namespace EconSimVisual.Simulation.Securities
         private static void Issue(Security security)
         {
             security.IsIssued = true;
-            ((Government.Government)security.Issuer).Debt.IssuedBonds.Add((Bond)security);
+            ((Government.Government)security.Issuer).Bonds.Issued.Add((Bond)security);
         }
     }
 }

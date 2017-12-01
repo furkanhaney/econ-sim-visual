@@ -1,29 +1,31 @@
 ﻿using EconSimVisual.Simulation.Base;
+using EconSimVisual.Simulation.Helpers;
+using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Simulation.Government
 {
-    internal class Government : Agent
+    internal class Government : Agent, IBondIssuer
     {
         public Government()
         {
             TargetCash = 250000;
             Taxes = new Taxes();
             Welfare = new Welfare();
-            Debt = new GovernmentDebt(this);
+            Bonds = new Bonds(this);
             Finances = new GovernmentFinances();
         }
 
         protected override string DefaultName => "Government";
         public new Taxes Taxes { get; }
         public Welfare Welfare { get; }
-        public GovernmentDebt Debt { get; }
+        public Bonds Bonds { get; }
         public GovernmentFinances Finances { get; }
 
         public override void FirstTick()
         {
-
+            if (Bonds.Exchange == null)
+                Bonds.Exchange = Town.Trade.BondExchange;
         }
-
         public override void LastTick()
         {
             Taxes.LastTick();

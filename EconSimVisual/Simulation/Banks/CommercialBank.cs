@@ -20,12 +20,8 @@ namespace EconSimVisual.Simulation.Banks
         private static int count = 1;
         private readonly int id = count++;
         protected override string DefaultName => "Bank" + id;
-        public double InterestRate { get; set; } = 0.001;
-        public double RateSpread { get; set; } = 3;
         public double MinimumPaymentConstant { get; set; } = 20;
         public double MinimumPaymentRate { get; set; } = 0.2;
-        public double SavingsRate { get; set; }
-        public double CreditRate { get; set; }
         public double ReserveRatio => Deposits == 0 ? 0 : Reserves / Deposits;
         public double RequiredReserves => Deposits * Town.Agents.CentralBank.ReserveRatio;
         public double Reserves => Cash + BankAccounts.Sum(o => o.Balance);
@@ -83,13 +79,13 @@ namespace EconSimVisual.Simulation.Banks
             foreach (var account in Accounts.Values)
                 if (account.Balance >= 0)
                 {
-                    InterestExpenses += account.Balance * SavingsRate;
-                    account.Balance *= 1 + Finance.ConvertRate(SavingsRate, Finance.AnnualToDaily);
+                    InterestExpenses += account.Balance * account.SavingsRate;
+                    account.Balance *= 1 + Finance.ConvertRate(account.SavingsRate, Finance.AnnualToDaily);
                 }
                 else
                 {
-                    InterestRevenues += -account.Balance * CreditRate;
-                    account.Balance *= 1 + Finance.ConvertRate(CreditRate, Finance.AnnualToDaily);
+                    InterestRevenues += -account.Balance * account.CreditRate;
+                    account.Balance *= 1 + Finance.ConvertRate(account.CreditRate, Finance.AnnualToDaily);
                 }
         }
 

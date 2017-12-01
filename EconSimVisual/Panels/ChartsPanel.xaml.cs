@@ -61,7 +61,7 @@ namespace EconSimVisual.Panels
         }
         private static Func<double, string> GetLabelFormatter(PropertyInfo prop)
         {
-            var dollarProperties = new[] { "UnitPrice", "TotalCash", "PriceChange", "NominalGdp", "TotalWealth", "MoneySupply", "MedianIncome", "MeanIncome" };
+            var dollarProperties = new[] { "Price", "TotalCash", "PriceChange", "NominalGdp", "TotalWealth", "MoneySupply", "MedianIncome", "MeanIncome" };
             var amountProperties = new[] { "Stocks", "Production", "Volume" };
             var percentageProperties = new[] { "IncomeGini", "WealthGini", "Unemployment" };
 

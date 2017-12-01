@@ -21,7 +21,7 @@ namespace EconSimVisual.Simulation.Base
     {
         protected Agent()
         {
-            BalanceSheet = new BalanceSheet(this);
+            BalanceSheet = new Accounting.BalanceSheet(this);
             OwnedAssets = new List<IAsset>();
             BankAccounts = new List<BankAccount>();
             Goods = CollectionsExtensions.InitializeDictionary<Good>();
@@ -34,6 +34,7 @@ namespace EconSimVisual.Simulation.Base
         public double Cash { get; set; }
         public double Money => Cash + CheckingBalance;
         public double CheckingBalance => BankAccounts.GetPositives().Sum(o => o.Balance);
+        public double NetMoney => Cash + BankAccounts.Sum(o => o.Balance);
         public double TargetCash { get; set; }
         public virtual bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
         public virtual bool CanPayCash(double amount)

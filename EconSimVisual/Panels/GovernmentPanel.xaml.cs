@@ -51,7 +51,7 @@ namespace EconSimVisual.Panels
             if (Entity.IsPeriodStart || Entity.Day - PieChartTaxes.LastUpdated > 30)
                 UpdateTaxPieChart();
 
-            GridIssuedBonds.SetData(Government.Debt.IssuedBonds);
+            GridIssuedBonds.SetData(Government.Bonds.Issued);
         }
 
         private void UpdateLabels()
@@ -62,7 +62,7 @@ namespace EconSimVisual.Panels
             LblWelfareLast.Content = Government.Welfare.LastExpenses.FormatMoney();
             LblNetCurrent.UpdateColored(Government.Finances.CurrentSurplus);
             LblNetLast.UpdateColored(Government.Finances.LastSurplus);
-            LblTotalDebt.Content = "Total Debt: " + Government.Debt.TotalAmount.FormatMoney();
+            LblTotalDebt.Content = "Total Bonds: " + Government.Bonds.TotalAmount.FormatMoney();
         }
 
         public void AdjustPrograms(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace EconSimVisual.Panels
             var limit = (int)UpDownBondLimit.Value;
             LblYield1.Content = Finance.GetYield(faceValue, price, maturity).ToString("0.00%");
 
-            var currentBond = Government.Debt.CurrentBond;
+            var currentBond = Government.Bonds.Current;
             currentBond.FaceValue = faceValue;
             currentBond.UnitPrice = price;
             currentBond.MaturityDays = maturity;

@@ -6,6 +6,7 @@ namespace EconSimVisual.Simulation.Helpers
     {
         public Person Person { get; set; }
         public double Wage { get; set; }
+        public double UnpaidWages { get; set; }
         public int Tenure { get; set; }
     }
 }

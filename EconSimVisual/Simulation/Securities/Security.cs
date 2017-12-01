@@ -17,7 +17,8 @@
             }
         }
 
-        public virtual double Value { get; }
+        public abstract double Value { get; }
+
         public double UnitPrice { get; set; }
 
         public bool IsIssued { get; set; }

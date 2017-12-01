@@ -94,6 +94,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BalanceSheet.xaml.cs">
+      <DependentUpon>BalanceSheet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\EnumUtils.cs" />
     <Compile Include="Extensions\FormatUtils.cs" />
     <Compile Include="Extensions\LoggerHelper.cs" />
@@ -134,6 +137,9 @@
     <Compile Include="Simulation\Accounting\BalanceSheet.cs" />
     <Compile Include="Simulation\Banks\BankFinances.cs" />
     <Compile Include="Simulation\Helpers\FinancialRatios.cs" />
+    <Compile Include="Simulation\Helpers\IBondIssuer.cs" />
+    <Compile Include="Simulation\Managers\Helpers\CapitalManager.cs" />
+    <Compile Include="Simulation\Managers\Helpers\LaborManager.cs" />
     <Compile Include="Simulation\Polities\ITownInitializer.cs" />
     <Compile Include="Simulation\Polities\PolityAgents.cs" />
     <Compile Include="Simulation\Polities\ProperPolity.cs" />
@@ -142,6 +148,7 @@
     <Compile Include="Simulation\Government\GovernmentFinances.cs" />
     <Compile Include="Simulation\Polities\Polity.cs" />
     <Compile Include="Simulation\Polities\IWorldInitializer.cs" />
+    <Compile Include="Simulation\Securities\Bonds.cs" />
     <Compile Include="Simulation\Securities\Exchanges\BondExchange.cs" />
     <Compile Include="Simulation\Securities\Exchanges\Exchange.cs" />
     <Compile Include="Simulation\Securities\Exchanges\StockExchange.cs" />
@@ -197,6 +204,10 @@
     <Compile Include="Simulation\Agents\Vendor.cs" />
     <Compile Include="Simulation\Helpers\Worker.cs" />
     <Compile Include="Simulation\Government\SocialPrograms\WageProgram.cs" />
+    <Page Include="BalanceSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\AgentsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

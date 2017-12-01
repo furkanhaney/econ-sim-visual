@@ -55,6 +55,8 @@
                         <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Limit" Binding="{Binding CreditLimit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Available" Binding="{Binding AvailableCredit, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Savings Rate" Binding="{Binding SavingsRate, StringFormat='%0.00'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Credit Rate" Binding="{Binding CreditRate, StringFormat='%0.00'}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

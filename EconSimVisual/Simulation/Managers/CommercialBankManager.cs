@@ -37,16 +37,17 @@ namespace EconSimVisual.Simulation.Managers
         private double TargetMinReserves => Math.Max(targetCash, MinReserves * 1.5);
         private double TargetMaxReserves => Math.Max(targetCash, MinReserves * 2.0);
 
-
         private void ManageBonds()
         {
             var targetAvg = (TargetMinReserves + TargetMaxReserves) / 2;
+            var amount = Math.Abs(Bank.Reserves - targetAvg);
+            amount = Math.Min(amount, 20000);
 
             RemoveCurrentBonds();
             if (Bank.Reserves > TargetMaxReserves)
-                BuyBonds(Bank.Reserves - targetAvg);
+                BuyBonds(amount);
             else if (Bank.Reserves < TargetMinReserves)
-                SellBonds(targetAvg - Bank.Reserves);
+                SellBonds(amount);
         }
 
         private void SellBonds(double amount)
@@ -90,10 +91,12 @@ namespace EconSimVisual.Simulation.Managers
                     break;
             }
         }
+
         private void RemoveCurrentBonds()
         {
             Town.Trade.BondExchange.AllBonds.RemoveAll(o => o.Owner == Bank);
         }
+
         private IEnumerable<Bond> GetBonds(double maxPrice)
         {
             return Town.Trade.BondExchange.AllBonds.Where(o => o.UnitPrice <= maxPrice);
@@ -108,16 +111,11 @@ namespace EconSimVisual.Simulation.Managers
 
         private void ManageRates()
         {
-            if (Bank.Reserves > TargetMaxReserves)
-                Bank.InterestRate /= 1.01;
-            if (Bank.Reserves < TargetMinReserves)
-                Bank.InterestRate *= 1.01;
-            if (Bank.InterestRate < 0.001)
-                Bank.InterestRate = 0.001;
-            if (Bank.InterestRate > 0.8)
-                Bank.InterestRate = 0.8;
-            Bank.SavingsRate = Bank.InterestRate;
-            Bank.CreditRate = Bank.InterestRate * Bank.RateSpread;
+            foreach (var account in Bank.Accounts.Values.ToList())
+            {
+                account.SavingsRate = 0.02;
+                account.CreditRate = 0.08;
+            }
         }
     }
 }

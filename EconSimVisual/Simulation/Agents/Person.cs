@@ -63,13 +63,14 @@ namespace EconSimVisual.Simulation.Agents
             SeekFood();
             if (Hunger != 0) return;
 
-            if (Town.Trade.CanBuyGood(this, Good.Luxury1))
-                Town.Trade.BuyGood(this, Good.Luxury1);
+            TryConsume(Good.Beer);
+        }
 
-            if (Town.Trade.CanBuyGood(this, Good.Luxury2))
-                Town.Trade.BuyGood(this, Good.Luxury2);
-
-            Goods[Good.Luxury1] = Goods[Good.Luxury2] = 0;
+        private void TryConsume(Good good)
+        {
+            if (Town.Trade.CanBuyGood(this, good))
+                Town.Trade.BuyGood(this, good);
+            Goods[good] = 0;
         }
 
         private void ManageEmployment()

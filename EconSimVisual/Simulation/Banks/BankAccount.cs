@@ -15,25 +15,10 @@ namespace EconSimVisual.Simulation.Banks
         public IBank Bank { get; set; }
         public Agent Owner { get; set; }
         public double Balance { get; set; }
-        public double SavingsRate => Bank is CommercialBank bank ? bank.SavingsRate : 0;
-        public double CreditRate => Bank is CommercialBank bank ? bank.CreditRate : 0;
+        public double SavingsRate { get; set; }
+        public double CreditRate { get; set; }
+        public double CreditLimit { get; set; }
         public double MinimumPayment => Balance >= 0 ? 0 : Math.Min(-Balance, 20 - Balance * ((CommercialBank)Bank).MinimumPaymentRate);
-        public double CreditLimit
-        {
-            get
-            {
-                double value = 0;
-                if (Owner is Simulation.Government.Government)
-                    value = 0;
-                if (Owner is Business)
-                    value = 500 * K;
-                if (Owner is Person)
-                    value = 0;
-                if (Owner is CommercialBank)
-                    value = 0;
-                return value;
-            }
-        }
         public double AvailableCredit => Balance + CreditLimit;
 
         public void Deposit(double amount)
@@ -62,7 +47,8 @@ namespace EconSimVisual.Simulation.Banks
 
         public void Withdraw(double amount)
         {
-            Assert(amount > 0);
+            if(amount <= 0)
+                throw new ArgumentOutOfRangeException(nameof(amount));
             Assert(AvailableCredit >= amount);
 
             if (((Agent)Bank).CanPay(amount))
@@ -141,6 +127,7 @@ namespace EconSimVisual.Simulation.Banks
             var manufacturer = new Manufacturer(ManufacturingProcess.Get("Potato")) { Cash = 100 };
             bank.OpenAccount(manufacturer);
             var account2 = manufacturer.BankAccounts[0];
+            account2.CreditLimit = 500;
             Assert(account2.MinimumPayment == 0);
             account2.Withdraw(20);
             Assert(account2.MinimumPayment == 20);

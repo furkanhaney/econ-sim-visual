@@ -9,6 +9,9 @@ namespace EconSimVisual.Simulation.Securities
     {
         public double Dividends => Count * ((Business)Issuer).Owners.Dividends;
 
+        public override double Value => Count * ((Business)Issuer).BalanceSheet.TotalEquity /
+                                        ((Business)Issuer).Owners.OutstandingShares;
+
         public override Security Clone()
         {
             return new Stock()
