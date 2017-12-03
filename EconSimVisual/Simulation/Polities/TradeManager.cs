@@ -7,7 +7,7 @@ using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Helpers;
 using EconSimVisual.Simulation.Information;
-using EconSimVisual.Simulation.Securities.Exchanges;
+using EconSimVisual.Simulation.Instruments.Securities;
 using MoreLinq;
 
 namespace EconSimVisual.Simulation.Polities
@@ -18,11 +18,13 @@ namespace EconSimVisual.Simulation.Polities
         {
             Town = town;
             TradeLogs = new List<List<GoodSummary>>();
-            BondExchange = new BondExchange();
+            BondExchange = new SecurityExchange<Bond>();
+            StockExchange = new SecurityExchange<Stock>();
             DailyTransactions = new List<Transaction>();
         }
 
-        public BondExchange BondExchange { get; set; }
+        public SecurityExchange<Bond> BondExchange { get; }
+        public SecurityExchange<Stock> StockExchange { get; }
         public List<List<GoodSummary>> TradeLogs { get; }
 
         private List<Transaction> DailyTransactions { get; }

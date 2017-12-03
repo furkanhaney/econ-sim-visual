@@ -93,7 +93,7 @@ namespace EconSimVisual.Panels
             currentBond.FaceValue = faceValue;
             currentBond.UnitPrice = price;
             currentBond.MaturityDays = maturity;
-            currentBond.Count = limit;
+            currentBond.Count = currentBond.OnSaleCount = limit;
         }
 
         private static void TaxesChanged(object sender, RoutedEventArgs e)

@@ -1,7 +1,7 @@
-﻿namespace EconSimVisual.Simulation.Securities
-{
-    using Extensions;
+﻿using EconSimVisual.Extensions;
 
+namespace EconSimVisual.Simulation.Instruments.Securities
+{
     internal class CouponBond : Bond
     {
         public int PaymentFrequency { get; set; }

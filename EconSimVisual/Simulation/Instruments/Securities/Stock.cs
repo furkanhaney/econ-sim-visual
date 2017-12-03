@@ -1,13 +1,14 @@
-﻿using EconSimVisual.Simulation.Government;
+﻿using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Agents;
+using EconSimVisual.Simulation.Government;
 
-namespace EconSimVisual.Simulation.Securities
+namespace EconSimVisual.Simulation.Instruments.Securities
 {
-    using Extensions;
-    using Agents;
-
     internal class Stock : Security
     {
-        public double Dividends => Count * ((Business)Issuer).Owners.Dividends;
+        public double Dividends => ((Business)Issuer).Owners.Dividends;
+
+        public double TotalDividends => Count * Dividends;
 
         public override double Value => Count * ((Business)Issuer).BalanceSheet.TotalEquity /
                                         ((Business)Issuer).Owners.OutstandingShares;
@@ -22,12 +23,12 @@ namespace EconSimVisual.Simulation.Securities
 
         public void PayDividends()
         {
-            if (Issuer.CanPay(Dividends))
+            if (Issuer.CanPay(TotalDividends))
             {
-                var tax = Taxes.GetAmount(Dividends, TaxType.Dividend);
+                var tax = Taxes.GetAmount(TotalDividends, TaxType.Dividend);
                 if (tax > 0)
                     Taxes.Pay(Issuer, tax, TaxType.Dividend);
-                Issuer.Pay(Owner, Dividends - tax);
+                Issuer.Pay(Owner, TotalDividends - tax);
             }
             else
                 Log(Issuer + " could not make dividend payments to " + Owner, LogType.NonPayment);

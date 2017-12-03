@@ -1,7 +1,7 @@
-﻿namespace EconSimVisual.Simulation.Securities
-{
-    using Base;
+﻿using EconSimVisual.Simulation.Base;
 
+namespace EconSimVisual.Simulation.Instruments.Securities
+{
     internal abstract class Security : Entity, IAsset
     {
         public Agent Issuer { get; set; }
@@ -17,8 +17,9 @@
             }
         }
 
+        public bool IsOnSale { get; set; }
+        public int OnSaleCount { get; set; }
         public abstract double Value { get; }
-
         public double UnitPrice { get; set; }
 
         public bool IsIssued { get; set; }

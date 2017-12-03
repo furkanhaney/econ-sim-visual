@@ -13,7 +13,6 @@
     {
         protected Vendor(IEnumerable<Good> goodsSold)
         {
-            TargetCash = 25000;
             TargetStocks = CollectionsExtensions.InitializeDictionary<Good>();
             Prices = CollectionsExtensions.InitializeDictionary(goodsSold, 10);
             SalesCount = CollectionsExtensions.InitializeDictionary(goodsSold);

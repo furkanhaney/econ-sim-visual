@@ -57,7 +57,7 @@ namespace EconSimVisual.Simulation.Polities
 
         private void FirstTick()
         {
-            Government.Bonds.Adjust();
+            Government.Bonds.Tick();
             foreach (var m in Manufacturers.Shuffle())
                 m.FirstTick();
             foreach (var g in Grocers.Shuffle())

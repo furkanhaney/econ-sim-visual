@@ -24,7 +24,8 @@ namespace EconSimVisual.Simulation.Banks
         public void Deposit(double amount)
         {
             log.Debug("");
-            Assert(amount > 0);
+            if (amount <= 0)
+                throw new ArgumentOutOfRangeException(nameof(amount));
             Assert(Owner.Cash >= amount);
 
             Owner.PayCash((Agent)Bank, amount);
@@ -47,7 +48,7 @@ namespace EconSimVisual.Simulation.Banks
 
         public void Withdraw(double amount)
         {
-            if(amount <= 0)
+            if (amount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(amount));
             Assert(AvailableCredit >= amount);
 

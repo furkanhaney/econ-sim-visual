@@ -2,7 +2,7 @@
 
 namespace EconSimVisual.Simulation.Managers
 {
-    internal abstract class BusinessManager : Entity
+    internal abstract class Manager : Entity
     {
         public abstract void Manage();
     }

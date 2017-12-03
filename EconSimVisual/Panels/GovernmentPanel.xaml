@@ -126,7 +126,7 @@
                     <Label Grid.Row="4" Grid.Column="0" Margin="10">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="0" Margin="10">Capital:</Label>
                     <Label Grid.Row="6" Grid.Column="0" Margin="10">Estate:</Label>
-                    <Label Grid.Row="7" Grid.Column="0" Margin="10">Dividends:</Label>
+                    <Label Grid.Row="7" Grid.Column="0" Margin="10">TotalDividends:</Label>
 
                     <xctk:DoubleUpDown x:Name="UpDownIncomeTaxRate"  Grid.Row="1" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
                     <xctk:DoubleUpDown x:Name="UpDownCorporateTaxRate" Grid.Row="2" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
@@ -142,7 +142,7 @@
                     <Label Grid.Row="4" Grid.Column="2" Margin="10" x:Name="LblPropertyTaxCurrent">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="2" Margin="10" x:Name="LblCapitalGainsTaxCurrent">Capital:</Label>
                     <Label Grid.Row="6" Grid.Column="2" Margin="10" x:Name="LblEstateTaxCurrent">Estate:</Label>
-                    <Label Grid.Row="7" Grid.Column="2" Margin="10" x:Name="LblDividendTaxCurrent">Dividends:</Label>
+                    <Label Grid.Row="7" Grid.Column="2" Margin="10" x:Name="LblDividendTaxCurrent">TotalDividends:</Label>
 
                     <Label Grid.Row="1" Grid.Column="3" Margin="10" x:Name="LblIncomeTaxLast">Income:</Label>
                     <Label Grid.Row="2" Grid.Column="3" Margin="10" x:Name="LblCorporateTaxLast">Corporate:</Label>
@@ -150,7 +150,7 @@
                     <Label Grid.Row="4" Grid.Column="3" Margin="10" x:Name="LblPropertyTaxLast">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="3" Margin="10" x:Name="LblCapitalGainsTaxLast">Capital:</Label>
                     <Label Grid.Row="6" Grid.Column="3" Margin="10" x:Name="LblEstateTaxLast">Estate:</Label>
-                    <Label Grid.Row="7" Grid.Column="3" Margin="10" x:Name="LblDividendTaxLast">Dividends:</Label>
+                    <Label Grid.Row="7" Grid.Column="3" Margin="10" x:Name="LblDividendTaxLast">TotalDividends:</Label>
 
                     <local:PieChart x:Name="PieChartTaxes" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500"/>
                 </Grid>

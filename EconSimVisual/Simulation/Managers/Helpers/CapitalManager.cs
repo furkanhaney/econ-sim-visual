@@ -10,7 +10,7 @@ using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Simulation.Managers.Helpers
 {
-    internal class CapitalManager : BusinessManager
+    internal class CapitalManager : Manager
     {
         public CapitalManager(Manufacturer manufacturer)
         {

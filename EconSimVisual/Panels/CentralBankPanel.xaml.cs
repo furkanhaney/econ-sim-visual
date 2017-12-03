@@ -3,6 +3,7 @@ using System.Linq;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Polities;
+using Xceed.Wpf.Toolkit;
 
 namespace EconSimVisual.Panels
 {
@@ -28,7 +29,6 @@ namespace EconSimVisual.Panels
             LblCash.Content = "Cash: " + SimulationScreen.Town.Economy.TotalCash.FormatMoney();
             LblDeposits.Content = "Deposits: " + SimulationScreen.Town.Economy.TotalDeposits.FormatMoney();
             LblMoney.Content = "Money: " + SimulationScreen.Town.Economy.MoneySupply.FormatMoney();
-
             UpdateCharts();
         }
 
@@ -60,6 +60,14 @@ namespace EconSimVisual.Panels
         public void Initialize()
         {
 
+        }
+
+        private void DoubleUpDownReserveRequirements_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            Agents.CentralBank.ReserveRatio = (double)upDown.Value;
         }
     }
 }

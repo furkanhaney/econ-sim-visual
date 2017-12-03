@@ -9,8 +9,8 @@ using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Helpers;
+using EconSimVisual.Simulation.Instruments.Securities;
 using EconSimVisual.Simulation.Polities;
-using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Initializers
 {
@@ -25,7 +25,7 @@ namespace EconSimVisual.Initializers
             CreatePopulation(100, 1000);
             CreateGovernment(500000);
             CreateCentralBank(200000);
-            CreateBanks(1, 250000);
+            CreateBanks(1, 1000000);
             CreateGrocers(2, 50000);
             CreateManufacturers();
 

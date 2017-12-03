@@ -1,7 +1,7 @@
 ﻿using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Government;
+using EconSimVisual.Simulation.Instruments.Securities;
 using EconSimVisual.Simulation.Managers;
-using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Simulation.Agents
 {
@@ -25,7 +25,7 @@ namespace EconSimVisual.Simulation.Agents
         }
 
         public FinancialRatios Ratios { get; }
-        public BusinessManager Manager { get; set; }
+        public Manager Manager { get; set; }
         public Labor Labor { get; }
         public Owners Owners { get; }
         public double BankBalance => BankAccounts.Sum(o => o.Balance);

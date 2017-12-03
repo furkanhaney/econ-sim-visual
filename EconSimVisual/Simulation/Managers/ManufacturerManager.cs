@@ -12,7 +12,7 @@ namespace EconSimVisual.Simulation.Managers
 
     using MoreLinq;
 
-    internal class ManufacturerManager : BusinessManager
+    internal class ManufacturerManager : Manager
     {
         public ManufacturerManager(Manufacturer manufacturer)
         {
@@ -30,15 +30,16 @@ namespace EconSimVisual.Simulation.Managers
             CapitalManager.Manage();
             LaborManager.Manage();
 
+            ManageFunds();
             ManageStocks();
             ManagePrices();
-            ManageFunds();
             ManageDividends();
         }
 
         private void ManageFunds()
         {
-            Manufacturer.TargetCash = 5000;
+            if (Manufacturer.Cash > 0)
+                Manufacturer.DepositCash(Manufacturer.Cash);
         }
 
         private void ManageStocks()

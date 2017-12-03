@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
+using EconSimVisual.Simulation.Instruments.Securities;
 using EconSimVisual.Simulation.Polities;
-using EconSimVisual.Simulation.Securities;
 using Microsoft.VisualBasic.Devices;
 
 namespace EconSimVisual.Panels

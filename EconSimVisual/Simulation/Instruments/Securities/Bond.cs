@@ -1,9 +1,8 @@
-﻿using EconSimVisual.Simulation.Helpers;
+﻿using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Helpers;
 
-namespace EconSimVisual.Simulation.Securities
+namespace EconSimVisual.Simulation.Instruments.Securities
 {
-    using Extensions;
-
     internal class Bond : Security
     {
         public double FaceValue { get; set; }
@@ -14,8 +13,7 @@ namespace EconSimVisual.Simulation.Securities
         public void Mature()
         {
             MakePayment();
-            Owner.OwnedAssets.Remove(this);
-            (Issuer as IBondIssuer).Bonds.Issued.Remove(this);
+            SelfDestruct();
         }
 
         public override Security Clone()
@@ -39,6 +37,12 @@ namespace EconSimVisual.Simulation.Securities
                 Issuer.Pay(Owner, payment);
             else
                 Town.TownLogger.Log(Issuer + " has defaulted on the principal of a bond!", LogType.NonPayment);
+        }
+
+        private void SelfDestruct()
+        {
+            Owner.OwnedAssets.Remove(this);
+            (Issuer as IBondIssuer).Bonds.Issued.Remove(this);
         }
     }
 }

@@ -3,9 +3,9 @@ using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Government;
 
-namespace EconSimVisual.Simulation.Securities
+namespace EconSimVisual.Simulation.Instruments.Securities
 {
-    internal class SecurityTransfer : Entity
+    internal class SecurityPurchase : Entity
     {
         public Security Security { get; set; }
         public Agent NewOwner { get; set; }
@@ -28,7 +28,7 @@ namespace EconSimVisual.Simulation.Securities
             HandlePayment();
 
             Security.Owner = NewOwner;
-            Town.Trade.BondExchange.AllBonds.Remove((Bond)Security);
+            Town.Trade.BondExchange.All.Remove((Bond)Security);
 
             if (!Security.IsIssued)
                 Issue(Security);

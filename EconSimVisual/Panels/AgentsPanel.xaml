@@ -21,7 +21,7 @@
                         <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Net Income" Binding="{Binding NetIncome, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Salary" Binding="{Binding Salary, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Dividends" Binding="{Binding Dividends, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="TotalDividends" Binding="{Binding Dividends, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

@@ -8,8 +8,8 @@ using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
+using EconSimVisual.Simulation.Instruments.Securities;
 using EconSimVisual.Simulation.Polities;
-using EconSimVisual.Simulation.Securities;
 
 namespace EconSimVisual.Simulation.Accounting
 {

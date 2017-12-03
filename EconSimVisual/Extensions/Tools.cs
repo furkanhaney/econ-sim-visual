@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Simulation.Banks;
+using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
 
 namespace EconSimVisual.Extensions
@@ -30,5 +31,14 @@ namespace EconSimVisual.Extensions
                 throw new Exception("Minimum must be less than maximum.");
             return random.NextDouble() * (max - min) + min;
         }
+        public static double GetValue(this IEnumerable<IAsset> assets)
+        {
+            return assets.Sum(o => o.Value);
+        }
+
+        /*public double GetGeometricSum(double firstTerm, double rate, int count = -1)
+        {
+            if(count==-1)
+        }*/
     }
 }

@@ -18,7 +18,7 @@ namespace EconSimVisual.Simulation.Banks
         public Dictionary<Agent, BankAccount> Accounts { get; } = new Dictionary<Agent, BankAccount>();
         public double Deposits => Accounts.Values.GetPositives().Sum(o => o.Balance);
         public double Loans => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
-        public double ReserveRatio { get; private set; } = 0.2;
+        public double ReserveRatio { get; set; } = 0.2;
 
         public void OpenAccount(Agent agent)
         {
@@ -35,11 +35,6 @@ namespace EconSimVisual.Simulation.Banks
         public bool HasAccount(Agent agent)
         {
             return Accounts.ContainsKey(agent);
-        }
-
-        public override void ManageFinances()
-        {
-
         }
 
         public override bool CanPay(double amount) => true;

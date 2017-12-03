@@ -1,7 +1,8 @@
 ﻿using System;
 using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Banks;
-using EconSimVisual.Simulation.Securities;
+using EconSimVisual.Simulation.Instruments.Loans;
+using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Base
 {
@@ -25,17 +26,24 @@ namespace EconSimVisual.Simulation.Base
             OwnedAssets = new List<IAsset>();
             BankAccounts = new List<BankAccount>();
             Goods = CollectionsExtensions.InitializeDictionary<Good>();
+            MadeLoans = new List<Loan>();
+            TakenLoans = new List<Loan>();
         }
 
         public IBalanceSheet BalanceSheet { get; protected set; }
         public IList<IAsset> OwnedAssets { get; }
+        public IEnumerable<Security> OwnedSecurities => OwnedAssets.Where(o => o is Security).Cast<Security>();
+        public IEnumerable<Bond> OwnedBonds => OwnedAssets.Where(o => o is Bond).Cast<Bond>();
         public IList<BankAccount> BankAccounts { get; }
         public IDictionary<Good, double> Goods { get; }
         public double Cash { get; set; }
         public double Money => Cash + CheckingBalance;
         public double CheckingBalance => BankAccounts.GetPositives().Sum(o => o.Balance);
         public double NetMoney => Cash + BankAccounts.Sum(o => o.Balance);
-        public double TargetCash { get; set; }
+
+        public List<Loan> MadeLoans { get; }
+        public List<Loan> TakenLoans { get; }
+
         public virtual bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
         public virtual bool CanPayCash(double amount)
         {
@@ -67,7 +75,10 @@ namespace EconSimVisual.Simulation.Base
         {
             foreach (var account in BankAccounts.OrderBy(o => GetWithdrawalLoss(o, amount)))
                 if (account.AvailableCredit >= amount)
+                {
                     account.Pay(payee, amount);
+                    return;
+                }
         }
         public virtual void FirstTick()
         {
@@ -75,26 +86,9 @@ namespace EconSimVisual.Simulation.Base
         }
         public virtual void LastTick()
         {
-            ManageFinances();
+
         }
-        public virtual void ManageFinances()
-        {
-            ManageCash();
-        }
-        public virtual void ManageCash()
-        {
-            if (Cash > TargetCash)
-            {
-                if (BankAccounts.Count > 0)
-                    BankAccounts.MaxBy(o => GetDepositGain(o, Cash - TargetCash)).Deposit(Cash - TargetCash);
-            }
-            else if (Cash < TargetCash)
-            {
-                var accounts = BankAccounts.Where(o => o.AvailableCredit >= TargetCash - Cash).ToList();
-                if (accounts.Count > 0)
-                    accounts.MinBy(o => GetWithdrawalLoss(o, TargetCash - Cash)).Withdraw(TargetCash - Cash);
-            }
-        }
+
         public void Transfer(Agent to, Good good, double amount)
         {
             Goods[good] -= amount;
@@ -102,7 +96,22 @@ namespace EconSimVisual.Simulation.Base
             Debug.Assert(Goods[good] >= 0);
         }
 
-        private static double GetWithdrawalLoss(BankAccount account, double amount)
+        public void DepositCash(double amount)
+        {
+            BankAccounts.MaxBy(o => GetDepositGain(o, amount)).Deposit(amount);
+        }
+
+        public void WithdrawCash(double amount)
+        {
+            foreach (var account in BankAccounts.OrderBy(o => GetWithdrawalLoss(o, amount)))
+                if (account.AvailableCredit >= amount)
+                {
+                    account.Withdraw(amount);
+                    return;
+                }
+        }
+
+        public static double GetWithdrawalLoss(BankAccount account, double amount)
         {
             if (account.Balance >= amount)
                 return account.SavingsRate * amount;
@@ -111,7 +120,7 @@ namespace EconSimVisual.Simulation.Base
             return account.CreditRate * amount;
         }
 
-        private static double GetDepositGain(BankAccount account, double amount)
+        public static double GetDepositGain(BankAccount account, double amount)
         {
             if (account.Balance >= 0)
                 return account.SavingsRate * amount;

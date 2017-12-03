@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EconSimVisual.Simulation.Government;
-using EconSimVisual.Simulation.Securities;
+using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Helpers
 {

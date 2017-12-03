@@ -19,8 +19,26 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Stocks">
-
+            <TabItem Header="New Stocks">
+                <DataGrid x:Name="GridNewStocks" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Count" Binding="{Binding Count, StringFormat='###,##0'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Price" Binding="{Binding UnitPrice, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Dividends" Binding="{Binding Dividends, StringFormat='0.00%'}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Old Stocks">
+                <DataGrid x:Name="GridOldStocks" ColumnWidth="*">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Seller" Binding="{Binding Owner}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Count" Binding="{Binding Count, StringFormat='###,##0'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Price" Binding="{Binding UnitPrice, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Dividends" Binding="{Binding Dividends, StringFormat='0.00%'}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header="New Bonds">
                 <DataGrid x:Name="GridNewBonds" ColumnWidth="*">

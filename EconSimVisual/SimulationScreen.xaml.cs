@@ -94,7 +94,7 @@ namespace EconSimVisual
             LblDay.Content = "Date: " + FormatUtils.ToDate(Entity.Day).Format();
             LblPopulation.Content = "Population: " + Town.Agents.Population.Count.ToString("###,##0");
             LblGdp.Content = "GDP: " + econ.NominalGdp.FormatMoney();
-            LblTreasury.Content = "Treasury: " + Town.Agents.Government.Cash.FormatMoney();
+            LblTreasury.Content = "Treasury: " + Town.Agents.Government.Money.FormatMoney();
             LblJobs.Content = "Available Jobs: " + Town.JobsAvailable.Count;
             LblAvgHunger.Content = "Avg Hunger: " + econ.AverageHunger.FormatAmount();
             LblAvgIncome.Content = "Avg Income: " + econ.MeanIncome.FormatMoney();

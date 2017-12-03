@@ -9,7 +9,7 @@ using MoreLinq;
 
 namespace EconSimVisual.Simulation.Managers.Helpers
 {
-    internal class LaborManager : BusinessManager
+    internal class LaborManager : Manager
     {
         public LaborManager(Manufacturer manufacturer)
         {

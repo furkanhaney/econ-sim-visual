@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Banks;
-using EconSimVisual.Simulation.Securities;
+using EconSimVisual.Simulation.Instruments.Securities;
+using EconSimVisual.Simulation.Managers.Helpers;
 using MoreLinq;
 
 namespace EconSimVisual.Simulation.Managers
 {
     using Agents;
 
-    internal class CommercialBankManager : BusinessManager
+    internal class CommercialBankManager : Manager
     {
-        public const double targetCash = 50000;
-
         public CommercialBankManager(CommercialBank bank)
         {
             Bank = bank;
@@ -24,18 +23,19 @@ namespace EconSimVisual.Simulation.Managers
         public override void Manage()
         {
             ManageRates();
-            AdjustFunds();
-        }
-
-        private void AdjustFunds()
-        {
-            Bank.TargetCash = targetCash;
+            ManageFunds();
             ManageBonds();
         }
 
+        private void ManageFunds()
+        {
+            if (Bank.Cash > 0)
+                Bank.DepositCash(Bank.Cash);
+        }
+
         private double MinReserves => Bank.Deposits * Town.Agents.CentralBank.ReserveRatio;
-        private double TargetMinReserves => Math.Max(targetCash, MinReserves * 1.5);
-        private double TargetMaxReserves => Math.Max(targetCash, MinReserves * 2.0);
+        private double TargetMinReserves => MinReserves * 1.5;
+        private double TargetMaxReserves => MinReserves * 2.0;
 
         private void ManageBonds()
         {
@@ -43,70 +43,11 @@ namespace EconSimVisual.Simulation.Managers
             var amount = Math.Abs(Bank.Reserves - targetAvg);
             amount = Math.Min(amount, 20000);
 
-            RemoveCurrentBonds();
+            var manager = new BondManager(Bank);
             if (Bank.Reserves > TargetMaxReserves)
-                BuyBonds(amount);
+                manager.BuyBonds(amount);
             else if (Bank.Reserves < TargetMinReserves)
-                SellBonds(amount);
-        }
-
-        private void SellBonds(double amount)
-        {
-            var exchange = Town.Trade.BondExchange;
-            var targetYield = Math.Max(exchange.MaxYield * 1.001, 0.0001);
-            double putOnMarket = 0;
-            foreach (Bond bond in Bank.OwnedAssets.Where(o => o is Bond))
-            {
-                var price = Finance.GetPrice(bond.FaceValue, targetYield, bond.MaturityDays);
-                if (putOnMarket >= amount) // Enough on sale
-                    exchange.AllBonds.Remove(bond);
-                else if (bond.Count * price <= amount - putOnMarket) // Bond not too big
-                {
-                    bond.UnitPrice = price;
-                    exchange.AllBonds.Add(bond);
-                }
-            }
-        }
-
-        private void BuyBonds(double amount)
-        {
-            var leftToBuy = amount;
-            var bonds = GetBonds(leftToBuy);
-
-            while (Town.Trade.BondExchange.ForSaleCount > 0)
-            {
-                var best = bonds.MaxBy(o => o.Yield);
-                var purchase = new SecurityTransfer
-                {
-                    Security = best,
-                    Count = GetCountOfBondPurchase(best, leftToBuy),
-                    NewOwner = Bank
-                };
-                if (Bank.CanPay(purchase.TotalPrice))
-                {
-                    purchase.Execute();
-                    bonds = GetBonds(leftToBuy);
-                }
-                else
-                    break;
-            }
-        }
-
-        private void RemoveCurrentBonds()
-        {
-            Town.Trade.BondExchange.AllBonds.RemoveAll(o => o.Owner == Bank);
-        }
-
-        private IEnumerable<Bond> GetBonds(double maxPrice)
-        {
-            return Town.Trade.BondExchange.AllBonds.Where(o => o.UnitPrice <= maxPrice);
-        }
-
-        private static int GetCountOfBondPurchase(Security bond, double leftToBuy)
-        {
-            if (bond.UnitPrice * bond.Count < leftToBuy)
-                return bond.Count;
-            return (int)(leftToBuy / bond.UnitPrice);
+                manager.SellBonds(amount);
         }
 
         private void ManageRates()

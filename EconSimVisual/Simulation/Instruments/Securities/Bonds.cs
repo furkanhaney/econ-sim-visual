@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EconSimVisual.Simulation.Base;
-using EconSimVisual.Simulation.Polities;
-using EconSimVisual.Simulation.Securities.Exchanges;
 
-namespace EconSimVisual.Simulation.Securities
+namespace EconSimVisual.Simulation.Instruments.Securities
 {
     internal class Bonds
     {
@@ -27,18 +22,17 @@ namespace EconSimVisual.Simulation.Securities
         }
 
         public Agent Agent { get; }
-        public BondExchange Exchange { get; set; }
+        public SecurityExchange<Bond> Exchange { get; set; }
         public List<Bond> Issued { get; }
         public Bond Current { get; }
         public double TotalAmount => Issued.Sum(o => o.Count * o.FaceValue);
-
-        public void Adjust()
+        public void Tick()
         {
             if (Exchange == null)
                 return;
 
-            Exchange.AllBonds.RemoveAll(o => o.Issuer == Agent && !o.IsIssued);
-            Exchange.AllBonds.Add((Bond)Current.Clone());
+            Exchange.All.RemoveAll(o => o.Issuer == Agent && !o.IsIssued);
+            Exchange.All.Add((Bond)Current.Clone());
 
             foreach (var bond in Issued.ToList())
             {

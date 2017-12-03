@@ -1,6 +1,6 @@
 ﻿using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
-using EconSimVisual.Simulation.Securities;
+using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Government
 {
@@ -8,7 +8,6 @@ namespace EconSimVisual.Simulation.Government
     {
         public Government()
         {
-            TargetCash = 250000;
             Taxes = new Taxes();
             Welfare = new Welfare();
             Bonds = new Bonds(this);
@@ -23,6 +22,8 @@ namespace EconSimVisual.Simulation.Government
 
         public override void FirstTick()
         {
+            if (Cash > 0)
+                DepositCash(Cash);
             if (Bonds.Exchange == null)
                 Bonds.Exchange = Town.Trade.BondExchange;
         }

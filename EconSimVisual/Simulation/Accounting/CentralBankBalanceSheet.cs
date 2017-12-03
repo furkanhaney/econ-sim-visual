@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Base;
-using EconSimVisual.Simulation.Securities;
+using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Accounting
 {
