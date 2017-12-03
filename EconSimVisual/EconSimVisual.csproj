@@ -137,6 +137,7 @@
     <Compile Include="Simulation\Accounting\BalanceSheet.cs" />
     <Compile Include="Simulation\Agents\IManager.cs.cs" />
     <Compile Include="Simulation\Banks\BankFinances.cs" />
+    <Compile Include="Simulation\Government\LaborLaws.cs" />
     <Compile Include="Simulation\Helpers\FinancialRatios.cs" />
     <Compile Include="Simulation\Helpers\IBondIssuer.cs" />
     <Compile Include="Simulation\Instruments\Instrument.cs" />

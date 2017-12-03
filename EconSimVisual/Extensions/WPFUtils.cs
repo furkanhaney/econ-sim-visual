@@ -8,6 +8,7 @@ namespace EconSimVisual.Extensions
 {
     internal static class WPFUtils
     {
+
         public static void SetData(this ComboBox cmb, IEnumerable data)
         {
             cmb.ItemsSource = data;

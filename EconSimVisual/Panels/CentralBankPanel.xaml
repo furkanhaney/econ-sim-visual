@@ -72,7 +72,7 @@
 
                     <xctk:DoubleUpDown Value="0.2" Style="{StaticResource Percentage}" Grid.Row="0" Grid.Column="1" Margin="0,10"  ValueChanged="DoubleUpDownReserveRequirements_ValueChanged"></xctk:DoubleUpDown>
                     <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="1" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
-                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="2" Grid.Column="1" Margin="0,10"></xctk:DoubleUpDown>
+                    <xctk:DoubleUpDown Style="{StaticResource Percentage}" Grid.Row="2" Grid.Column="1" Margin="0,10" ValueChanged="DoubleUpDown_ValueChanged"></xctk:DoubleUpDown>
                 </Grid>
             </TabItem>
         </TabControl>

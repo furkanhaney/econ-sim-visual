@@ -212,6 +212,26 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Labor Laws">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="10">Minimum Wage:</Label>
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10,0">Maximum Wage:</Label>
+
+                    <xctk:DoubleUpDown Style="{StaticResource Currency}" Grid.Row="0" Grid.Column="1" ValueChanged="DoubleUpDown_ValueChanged"></xctk:DoubleUpDown>
+                    <Label Grid.Row="1" Grid.Column="1" Foreground="Gray" HorizontalContentAlignment="Center">Coming Soon...</Label>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

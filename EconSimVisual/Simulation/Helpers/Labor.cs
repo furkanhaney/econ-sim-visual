@@ -20,12 +20,9 @@ namespace EconSimVisual.Simulation.Helpers
         }
 
         public Business Business { get; }
-        public bool IsHiring { get; set; }
-        public double BaseWage { get; set; } = 10;
         public List<Worker> Workers { get; set; }
         public double LaborCount => Workers.Count;
         public double LastWagesPaid { get; private set; }
-        public double CurrentWages => Workers.Sum(o => o.Wage);
         public double AverageWage
         {
             get { return LaborCount == 0 ? 0 : Workers.Average(o => o.Wage); }

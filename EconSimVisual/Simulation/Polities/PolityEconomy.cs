@@ -15,7 +15,15 @@ namespace EconSimVisual.Simulation.Polities
 
         public List<EconomicReport> EconomicReports { get; set; } = new List<EconomicReport>();
 
-        public double NominalGdp { get; } = 0;
+        public double NominalGdp
+        {
+            get
+            {
+                var sum = Polity.Agents.Manufacturers.Sum(o =>
+                    o.ActualOutput * ((Town)Polity).Trade.GetLastPrice(o.Process.Outputs[0].Good));
+                return sum * 365;
+            }
+        }
 
         public double IncomeGini => Citizens.Select(o => o.NetIncome).Gini();
         public double WealthGini => Citizens.Select(o => o.NetWorth).Gini();

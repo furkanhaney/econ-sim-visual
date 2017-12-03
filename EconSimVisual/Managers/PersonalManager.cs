@@ -10,6 +10,7 @@ namespace EconSimVisual.Managers
     {
         public Person Person { get; }
         public double TargetCash { get; set; } = 2000;
+        public double HappinessToday { get; set; }
 
         public PersonalManager(Person person)
         {
@@ -18,9 +19,11 @@ namespace EconSimVisual.Managers
 
         public override void Manage()
         {
+            HappinessToday = 0;
             ManageConsumption();
             ManageEmployment();
             ManageWealth();
+            Person.Happiness = Person.Happiness * 0.8 + HappinessToday * 0.2;
         }
 
         private void ManageWealth()
@@ -42,8 +45,11 @@ namespace EconSimVisual.Managers
             SeekFood();
             if (Person.Hunger != 0) return;
 
-            TryConsume(Good.Beer);
-            TryConsume(Good.Wine);
+            HappinessToday += 60;
+            if (TryConsume(Good.Beer))
+                HappinessToday += 30;
+            if (TryConsume(Good.Wine))
+                HappinessToday += 10;
         }
 
         private void ManageEmployment()
@@ -80,11 +86,15 @@ namespace EconSimVisual.Managers
             }
         }
 
-        private void TryConsume(Good good)
+        private bool TryConsume(Good good)
         {
             if (Town.Trade.CanBuyGood(Person, good))
+            {
                 Town.Trade.BuyGood(Person, good);
-            Person.Goods[good] = 0;
+                Person.Goods[good] = 0;
+                return true;
+            }
+            return false;
         }
 
     }

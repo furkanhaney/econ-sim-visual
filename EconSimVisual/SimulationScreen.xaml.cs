@@ -96,7 +96,7 @@ namespace EconSimVisual
             LblGdp.Content = "GDP: " + econ.NominalGdp.FormatMoney();
             LblTreasury.Content = "Treasury: " + Town.Agents.Government.Money.FormatMoney();
             LblJobs.Content = "Available Jobs: " + Town.JobsAvailable.Count;
-            LblAvgHunger.Content = "Avg Hunger: " + econ.AverageHunger.FormatAmount();
+            LblAvgHunger.Content = "Max Hunger: " + Town.Agents.Population.Max(o => o.Hunger).ToString("0");
             LblAvgIncome.Content = "Avg Income: " + econ.MeanIncome.FormatMoney();
             LblAvgWealth.Content = "Avg Wealth: " + econ.MeanNetWorth.FormatMoney();
             LblIncomeGini.Content = "Income Gini: " + econ.IncomeGini.ToString("0.00%");
@@ -104,6 +104,10 @@ namespace EconSimVisual
             LblTotalCash.Content = "Total Cash: " + econ.TotalCash.FormatMoney();
             LblMoneySupply.Content = "Money Supply: " + econ.MoneySupply.FormatMoney();
             LblUnemployment.Content = "Unemployment: " + econ.Unemployment.ToString("0.00%");
+            LblHappiness.Content = "Happiness: " + Town.Agents.Population.Average(o => o.Happiness).ToString("0.00");
+            var debt = Town.Agents.Government.BalanceSheet.TotalLiabilities;
+            var percent = debt / Town.Economy.NominalGdp;
+            LblDebt.Content = "Debt: " + debt.FormatMoney() + " (" + percent.ToString("%0.00") + ")";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

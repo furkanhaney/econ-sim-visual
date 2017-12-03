@@ -32,11 +32,11 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"  x:Name="LblDay" Margin="10" DockPanel.Dock="Left">Day 1</Label>
-            <Label Grid.Column="1" x:Name="LblPopulation" Margin="10" DockPanel.Dock="Left">Population:</Label>
-            <Label Grid.Column="2"  x:Name="LblGdp" Margin="10" DockPanel.Dock="Left">GDP:</Label>
-            <Label Grid.Column="3" x:Name="LblLand"  Margin="10" DockPanel.Dock="Left">Land:</Label>
-            <Label Grid.Column="4" x:Name="LblTreasury" Margin="10" DockPanel.Dock="Left">Treasury:</Label>
+            <Label Grid.Column="0" Width="240"  x:Name="LblDay" Margin="10" DockPanel.Dock="Left">Day 1</Label>
+            <Label Grid.Column="1" Width="240" x:Name="LblPopulation" Margin="10" DockPanel.Dock="Left">Population:</Label>
+            <Label Grid.Column="2" Width="240"  x:Name="LblGdp" Margin="10" DockPanel.Dock="Left">GDP:</Label>
+            <Label Grid.Column="3" Width="240" x:Name="LblDebt" Margin="10" DockPanel.Dock="Left">Land:</Label>
+            <Label Grid.Column="4" Width="240" x:Name="LblTreasury" Margin="10" DockPanel.Dock="Left">Treasury:</Label>
             <Button Grid.Column="6" x:Name="BtnProgress" Margin="10" DockPanel.Dock="Right" Content="   Progress   " Click="BtnProgress_Click"/>
             <ComboBox x:Name="CmbSimDays" Grid.Column="7" Width="120" SelectedIndex="0">
                 <ComboBox.Items>
@@ -56,6 +56,7 @@
             <Label x:Name="LblWealthGini" Content="Wealth Gini:" DockPanel.Dock="Top"></Label>
             <Label x:Name="LblTotalCash" Content="Total Cash:" DockPanel.Dock="Top"></Label>
             <Label x:Name="LblMoneySupply" Content="Money Supply:" DockPanel.Dock="Top"></Label>
+            <Label x:Name="LblHappiness" Content="Happiness:" DockPanel.Dock="Top"></Label>
             <Label Width="270" x:Name="LblUnemployment" Content="Unemployment:" DockPanel.Dock="Top"></Label>
         </DockPanel>
         <TabControl x:Name="TabControlMain" DockPanel.Dock="Bottom" Margin="10">

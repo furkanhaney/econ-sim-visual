@@ -12,10 +12,12 @@ namespace EconSimVisual.Simulation.Government
             Welfare = new Welfare();
             Bonds = new Bonds(this);
             Finances = new GovernmentFinances();
+            LaborLaws = new LaborLaws();
         }
 
         protected override string DefaultName => "Government";
         public new Taxes Taxes { get; }
+        public LaborLaws LaborLaws { get; set; }
         public Welfare Welfare { get; }
         public Bonds Bonds { get; }
         public GovernmentFinances Finances { get; }

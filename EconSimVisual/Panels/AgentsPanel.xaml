@@ -14,6 +14,7 @@
                         <DataGridTextColumn Header="Name" Binding="{Binding FirstName}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Surname" Binding="{Binding LastName}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Happiness" Binding="{Binding Happiness, StringFormat=0.0}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Hunger" Binding="{Binding Hunger}"></DataGridTextColumn>
                         <DataGridTextColumn Width="1.5*" Header="Workplace" Binding="{Binding Workplace}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Money" Binding="{Binding Money, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>

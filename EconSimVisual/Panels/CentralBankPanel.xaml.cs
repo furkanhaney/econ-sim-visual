@@ -69,5 +69,16 @@ namespace EconSimVisual.Panels
                 return;
             Agents.CentralBank.ReserveRatio = (double)upDown.Value;
         }
+
+        private void DoubleUpDown_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            foreach(var account in Agents.CentralBank.Accounts.Values)
+                if (account.Owner is CommercialBank)
+                    account.SavingsRate = (double) upDown.Value;
+
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Ink;
 using EconSimVisual.Simulation.Agents;
+using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Helpers;
 using MoreLinq;
 
@@ -9,6 +11,8 @@ namespace EconSimVisual.Managers.Helpers
 {
     internal class LaborManager : Manager
     {
+        private LaborLaws Laws => Manufacturer.Town.Agents.Government.LaborLaws;
+
         public LaborManager(Manufacturer manufacturer)
         {
             Manufacturer = manufacturer;
@@ -20,6 +24,7 @@ namespace EconSimVisual.Managers.Helpers
         {
             HandleJobOffers();
             HandleOverPaidWorkers();
+            IncraseLowWages();
         }
 
         private void HandleJobOffers()
@@ -30,8 +35,15 @@ namespace EconSimVisual.Managers.Helpers
                 return;
             }
 
-            var pay = Math.Max(1, Manufacturer.MarginalRevenueLabor);
+            var pay = Math.Max(Laws.MinimumWage, Manufacturer.MarginalRevenueLabor);
             UpdateJobOffer(pay);
+        }
+
+        private void IncraseLowWages()
+        {
+            foreach (var worker in Manufacturer.Labor.Workers)
+                if (worker.Wage < Laws.MinimumWage)
+                    worker.Wage = Laws.MinimumWage;
         }
 
         private void UpdateJobOffer(double pay)

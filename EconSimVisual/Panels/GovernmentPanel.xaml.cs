@@ -144,5 +144,13 @@ namespace EconSimVisual.Panels
                 label.Content = SimulationScreen.Town.Agents.Government.Taxes.CurrentRevenues[taxType]
                     .FormatMoney();
         }
+
+        private void DoubleUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            Government.LaborLaws.MinimumWage = (double)upDown.Value;
+        }
     }
 }

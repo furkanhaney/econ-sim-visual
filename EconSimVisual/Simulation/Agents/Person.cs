@@ -19,6 +19,7 @@ namespace EconSimVisual.Simulation.Agents
 
         protected override string CustomName => FirstName + " " + LastName;
         public int Hunger { get; set; }
+        public double Happiness { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Gender Gender { get; set; }
