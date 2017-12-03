@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
+using EconSimVisual.Managers;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
-using EconSimVisual.Simulation.Managers;
 
 namespace EconSimVisual.Simulation.Banks
 {
@@ -14,7 +14,6 @@ namespace EconSimVisual.Simulation.Banks
     {
         public CommercialBank()
         {
-            Manager = new CommercialBankManager(this);
         }
 
         private static int count = 1;
@@ -56,7 +55,6 @@ namespace EconSimVisual.Simulation.Banks
 
         public override void FirstTick()
         {
-            Manager.Manage();
             if (IsPeriodStart)
                 CollectMinimumPayments();
             ApplyRates();

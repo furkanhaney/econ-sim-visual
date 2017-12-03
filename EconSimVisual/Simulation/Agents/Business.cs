@@ -1,7 +1,7 @@
-﻿using EconSimVisual.Simulation.Accounting;
+﻿using EconSimVisual.Managers;
+using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Instruments.Securities;
-using EconSimVisual.Simulation.Managers;
 
 namespace EconSimVisual.Simulation.Agents
 {
@@ -25,7 +25,6 @@ namespace EconSimVisual.Simulation.Agents
         }
 
         public FinancialRatios Ratios { get; }
-        public Manager Manager { get; set; }
         public Labor Labor { get; }
         public Owners Owners { get; }
         public double BankBalance => BankAccounts.Sum(o => o.Balance);
@@ -43,6 +42,7 @@ namespace EconSimVisual.Simulation.Agents
             if (Bonds.Exchange == null)
                 Bonds.Exchange = Town.Trade.BondExchange;
             Manager.Manage();
+            Bonds.Tick();
             Labor.PayWages();
         }
 

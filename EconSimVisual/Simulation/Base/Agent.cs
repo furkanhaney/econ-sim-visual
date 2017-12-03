@@ -1,5 +1,6 @@
 ﻿using System;
 using EconSimVisual.Simulation.Accounting;
+using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Instruments.Loans;
 using EconSimVisual.Simulation.Instruments.Securities;
@@ -30,6 +31,7 @@ namespace EconSimVisual.Simulation.Base
             TakenLoans = new List<Loan>();
         }
 
+        public IManager Manager { get; set; }
         public IBalanceSheet BalanceSheet { get; protected set; }
         public IList<IAsset> OwnedAssets { get; }
         public IEnumerable<Security> OwnedSecurities => OwnedAssets.Where(o => o is Security).Cast<Security>();
@@ -82,7 +84,7 @@ namespace EconSimVisual.Simulation.Base
         }
         public virtual void FirstTick()
         {
-
+            Manager?.Manage();
         }
         public virtual void LastTick()
         {

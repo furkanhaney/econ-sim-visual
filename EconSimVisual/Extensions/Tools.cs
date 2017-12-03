@@ -36,9 +36,11 @@ namespace EconSimVisual.Extensions
             return assets.Sum(o => o.Value);
         }
 
-        /*public double GetGeometricSum(double firstTerm, double rate, int count = -1)
+        public static double GetGeometricSum(double firstTerm, double multiplier, int count = -1)
         {
-            if(count==-1)
-        }*/
+            if (count == -1)
+                return firstTerm / (1 - multiplier);
+            return firstTerm / (1 - Math.Pow(multiplier, count)) / (1 - multiplier);
+        }
     }
 }

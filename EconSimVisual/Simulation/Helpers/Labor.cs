@@ -88,7 +88,7 @@ namespace EconSimVisual.Simulation.Helpers
         private void PayWageAmount(Worker worker, double amount)
         {
             var tax = Taxes.GetAmount(amount, TaxType.Income);
-            Business.Pay(worker.Person, amount);
+            Business.Pay(worker.Person, amount - tax);
             if (tax > 0)
                 Taxes.Pay(Business, tax, TaxType.Income);
             WagesPaid += amount;

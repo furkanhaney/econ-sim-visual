@@ -121,7 +121,7 @@
                     <Label Grid.Row="0" Grid.Column="3" Content="Last Revenue" Margin="10"></Label>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="10" >Income:</Label>
-                    <Label Grid.Row="2" Grid.Column="0" Margin="10">Corporate:</Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10">Corpomultiplier:</Label>
                     <Label Grid.Row="3" Grid.Column="0" Margin="10">Sales:</Label>
                     <Label Grid.Row="4" Grid.Column="0" Margin="10">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="0" Margin="10">Capital:</Label>
@@ -137,7 +137,7 @@
                     <xctk:DoubleUpDown x:Name="UpDownDividendTaxRate" Grid.Row="7" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
 
                     <Label Grid.Row="1" Grid.Column="2" Margin="10" x:Name="LblIncomeTaxCurrent">Income:</Label>
-                    <Label Grid.Row="2" Grid.Column="2" Margin="10" x:Name="LblCorporateTaxCurrent">Corporate:</Label>
+                    <Label Grid.Row="2" Grid.Column="2" Margin="10" x:Name="LblCorporateTaxCurrent">Corpomultiplier:</Label>
                     <Label Grid.Row="3" Grid.Column="2" Margin="10" x:Name="LblSalesTaxCurrent">Sales:</Label>
                     <Label Grid.Row="4" Grid.Column="2" Margin="10" x:Name="LblPropertyTaxCurrent">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="2" Margin="10" x:Name="LblCapitalGainsTaxCurrent">Capital:</Label>
@@ -145,7 +145,7 @@
                     <Label Grid.Row="7" Grid.Column="2" Margin="10" x:Name="LblDividendTaxCurrent">TotalDividends:</Label>
 
                     <Label Grid.Row="1" Grid.Column="3" Margin="10" x:Name="LblIncomeTaxLast">Income:</Label>
-                    <Label Grid.Row="2" Grid.Column="3" Margin="10" x:Name="LblCorporateTaxLast">Corporate:</Label>
+                    <Label Grid.Row="2" Grid.Column="3" Margin="10" x:Name="LblCorporateTaxLast">Corpomultiplier:</Label>
                     <Label Grid.Row="3" Grid.Column="3" Margin="10" x:Name="LblSalesTaxLast">Sales:</Label>
                     <Label Grid.Row="4" Grid.Column="3" Margin="10" x:Name="LblPropertyTaxLast">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="3" Margin="10" x:Name="LblCapitalGainsTaxLast">Capital:</Label>

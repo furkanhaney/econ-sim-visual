@@ -1,17 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using EconSimVisual.Simulation.Helpers;
+﻿using System;
+using System.Linq;
+using EconSimVisual.Extensions;
+using EconSimVisual.Managers.Helpers;
+using EconSimVisual.Simulation.Agents;
 
-namespace EconSimVisual.Simulation.Managers
+namespace EconSimVisual.Managers
 {
-    using System;
-    using System.Linq;
-    using Extensions;
-    using Agents;
-    using Helpers;
-
-    using MoreLinq;
-
     internal class ManufacturerManager : Manager
     {
         public ManufacturerManager(Manufacturer manufacturer)
@@ -33,13 +27,36 @@ namespace EconSimVisual.Simulation.Managers
             ManageFunds();
             ManageStocks();
             ManagePrices();
-            ManageDividends();
+            ManageBonds();
+            //ManageDividends();
         }
 
         private void ManageFunds()
         {
             if (Manufacturer.Cash > 0)
                 Manufacturer.DepositCash(Manufacturer.Cash);
+        }
+
+        private void ManageBonds()
+        {
+            var capitalReturn = CapitalManager.CapitalReturn;
+            var current = Manufacturer.Bonds.Current;
+            if (capitalReturn < 0 || Manufacturer.Money > 250000)
+                StopBondSales();
+            else
+            {
+                var yield = Math.Min(0.1, capitalReturn);
+                current.Count = current.OnSaleCount = 5;
+                current.FaceValue = 1000;
+                current.MaturityDays = 365;
+                current.UnitPrice = Finance.GetPrice(1000, yield, 365);
+            }
+        }
+
+        private void StopBondSales()
+        {
+            var current = Manufacturer.Bonds.Current;
+            current.Count = current.OnSaleCount = 0;
         }
 
         private void ManageStocks()

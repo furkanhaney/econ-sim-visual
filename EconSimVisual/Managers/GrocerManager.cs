@@ -1,10 +1,8 @@
-﻿using System.Drawing.Drawing2D;
+﻿using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Agents;
 
-namespace EconSimVisual.Simulation.Managers
+namespace EconSimVisual.Managers
 {
-    using Extensions;
-    using Agents;
-
     internal class GrocerManager : Manager
     {
         public GrocerManager(Grocer grocer)
@@ -17,7 +15,7 @@ namespace EconSimVisual.Simulation.Managers
 
         public override void Manage()
         {
-            Margin = Random.NextDouble(0.05, 0.10);
+            Margin = Random.NextDouble(0.10, 0.15);
             ManageFunds();
             ManagePrices();
             ManageStocks();

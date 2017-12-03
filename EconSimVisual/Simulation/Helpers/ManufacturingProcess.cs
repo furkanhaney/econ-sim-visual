@@ -6,7 +6,7 @@
 
     using Extensions;
 
-    public enum Good { Capital, Potato, Squash, Wheat, Flour, Bread, Beer, Land, Luxury1, Luxury2 }
+    public enum Good { Capital, Potato, Squash, Beer, Wine, Land}
 
     public class ManufacturingProcess
     {

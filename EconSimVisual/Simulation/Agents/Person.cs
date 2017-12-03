@@ -1,7 +1,7 @@
 ﻿using EconSimVisual.Extensions;
+using EconSimVisual.Managers;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Instruments.Securities;
-using EconSimVisual.Simulation.Managers;
 
 namespace EconSimVisual.Simulation.Agents
 {
@@ -15,10 +15,8 @@ namespace EconSimVisual.Simulation.Agents
     {
         public Person()
         {
-            Manager = new PersonalManager(this);
         }
 
-        public Manager Manager { get; }
         protected override string CustomName => FirstName + " " + LastName;
         public int Hunger { get; set; }
         public string FirstName { get; set; }
@@ -48,8 +46,6 @@ namespace EconSimVisual.Simulation.Agents
                 Die("starvation");
                 return;
             }
-
-            Manager.Manage();
             base.FirstTick();
         }
 

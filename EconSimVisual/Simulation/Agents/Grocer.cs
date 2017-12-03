@@ -1,7 +1,7 @@
-﻿namespace EconSimVisual.Simulation.Agents
-{
-    using Managers;
+﻿using EconSimVisual.Managers;
 
+namespace EconSimVisual.Simulation.Agents
+{
     /// <summary>
     ///     Businesses that buy consumer goods from manufacturers in bulk and sell them to consumers.
     /// </summary>
@@ -12,7 +12,7 @@
 
         public Grocer() : base(ConsumerGoods)
         {
-            Manager = new GrocerManager(this);
+
         }
 
     }

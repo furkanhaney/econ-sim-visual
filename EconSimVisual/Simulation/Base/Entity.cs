@@ -22,10 +22,10 @@ namespace EconSimVisual.Simulation.Base
         {
             Foods.Add(Good.Potato);
             Foods.Add(Good.Squash);
-            Foods.Add(Good.Bread);
 
             ConsumerGoods.AddRange(Foods);
             ConsumerGoods.Add(Good.Beer);
+            ConsumerGoods.Add(Good.Wine);
         }
 
         protected const double K = 1000, M = K * K, B = K * K * K;

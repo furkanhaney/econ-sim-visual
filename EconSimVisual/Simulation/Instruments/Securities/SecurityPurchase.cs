@@ -2,6 +2,7 @@
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Government;
+using EconSimVisual.Simulation.Helpers;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
@@ -72,7 +73,7 @@ namespace EconSimVisual.Simulation.Instruments.Securities
         private static void Issue(Security security)
         {
             security.IsIssued = true;
-            ((Government.Government)security.Issuer).Bonds.Issued.Add((Bond)security);
+            ((IBondIssuer)security.Issuer).Bonds.Issued.Add((Bond)security);
         }
     }
 }

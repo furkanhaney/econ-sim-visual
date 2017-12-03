@@ -1,6 +1,6 @@
 ﻿using EconSimVisual.Simulation.Instruments.Securities;
 
-namespace EconSimVisual.Simulation.Managers.Helpers
+namespace EconSimVisual.Managers.Helpers
 {
     internal class BondEvaluator : IBondEvaluator
     {

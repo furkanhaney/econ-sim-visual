@@ -36,7 +36,7 @@
                         <DataGridTextColumn Header="Equity" Binding="{Binding BalanceSheet.TotalEquity, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="ROA" Binding="{Binding Ratios.ReturnOnAssets, StringFormat='%0.00'}"></DataGridTextColumn>
                         <DataGridTextColumn Header="ROE" Binding="{Binding Ratios.ReturnOnEquity, StringFormat='%0.00'}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="BondsEquity" Binding="{Binding Ratios.DebtEquityRatio, StringFormat='0.00'}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="DebtEquity" Binding="{Binding Ratios.DebtEquityRatio, StringFormat='0.00'}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Revenues" Binding="{Binding Revenues, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Expenses" Binding="{Binding Expenses, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Profits" Binding="{Binding Profits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>

@@ -4,7 +4,7 @@ using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Instruments.Securities;
 
-namespace EconSimVisual.Simulation.Managers.Helpers
+namespace EconSimVisual.Managers.Helpers
 {
     // Buys and sells securities to keep their total value in given range
     internal class BondManager
@@ -43,7 +43,7 @@ namespace EconSimVisual.Simulation.Managers.Helpers
             var bonds = BondExchange.All.OrderByDescending(o => evaluator.GetAdjustedYield(o)).ToList();
             foreach (var current in bonds)
             {
-                var count = Math.Min(current.OnSaleCount, (int)(leftToBuy / current.UnitPrice));
+                var count = Math.Min(current.Count, (int)(leftToBuy / current.UnitPrice));
                 if (count == 0)
                     continue;
                 Purchase(current, count);

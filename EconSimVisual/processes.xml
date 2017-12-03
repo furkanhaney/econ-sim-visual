@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfManufacturingProcess xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
   <ManufacturingProcess>
     <Inputs />
     <Outputs>
@@ -14,6 +15,7 @@
     <CapitalConstant>0.4</CapitalConstant>
     <LandConstant>0.4</LandConstant>
   </ManufacturingProcess>
+  
   <ManufacturingProcess>
     <Inputs />
     <Outputs>
@@ -28,65 +30,8 @@
     <CapitalConstant>0.5</CapitalConstant>
     <LandConstant>0.4</LandConstant>
   </ManufacturingProcess>
+  
   <ManufacturingProcess>
-    <Inputs />
-    <Outputs>
-      <GoodAmount>
-        <Good>Wheat</Good>
-        <Amount>1</Amount>
-      </GoodAmount>
-    </Outputs>
-    <Name>Wheat</Name>
-    <ProductionConstant>2</ProductionConstant>
-    <LaborConstant>0.4</LaborConstant>
-    <CapitalConstant>0.5</CapitalConstant>
-    <LandConstant>0.4</LandConstant>
-  </ManufacturingProcess>
-  <ManufacturingProcess>
-    <Inputs>
-      <GoodAmount>
-        <Good>Wheat</Good>
-        <Amount>2</Amount>
-      </GoodAmount>
-    </Inputs>
-    <Outputs>
-      <GoodAmount>
-        <Good>Flour</Good>
-        <Amount>1</Amount>
-      </GoodAmount>
-    </Outputs>
-    <Name>Flour</Name>
-    <ProductionConstant>1</ProductionConstant>
-    <LaborConstant>0.5</LaborConstant>
-    <CapitalConstant>0.5</CapitalConstant>
-    <LandConstant>0.2</LandConstant>
-  </ManufacturingProcess>
-  <ManufacturingProcess>
-    <Inputs>
-      <GoodAmount>
-        <Good>Flour</Good>
-        <Amount>2</Amount>
-      </GoodAmount>
-    </Inputs>
-    <Outputs>
-      <GoodAmount>
-        <Good>Bread</Good>
-        <Amount>5</Amount>
-      </GoodAmount>
-    </Outputs>
-    <Name>Bread</Name>
-    <ProductionConstant>1</ProductionConstant>
-    <LaborConstant>0.5</LaborConstant>
-    <CapitalConstant>0.5</CapitalConstant>
-    <LandConstant>0.2</LandConstant>
-  </ManufacturingProcess>
-  <ManufacturingProcess>
-    <Inputs>
-      <GoodAmount>
-        <Good>Wheat</Good>
-        <Amount>2</Amount>
-      </GoodAmount>
-    </Inputs>
     <Outputs>
       <GoodAmount>
         <Good>Beer</Good>
@@ -94,11 +39,26 @@
       </GoodAmount>
     </Outputs>
     <Name>Beer</Name>
-    <ProductionConstant>0.25</ProductionConstant>
+    <ProductionConstant>0.1</ProductionConstant>
+    <LaborConstant>0.45</LaborConstant>
+    <CapitalConstant>0.55</CapitalConstant>
+    <LandConstant>0.2</LandConstant>
+  </ManufacturingProcess>
+
+  <ManufacturingProcess>
+    <Outputs>
+      <GoodAmount>
+        <Good>Wine</Good>
+        <Amount>1</Amount>
+      </GoodAmount>
+    </Outputs>
+    <Name>Wine</Name>
+    <ProductionConstant>0.01</ProductionConstant>
     <LaborConstant>0.4</LaborConstant>
     <CapitalConstant>0.6</CapitalConstant>
     <LandConstant>0.2</LandConstant>
   </ManufacturingProcess>
+
   <ManufacturingProcess>
     <Inputs />
     <Outputs>
@@ -113,32 +73,5 @@
     <CapitalConstant>0.5</CapitalConstant>
     <LandConstant>0.2</LandConstant>
   </ManufacturingProcess>
-  <ManufacturingProcess>
-    <Inputs />
-    <Outputs>
-      <GoodAmount>
-        <Good>Luxury1</Good>
-        <Amount>1</Amount>
-      </GoodAmount>
-    </Outputs>
-    <Name>Luxury1</Name>
-    <ProductionConstant>0.01</ProductionConstant>
-    <LaborConstant>0.2</LaborConstant>
-    <CapitalConstant>0.6</CapitalConstant>
-    <LandConstant>0.2</LandConstant>
-  </ManufacturingProcess>
-  <ManufacturingProcess>
-    <Inputs />
-    <Outputs>
-      <GoodAmount>
-        <Good>Luxury2</Good>
-        <Amount>1</Amount>
-      </GoodAmount>
-    </Outputs>
-    <Name>Luxury2</Name>
-    <ProductionConstant>0.001</ProductionConstant>
-    <LaborConstant>0.2</LaborConstant>
-    <CapitalConstant>0.6</CapitalConstant>
-    <LandConstant>0.2</LandConstant>
-  </ManufacturingProcess>
+  
 </ArrayOfManufacturingProcess>

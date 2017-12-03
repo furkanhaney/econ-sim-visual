@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using EconSimVisual.Managers.Helpers;
 using EconSimVisual.Simulation.Agents;
-using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
-using EconSimVisual.Simulation.Managers.Helpers;
 using MoreLinq;
 
-namespace EconSimVisual.Simulation.Managers
+namespace EconSimVisual.Managers
 {
     internal class PersonalManager : Manager
     {
@@ -48,6 +43,7 @@ namespace EconSimVisual.Simulation.Managers
             if (Person.Hunger != 0) return;
 
             TryConsume(Good.Beer);
+            TryConsume(Good.Wine);
         }
 
         private void ManageEmployment()

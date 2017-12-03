@@ -30,10 +30,11 @@ namespace EconSimVisual.Simulation.Instruments.Securities
         {
             if (Exchange == null)
                 return;
-
             Exchange.All.RemoveAll(o => o.Issuer == Agent && !o.IsIssued);
-            Exchange.All.Add((Bond)Current.Clone());
+            if (Current.Count == 0)
+                return;
 
+            Exchange.All.Add((Bond)Current.Clone());
             foreach (var bond in Issued.ToList())
             {
                 bond.MaturityDays--;

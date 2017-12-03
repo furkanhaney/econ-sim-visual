@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Helpers;
 using MoreLinq;
 
-namespace EconSimVisual.Simulation.Managers.Helpers
+namespace EconSimVisual.Managers.Helpers
 {
     internal class LaborManager : Manager
     {

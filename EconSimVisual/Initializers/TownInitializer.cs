@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EconSimVisual.Extensions;
+using EconSimVisual.Managers;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Government;
@@ -40,21 +41,27 @@ namespace EconSimVisual.Initializers
         private void CreateBanks(int count, double initialCash)
         {
             for (var i = 0; i < count; i++)
-                Agents.Banks.Add(
-                    new CommercialBank()
-                    {
-                        Cash = initialCash
-                    });
+            {
+                var bank = new CommercialBank
+                {
+                    Cash = initialCash
+                };
+                bank.Manager = new CommercialBankManager(bank);
+                Agents.Banks.Add(bank);
+            }
         }
 
         private void CreateGrocers(int count, double initialCash)
         {
             for (var i = 0; i < count; i++)
-                Agents.Grocers.Add(
-                    new Grocer()
-                    {
-                        Cash = initialCash
-                    });
+            {
+                var grocer = new Grocer()
+                {
+                    Cash = initialCash
+                };
+                grocer.Manager = new GrocerManager(grocer);
+                Agents.Grocers.Add(grocer);
+            }
         }
 
         private void CreateManufacturers()
@@ -63,10 +70,8 @@ namespace EconSimVisual.Initializers
             {
                 CreateManufacturer("Potato"),
                 CreateManufacturer("Squash"),
-                CreateManufacturer("Wheat"),
-                CreateManufacturer("Flour"),
-                CreateManufacturer("Bread"),
                 CreateManufacturer("Beer"),
+                CreateManufacturer("Wine"),
                 CreateManufacturer("Capital")
             };
             Agents.Manufacturers.AddRange(manufacturers);
@@ -75,18 +80,7 @@ namespace EconSimVisual.Initializers
         private void CreatePopulation(int count, double initialCash)
         {
             for (var i = 0; i < count; i++)
-            {
-                var gender = RandomUtils.GetRandomGender();
-                var firstName = RandomUtils.GetRandomFirstName(gender);
-                var lastName = RandomUtils.GetRandomLastName();
-                Agents.Population.Add(new Person()
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Gender = gender,
-                    Cash = initialCash
-                });
-            }
+                Agents.Population.Add(CreatePerson(initialCash));
         }
 
         private void CreateGovernment(double initialCash)
@@ -151,7 +145,22 @@ namespace EconSimVisual.Initializers
                 Land = 1,
                 Cash = initialCash
             };
+            m.Manager = new ManufacturerManager(m);
             return m;
+        }
+
+        private static Person CreatePerson(double initialCash)
+        {
+            var gender = RandomUtils.GetRandomGender();
+            var person = new Person
+            {
+                FirstName = RandomUtils.GetRandomFirstName(gender),
+                LastName = RandomUtils.GetRandomLastName(),
+                Gender = gender,
+                Cash = initialCash
+            };
+            person.Manager = new PersonalManager(person);
+            return person;
         }
     }
 }

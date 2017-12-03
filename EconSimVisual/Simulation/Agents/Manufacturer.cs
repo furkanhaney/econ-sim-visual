@@ -1,9 +1,10 @@
-﻿namespace EconSimVisual.Simulation.Agents
+﻿using EconSimVisual.Managers;
+
+namespace EconSimVisual.Simulation.Agents
 {
     using System;
     using System.Linq;
     using Helpers;
-    using Managers;
 
     /// <summary>
     ///     Business that engages in the production of goods.
@@ -15,7 +16,6 @@
         public Manufacturer(ManufacturingProcess process) : base(process.Outputs.Select(o => o.Good).ToList())
         {
             Process = process;
-            Manager = new ManufacturerManager(this);
         }
 
         public double Capital { get; set; }
