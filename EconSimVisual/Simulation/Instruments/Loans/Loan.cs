@@ -4,6 +4,7 @@ namespace EconSimVisual.Simulation.Instruments.Loans
 {
     internal abstract class Loan : Entity, IAsset
     {
+        public Agent Borrower { get; set; }
         private Agent owner;
         public Agent Owner
         {

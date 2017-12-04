@@ -33,5 +33,7 @@ namespace EconSimVisual.Simulation.Instruments.Securities
             else
                 Log(Issuer + " could not make dividend payments to " + Owner, LogType.NonPayment);
         }
+
+        public double Percentage => ((double) Count) / ((Business)Issuer).Owners.OutstandingShares;
     }
 }

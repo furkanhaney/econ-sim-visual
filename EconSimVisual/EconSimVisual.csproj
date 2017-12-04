@@ -141,7 +141,7 @@
     <Compile Include="Simulation\Helpers\FinancialRatios.cs" />
     <Compile Include="Simulation\Helpers\IBondIssuer.cs" />
     <Compile Include="Simulation\Instruments\Instrument.cs" />
-    <Compile Include="Simulation\Instruments\Loans\ILoanMaker.cs" />
+    <Compile Include="Simulation\Instruments\Loans\ILender.cs" />
     <Compile Include="Simulation\Instruments\Loans\Loan.cs" />
     <Compile Include="Simulation\Instruments\Loans\Loans.cs" />
     <Compile Include="Simulation\Instruments\Loans\SimpleLoan.cs" />

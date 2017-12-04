@@ -25,7 +25,7 @@ namespace EconSimVisual.Simulation.Banks
         public double RequiredReserves => Deposits * Town.Agents.CentralBank.ReserveRatio;
         public double Reserves => Cash + BankAccounts.Sum(o => o.Balance);
         public double Deposits => Accounts.Values.GetPositives().Sum(o => o.Balance);
-        public double Loans => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
+        public double Loans1 => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
         public override double Revenues => LastInterestRevenues;
         public override double Expenses => LastInterestExpenses;
         public override double Profits => Revenues - Expenses;

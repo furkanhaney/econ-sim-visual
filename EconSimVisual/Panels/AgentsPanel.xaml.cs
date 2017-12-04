@@ -1,4 +1,5 @@
 ﻿using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Polities;
 
@@ -25,6 +26,7 @@ namespace EconSimVisual.Panels
             GridPrivateBanks.SetData(Agents.Banks);
             BalanceSheetAgent.Update();
             ComboBoxAgents.SetData(Agents.All);
+            ComboBoxBusinesses.SetData(Agents.Businesses);
         }
 
         public void Initialize()
@@ -35,6 +37,12 @@ namespace EconSimVisual.Panels
         {
             BalanceSheetAgent.Sheet = (Simulation.Accounting.BalanceSheet)((Agent)ComboBoxAgents.SelectedItem).BalanceSheet;
             BalanceSheetAgent.Update();
+        }
+
+        private void ComboBoxBusinesses_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var business = (Business)ComboBoxBusinesses.SelectedItem;
+            GridStocks.SetData(business.Owners.IssuedStocks);
         }
     }
 }

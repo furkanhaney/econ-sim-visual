@@ -98,6 +98,30 @@
                     <local:BalanceSheet x:Name="BalanceSheetAgent" Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></local:BalanceSheet>
                 </Grid>
             </TabItem>
+            <TabItem Header="Stock Owners">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="10">Business:</Label>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="ComboBoxBusinesses" Margin="10" SelectionChanged="ComboBoxBusinesses_SelectionChanged"></ComboBox>
+                    <DataGrid Name="GridStocks" ColumnWidth="*" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Owner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Percentage" Binding="{Binding Percentage, StringFormat='%0.00' }"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Count" Binding="{Binding Count, StringFormat='###,##0'}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Dividends" Binding="{Binding TotalDividends, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

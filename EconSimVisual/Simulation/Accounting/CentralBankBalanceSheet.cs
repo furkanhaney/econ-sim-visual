@@ -26,7 +26,7 @@ namespace EconSimVisual.Simulation.Accounting
         // Assets
         public double Securities => Bank.OwnedAssets.Where(o => o is Security).Sum(o => o.Value);
         public double OtherAssets => Bank.OwnedAssets.Where(o => !(o is Security)).Sum(o => o.Value);
-        public double Loans => Bank.Loans;
+        public double Loans => Bank.Loans1;
 
         // Liabilities
         public double Deposits => Bank.Deposits;

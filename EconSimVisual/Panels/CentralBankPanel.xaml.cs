@@ -26,6 +26,7 @@ namespace EconSimVisual.Panels
         public void Update()
         {
             GridBankReserves.SetData(CentralBank.Accounts.Values);
+            GridLoans.SetData(CentralBank.Loans.MadeLoans);
             LblCash.Content = "Cash: " + SimulationScreen.Town.Economy.TotalCash.FormatMoney();
             LblDeposits.Content = "Deposits: " + SimulationScreen.Town.Economy.TotalDeposits.FormatMoney();
             LblMoney.Content = "Money: " + SimulationScreen.Town.Economy.MoneySupply.FormatMoney();
@@ -75,9 +76,18 @@ namespace EconSimVisual.Panels
             var upDown = (DoubleUpDown)sender;
             if (upDown.Value is null)
                 return;
-            foreach(var account in Agents.CentralBank.Accounts.Values)
+            foreach (var account in Agents.CentralBank.Accounts.Values)
                 if (account.Owner is CommercialBank)
-                    account.SavingsRate = (double) upDown.Value;
+                    account.SavingsRate = (double)upDown.Value;
+
+        }
+
+        private void DoubleUpDown_ValueChanged_1(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            CentralBank.Loans.InterestRate = (double)upDown.Value;
 
         }
     }

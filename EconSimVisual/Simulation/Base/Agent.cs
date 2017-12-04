@@ -27,8 +27,7 @@ namespace EconSimVisual.Simulation.Base
             OwnedAssets = new List<IAsset>();
             BankAccounts = new List<BankAccount>();
             Goods = CollectionsExtensions.InitializeDictionary<Good>();
-            MadeLoans = new List<Loan>();
-            TakenLoans = new List<Loan>();
+            TakenLoans = new List<SimpleLoan>();
         }
 
         public IManager Manager { get; set; }
@@ -37,14 +36,12 @@ namespace EconSimVisual.Simulation.Base
         public IEnumerable<Security> OwnedSecurities => OwnedAssets.Where(o => o is Security).Cast<Security>();
         public IEnumerable<Bond> OwnedBonds => OwnedAssets.Where(o => o is Bond).Cast<Bond>();
         public IList<BankAccount> BankAccounts { get; }
+        public IList<SimpleLoan> TakenLoans { get; }
         public IDictionary<Good, double> Goods { get; }
         public double Cash { get; set; }
         public double Money => Cash + CheckingBalance;
         public double CheckingBalance => BankAccounts.GetPositives().Sum(o => o.Balance);
         public double NetMoney => Cash + BankAccounts.Sum(o => o.Balance);
-
-        public List<Loan> MadeLoans { get; }
-        public List<Loan> TakenLoans { get; }
 
         public virtual bool CanPay(double amount) => CanPayCash(amount) || CanPayCredit(amount);
         public virtual bool CanPayCash(double amount)

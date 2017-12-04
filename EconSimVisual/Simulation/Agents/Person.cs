@@ -42,7 +42,7 @@ namespace EconSimVisual.Simulation.Agents
         public override void FirstTick()
         {
             UpdateStats();
-            if (Hunger > 40)
+            if (Hunger > 40 && false)
             {
                 Die("starvation");
                 return;

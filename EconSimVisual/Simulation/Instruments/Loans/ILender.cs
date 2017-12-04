@@ -1,6 +1,7 @@
 ﻿namespace EconSimVisual.Simulation.Instruments.Loans
 {
-    interface ILoanMaker
+    internal interface ILender
     {
+        Loans Loans { get; set; }
     }
 }

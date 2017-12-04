@@ -8,7 +8,7 @@ namespace EconSimVisual.Simulation.Banks
         Dictionary<Agent, BankAccount> Accounts { get; }
 
         double Deposits { get; }
-        double Loans { get; }
+        double Loans1 { get; }
 
         void OpenAccount(Agent agent);
         bool HasAccount(Agent agent);
