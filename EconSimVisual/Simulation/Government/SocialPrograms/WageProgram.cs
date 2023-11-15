@@ -5,6 +5,7 @@ using EconSimVisual.Simulation.Agents;
 
 namespace EconSimVisual.Simulation.Government.SocialPrograms
 {
+    [Serializable]
     internal abstract class WageProgram : SocialProgram
     {
         public double Wage { get; set; }
@@ -19,7 +20,7 @@ namespace EconSimVisual.Simulation.Government.SocialPrograms
 
         private void MakePayments()
         {
-            foreach (var person in Citizens.Where(o => Qualifier(o)))
+            foreach (var person in Polity.Agents.Population.Where(o => Qualifier(o)))
                 if (Government.CanPay(Wage))
                 {
                     Government.Pay(person, Wage);

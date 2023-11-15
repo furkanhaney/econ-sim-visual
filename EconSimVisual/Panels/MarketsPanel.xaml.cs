@@ -9,7 +9,7 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class MarketsPanel : IPanel
     {
-        private TradeManager Trade => SimulationScreen.Town.Trade;
+        private PolityTrade Trade => SimulationScreen.Polity.Trade;
 
         public MarketsPanel()
         {
@@ -18,8 +18,9 @@ namespace EconSimVisual.Panels
 
         public void Update()
         {
-            GridBankAccounts.SetData(SimulationScreen.Town.Agents.Banks.SelectMany(o => o.Accounts.Values));
-            GridCommodities.SetData(Trade.TradeLogs.Last());
+            GridBankAccounts.SetData(SimulationScreen.Polity.Agents.Banks.SelectMany(o => o.Deposits.Accounts.Values));
+            if (Trade.TradeLogs.Count > 0)
+                GridCommodities.SetData(Trade.TradeLogs.Last().Summaries.Values);
             GridNewBonds.SetData(Trade.BondExchange.PrimaryMarket);
             GridOldBonds.SetData(Trade.BondExchange.SecondaryMarket);
             GridNewStocks.SetData(Trade.StockExchange.PrimaryMarket);

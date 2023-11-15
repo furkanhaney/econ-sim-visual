@@ -1,17 +1,33 @@
-﻿using EconSimVisual.Extensions;
+﻿using System;
+using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Government;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
+    [Serializable]
     internal class Stock : Security
     {
+        private double cachedValue = 0;
+        private int lastCalculated = int.MinValue;
+
         public double Dividends => ((Business)Issuer).Owners.Dividends;
 
         public double TotalDividends => Count * Dividends;
 
-        public override double Value => Count * ((Business)Issuer).BalanceSheet.TotalEquity /
-                                        ((Business)Issuer).Owners.OutstandingShares;
+        public override double Value
+        {
+            get
+            {
+                if (lastCalculated == Day)
+                    return cachedValue;
+                var bookValue = Count * ((Business)Issuer).BalanceSheet.TotalEquity /
+                                ((Business)Issuer).Owners.OutstandingShares;
+                cachedValue = Math.Max(bookValue, 0);
+                lastCalculated = Day;
+                return cachedValue;
+            }
+        }
 
         public override Security Clone()
         {
@@ -34,6 +50,6 @@ namespace EconSimVisual.Simulation.Instruments.Securities
                 Log(Issuer + " could not make dividend payments to " + Owner, LogType.NonPayment);
         }
 
-        public double Percentage => ((double) Count) / ((Business)Issuer).Owners.OutstandingShares;
+        public double Percentage => ((double)Count) / ((Business)Issuer).Owners.OutstandingShares;
     }
 }

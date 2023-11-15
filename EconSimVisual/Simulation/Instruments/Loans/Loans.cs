@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Instruments.Loans
 {
+    [Serializable]
     internal class Loans
     {
         public Loans(Agent agent)
@@ -47,6 +50,7 @@ namespace EconSimVisual.Simulation.Instruments.Loans
             };
             loan.TransferFunds();
             MadeLoans.Add(loan);
+            borrower.TakenLoans.Add(loan);
         }
     }
 }

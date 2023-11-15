@@ -8,6 +8,7 @@ using EconSimVisual.Simulation.Agents;
 
 namespace EconSimVisual.Simulation.Helpers
 {
+    [Serializable]
     internal class FinancialRatios
     {
         public FinancialRatios(Business business)
@@ -18,9 +19,10 @@ namespace EconSimVisual.Simulation.Helpers
         private Business Business { get; }
         private IBalanceSheet BalanceSheet => Business.BalanceSheet;
 
-        public double ReturnOnEquity => Business.Profits / BalanceSheet.TotalEquity;
-        public double ReturnOnAssets => Business.Profits / BalanceSheet.TotalAssets;
+        public double ReturnOnEquity => 0;// Business.Profits / BalanceSheet.TotalEquity;
+        public double ReturnOnAssets => 0;// Business.Profits / BalanceSheet.TotalAssets;
         public double DebtEquityRatio => BalanceSheet.TotalLiabilities / BalanceSheet.TotalEquity;
+        public double DebtAssetRatio => BalanceSheet.TotalLiabilities / BalanceSheet.TotalAssets;
         //public double EarningsPerShare => (Business.Profits - Business.Owners.TotalDividends) / Business.Owners.OutstandingShares;
     }
 }

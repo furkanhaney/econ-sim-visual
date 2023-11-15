@@ -4,13 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EconSimVisual"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Starting Conditions" Height="350" Width="525" FontSize="12">
+        Title="Starting Conditions" WindowStartupLocation="CenterScreen" FontSize="24" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="20">
-            <CheckBox Margin="10,10">UnitPrice Taker</CheckBox>
-            <CheckBox Margin="10,10">Monetary Independence</CheckBox>
-            <Button Content="Start" Margin="20" Background="White"></Button>
-        </StackPanel>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label FontSize="24" Grid.Row="0" Grid.Column="0" Margin="10">Town Size:</Label>
+            <xctk:IntegerUpDown Name="IntegerUpDownScale" Margin="10" Width="200" Value="2" Minimum="1" Maximum="10000" Grid.Row="0" Grid.Column="1"></xctk:IntegerUpDown>
+            <Button x:Name="btnBenchmark" FontSize="24" Grid.Row="1" Grid.Column="0" Content="Benchmark" Margin="20" Background="White" Click="btnBenchmark_Click"/>
+            <Button FontSize="24" Grid.Row="1" Grid.Column="1" Content="Start" Margin="20" Background="White" Click="Button_Click"></Button>
+            <TextBox x:Name="txtSaveName" Grid.Row="2" Margin="10"></TextBox>
+            <Button x:Name="btnLoad" Grid.Row="2" Grid.Column="1" Margin="10" Content="Load" Click="btnLoad_Click"></Button>
+        </Grid>
     </Grid>
 </Window>

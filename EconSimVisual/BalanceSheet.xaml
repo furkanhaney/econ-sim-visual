@@ -41,7 +41,7 @@
         <Label Grid.Column="0" Grid.Row="6">Loans:</Label>
         <Label Grid.Column="0" Grid.Row="7">Total Assets:</Label>
 
-        <Label Grid.Column="2" Grid.Row="1">Bonds:</Label>
+        <Label Grid.Column="2" Grid.Row="1">Debt:</Label>
         <Label Grid.Column="2" Grid.Row="2">Bonds:</Label>
         <Label Grid.Column="2" Grid.Row="3">Deposits:</Label>
         <Label Grid.Column="2" Grid.Row="4">Total Liabilities:</Label>

@@ -1,4 +1,5 @@
-﻿using EconSimVisual.Managers;
+﻿using System.Collections.Generic;
+using EconSimVisual.Managers;
 using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Instruments.Securities;
@@ -10,7 +11,10 @@ namespace EconSimVisual.Simulation.Agents
     using Extensions;
     using Base;
     using Helpers;
+    using EconSimVisual.Simulation.Polities;
+    using System;
 
+    [Serializable]
     /// <summary>
     ///     A profit-maximing agent
     /// </summary>
@@ -24,13 +28,16 @@ namespace EconSimVisual.Simulation.Agents
             Bonds = new Bonds(this);
         }
 
+        public override Town Town { get => base.Town;
+            set {
+                base.Town = value;
+                Labor.Town = value;
+            } }
         public FinancialRatios Ratios { get; }
         public Labor Labor { get; }
         public Owners Owners { get; }
         public double BankBalance => BankAccounts.Sum(o => o.Balance);
-        public abstract double Revenues { get; }
-        public virtual double Expenses => Labor.LastWagesPaid;
-        public virtual double Profits => Revenues - Expenses;
+
         public double Land
         {
             get => Goods[Good.Land];
@@ -39,8 +46,6 @@ namespace EconSimVisual.Simulation.Agents
 
         public override void FirstTick()
         {
-            if (Bonds.Exchange == null)
-                Bonds.Exchange = Town.Trade.BondExchange;
             Manager.Manage();
             Bonds.Tick();
             Labor.PayWages();
@@ -60,11 +65,13 @@ namespace EconSimVisual.Simulation.Agents
         protected virtual void ResetStats()
         {
             Labor.ResetStats();
+            PreviousIncomeStatements.Add(Income);
+            Income = new IncomeStatement();
         }
 
         private void PayCorporateTax()
         {
-            if (Profits <= 0) return;
+            /*if (Profits <= 0) return;
             var corporateTax = Taxes.GetAmount(Profits, TaxType.Corporate);
             if (corporateTax == 0)
                 return;
@@ -72,7 +79,7 @@ namespace EconSimVisual.Simulation.Agents
             if (CanPay(corporateTax))
                 Taxes.Pay(this, corporateTax, TaxType.Corporate);
             else
-                Log(this + " could not pay corporate taxes.", LogType.NonPayment);
+                Log(this + " could not pay corporate taxes.", LogType.NonPayment);*/
         }
 
         public Bonds Bonds { get; }

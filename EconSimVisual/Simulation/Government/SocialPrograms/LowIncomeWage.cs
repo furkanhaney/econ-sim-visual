@@ -3,6 +3,7 @@ using EconSimVisual.Simulation.Agents;
 
 namespace EconSimVisual.Simulation.Government.SocialPrograms
 {
+    [Serializable]
     internal class LowIncomeWage : WageProgram
     {
         public double Threshold { get; set; }

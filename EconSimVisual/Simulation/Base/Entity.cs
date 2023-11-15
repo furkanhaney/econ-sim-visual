@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
 using EconSimVisual.Simulation.Government;
 using EconSimVisual.Simulation.Polities;
-using log4net;
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace EconSimVisual.Simulation.Base
 {
     using System;
@@ -13,15 +11,18 @@ namespace EconSimVisual.Simulation.Base
     using Extensions;
     using Agents;
     using Helpers;
+    using EconSimVisual.Simulation.Banks;
+    using System.Linq;
 
+    [Serializable]
     internal abstract class Entity
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         static Entity()
         {
             Foods.Add(Good.Potato);
             Foods.Add(Good.Squash);
+            Foods.Add(Good.Bread);
+
 
             ConsumerGoods.AddRange(Foods);
             ConsumerGoods.Add(Good.Beer);
@@ -35,6 +36,14 @@ namespace EconSimVisual.Simulation.Base
         public static int TotalCount { get; set; }
         public static List<Good> ConsumerGoods { get; set; } = new List<Good>();
         public static List<Good> Foods { get; set; } = new List<Good>();
+        public static List<Good> AllGoods
+        {
+            get
+            {
+                return Enum.GetValues(typeof(Good)).Cast<Good>().ToList();
+            }
+        }
+        public static Random Rnd = new Random();
 
         public static int Day { get; set; }
         protected virtual string DefaultName => string.Empty;
@@ -42,8 +51,26 @@ namespace EconSimVisual.Simulation.Base
         protected virtual string CustomName { get; set; }
 
         protected static Random Random { get; set; } = new Random();
-        public Town Town => SimulationScreen.Town;
-        protected Government.Government Government => Town.Agents.Government;
+        public virtual Town Town { get; set; }
+        public virtual Polity Polity { get; set; }
+        public Government.Government Government
+        {
+            get
+            {
+                if (Town.Agents.Government == null)
+                    return Town.SuperPolity.Agents.Government;
+                return Town.Agents.Government;
+            }
+        }
+        public CentralBank CentralBank
+        {
+            get
+            {
+                if (Town.Agents.CentralBank == null)
+                    return Town.SuperPolity.Agents.CentralBank;
+                return Town.Agents.CentralBank;
+            }
+        }
         protected List<Person> Citizens => Town.Agents.Population;
         protected Taxes Taxes => Government.Taxes;
 

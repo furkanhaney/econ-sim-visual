@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Helpers
 {
+    [Serializable]
     internal class Owners
     {
         public Owners(Business business)

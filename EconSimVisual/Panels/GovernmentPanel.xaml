@@ -121,13 +121,14 @@
                     <Label Grid.Row="0" Grid.Column="3" Content="Last Revenue" Margin="10"></Label>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="10" >Income:</Label>
-                    <Label Grid.Row="2" Grid.Column="0" Margin="10">Corpomultiplier:</Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10">Corporate:</Label>
                     <Label Grid.Row="3" Grid.Column="0" Margin="10">Sales:</Label>
                     <Label Grid.Row="4" Grid.Column="0" Margin="10">Property:</Label>
                     <Label Grid.Row="5" Grid.Column="0" Margin="10">Capital:</Label>
                     <Label Grid.Row="6" Grid.Column="0" Margin="10">Estate:</Label>
-                    <Label Grid.Row="7" Grid.Column="0" Margin="10">TotalDividends:</Label>
-
+                    <Label Grid.Row="7" Grid.Column="0" Margin="10">Dividend:</Label>
+                    <Label Grid.Row="0" Grid.Column="5" HorizontalAlignment="CenteR">Tax Revenue Breakdown</Label>
+                    
                     <xctk:DoubleUpDown x:Name="UpDownIncomeTaxRate"  Grid.Row="1" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
                     <xctk:DoubleUpDown x:Name="UpDownCorporateTaxRate" Grid.Row="2" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
                     <xctk:DoubleUpDown x:Name="UpDownSalesTaxRate" Grid.Row="3" Grid.Column="1" Style="{StaticResource Percentage}"></xctk:DoubleUpDown>
@@ -152,7 +153,7 @@
                     <Label Grid.Row="6" Grid.Column="3" Margin="10" x:Name="LblEstateTaxLast">Estate:</Label>
                     <Label Grid.Row="7" Grid.Column="3" Margin="10" x:Name="LblDividendTaxLast">TotalDividends:</Label>
 
-                    <local:PieChart x:Name="PieChartTaxes" Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" Width="500"/>
+                    <local:PieChart x:Name="PieChartTaxes" Grid.Column="5" Grid.Row="1" Grid.RowSpan="7" Width="500"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Bonds">

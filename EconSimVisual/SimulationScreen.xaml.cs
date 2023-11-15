@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Threading;
 using EconSimVisual.Initializers;
 using EconSimVisual.Simulation.Banks;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
 using EconSimVisual.Simulation.Polities;
+using Debug = EconSimVisual.Panels.Debug;
 
 namespace EconSimVisual
 {
@@ -21,17 +25,20 @@ namespace EconSimVisual
     internal partial class SimulationScreen
     {
         public static World World { get; private set; }
-        public static Town Town { get; private set; }
+        public static Polity Polity { get; private set; }
+        public SimRunner Runner { get; }
 
-        public SimulationScreen()
+        public SimulationScreen(World world)
         {
             File.WriteAllText(@"D:\logs.txt", "");
-            World = new World(new WorldInitializer());
-            Town = (Town)World.TopPolities[0];
+            World = world;
+            Polity = World.TopPolities[0];
             InitializeGui();
+            Runner = new SimRunner(World, this);
             SimInitialized = true;
             Progress();
-            RunTests();
+            var testThread = new Thread(RunTests) { IsBackground = true };
+            testThread.Start();
         }
 
         private void RunTests()
@@ -52,18 +59,9 @@ namespace EconSimVisual
         private void Progress()
         {
             Mouse.OverrideCursor = Cursors.Wait;
-            TechnicalPanel.StartTime = DateTime.UtcNow;
+            Debug.StartTime = DateTime.UtcNow;
             var days = CmbSimDays.Text.ParseDays();
-            ChartsPanel.ReadGoodInputs(out var good, out var prop1, out var timeFrame);
-            ChartsPanel.ReadEconomicInputs(out var prop2, out var timeFrame2);
-            for (var i = 0; i < days; i++)
-            {
-                World.Tick();
-                ChartsPanel.GoodsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(good, prop1));
-                ChartsPanel.EconomicsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(prop2));
-            }
-            Update();
-            Mouse.OverrideCursor = Cursors.Arrow;
+            Runner.Run(days);
         }
 
         private void BtnProgress_Click(object sender, RoutedEventArgs e)
@@ -77,26 +75,32 @@ namespace EconSimVisual
             Background = RandomUtils.GetRandomBackgroundColor();
             foreach (var panel in AllPanels)
                 panel.Initialize();
+            CmbPolity.ItemsSource = World.AllPolities;
+            CmbPolity.SelectedIndex = 0;
             DataContext = this;
         }
 
-        private void Update()
+        public void Update()
         {
-            foreach (var panel in AllPanels)
-                panel.Update();
+            ChartsPanel.ReadGoodInputs(out var good, out var prop1, out var timeFrame);
+            ChartsPanel.ReadEconomicInputs(out var prop2, out var timeFrame2);
+            ChartsPanel.GoodsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(good, prop1));
+            ChartsPanel.EconomicsChartPoints.Add(Panels.ChartsPanel.GetChartPoint(prop2));
+            foreach (var panel in AllPanels.ToList())
+                if (((panel as Control).Parent as TabItem).Visibility == Visibility.Visible)
+                    panel.Update();
             UpdateLabels();
         }
 
         private void UpdateLabels()
         {
-            var econ = Town.Economy;
+            var econ = Polity.Economy;
 
             LblDay.Content = "Date: " + FormatUtils.ToDate(Entity.Day).Format();
-            LblPopulation.Content = "Population: " + Town.Agents.Population.Count.ToString("###,##0");
+            LblPopulation.Content = "Population: " + Polity.Agents.Population.Count.ToString("###,##0");
             LblGdp.Content = "GDP: " + econ.NominalGdp.FormatMoney();
-            LblTreasury.Content = "Treasury: " + Town.Agents.Government.Money.FormatMoney();
-            LblJobs.Content = "Available Jobs: " + Town.JobsAvailable.Count;
-            LblAvgHunger.Content = "Max Hunger: " + Town.Agents.Population.Max(o => o.Hunger).ToString("0");
+            //LblJobs.Content = "Available Jobs: " + Town.JobsAvailable.Count;
+            LblAvgHunger.Content = "Max Hunger: " + Polity.Agents.Population.Max(o => o.Hunger).ToString("0");
             LblAvgIncome.Content = "Avg Income: " + econ.MeanIncome.FormatMoney();
             LblAvgWealth.Content = "Avg Wealth: " + econ.MeanNetWorth.FormatMoney();
             LblIncomeGini.Content = "Income Gini: " + econ.IncomeGini.ToString("0.00%");
@@ -104,15 +108,45 @@ namespace EconSimVisual
             LblTotalCash.Content = "Total Cash: " + econ.TotalCash.FormatMoney();
             LblMoneySupply.Content = "Money Supply: " + econ.MoneySupply.FormatMoney();
             LblUnemployment.Content = "Unemployment: " + econ.Unemployment.ToString("0.00%");
-            LblHappiness.Content = "Happiness: " + Town.Agents.Population.Average(o => o.Happiness).ToString("0.00");
-            var debt = Town.Agents.Government.BalanceSheet.TotalLiabilities;
-            var percent = debt / Town.Economy.NominalGdp;
-            LblDebt.Content = "Debt: " + debt.FormatMoney() + " (" + percent.ToString("%0.00") + ")";
+            LblHappiness.Content = "Happiness: " + Polity.Agents.Population.Average(o => o.Happiness).ToString("0.00");
+
+            if (Polity.Agents.Government != null)
+            {
+                LblTreasury.Content = "Treasury: " + Polity.Agents.Government.Money.FormatMoney();
+                var debt = Polity.Agents.Government.BalanceSheet.TotalLiabilities;
+                var percent = debt / Polity.Economy.NominalGdp;
+                LblDebt.Content = "Debt: " + debt.FormatMoney();
+                if (!double.IsNaN(percent))
+                    LblDebt.Content += " (" + percent.ToString("%0.00") + ")";
+            }
+            else
+            {
+                LblTreasury.Content = "Treasury: -";
+                LblDebt.Content = "Debt: -";
+            }
+
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void CmbPolity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Polity = (Polity)CmbPolity.SelectedItem;
+            if (Polity.Agents.Government == null)
+                tabGovernment.Visibility = Visibility.Collapsed;
+            else
+                tabGovernment.Visibility = Visibility.Visible;
+            if (Polity.Agents.CentralBank == null)
+                tabCentralBank.Visibility = Visibility.Collapsed;
+            else
+                tabCentralBank.Visibility = Visibility.Visible;
+            Update();
+            ChartsPanel.ResetEconomicsChart();
+            ChartsPanel.ResetGoodsChart();
         }
     }
 

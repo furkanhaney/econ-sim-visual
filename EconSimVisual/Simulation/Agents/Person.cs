@@ -5,17 +5,25 @@ using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Agents
 {
+    using System;
     using System.Linq;
 
     using Base;
+    using EconSimVisual.Simulation.Polities;
     using Helpers;
     using MoreLinq;
 
+    [Serializable]
     internal class Person : Agent
     {
         public Person()
         {
         }
+
+        public override Town Town { get => base.Town; set {
+                base.Town = value;
+                Manager.Town = value;
+            } }
 
         protected override string CustomName => FirstName + " " + LastName;
         public int Hunger { get; set; }
@@ -42,7 +50,7 @@ namespace EconSimVisual.Simulation.Agents
         public override void FirstTick()
         {
             UpdateStats();
-            if (Hunger > 40 && false)
+            if (Hunger > 40)
             {
                 Die("starvation");
                 return;

@@ -1,5 +1,8 @@
-﻿namespace EconSimVisual.Simulation.Information
+﻿using System;
+
+namespace EconSimVisual.Simulation.Information
 {
+    [Serializable]
     internal class EconomicReport
     {
         public double NominalGdp { get; set; }

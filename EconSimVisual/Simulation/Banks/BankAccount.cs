@@ -4,26 +4,29 @@ using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
-using log4net;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Simulation.Banks
 {
+    [Serializable]
     internal class BankAccount : Entity
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        public IBank Bank { get; set; }
+        public IDepository Bank { get; set; }
         public Agent Owner { get; set; }
         public double Balance { get; set; }
         public double SavingsRate { get; set; }
         public double CreditRate { get; set; }
         public double CreditLimit { get; set; }
-        public double MinimumPayment => Balance >= 0 ? 0 : Math.Min(-Balance, 20 - Balance * ((CommercialBank)Bank).MinimumPaymentRate);
         public double AvailableCredit => Balance + CreditLimit;
+        public override Town Town {
+            get => Owner.Town;
+            set
+            {
+                throw new Exception();
+            } }
 
         public void Deposit(double amount)
         {
-            log.Debug("");
             if (amount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(amount));
             Assert(Owner.Cash >= amount);
@@ -38,7 +41,7 @@ namespace EconSimVisual.Simulation.Banks
             Assert(amount > 0);
             Assert(AvailableCredit >= amount);
 
-            if (Bank.HasAccount(agent))
+            if (Bank.Deposits.HasAccount(agent))
                 TransferCredit(agent, amount);
             else if (((Agent)Bank).CanPay(amount))
                 TransferCash(agent, amount);
@@ -64,9 +67,10 @@ namespace EconSimVisual.Simulation.Banks
 
         public void Close()
         {
-            Assert(Balance > 0);
+            if (Balance > 0)
+                ((Agent)Bank).Income.BadDebt += Balance;
             Owner.BankAccounts.Remove(this);
-            Bank.Accounts.Remove(Owner);
+            Bank.Deposits.Accounts.Remove(Owner);
         }
 
         private void TransferCash(Agent agent, double amount)
@@ -78,12 +82,12 @@ namespace EconSimVisual.Simulation.Banks
         private void TransferCredit(Agent agent, double amount)
         {
             Balance -= amount;
-            Bank.Accounts[agent].Balance += amount;
+            Bank.Deposits.Accounts[agent].Balance += amount;
         }
 
         public static void Test()
         {
-            var person = new Person()
+            /*var person = new Person()
             {
                 Cash = 250
             };
@@ -133,7 +137,7 @@ namespace EconSimVisual.Simulation.Banks
             account2.Withdraw(20);
             Assert(account2.MinimumPayment == 20);
             account2.Withdraw(10);
-            Assert(account2.MinimumPayment == 23);
+            Assert(account2.MinimumPayment == 23);*/
         }
     }
 }

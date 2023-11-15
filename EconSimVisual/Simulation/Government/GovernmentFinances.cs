@@ -7,6 +7,7 @@ using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Government
 {
+    [Serializable]
     internal class GovernmentFinances : Entity
     {
         public double CurrentSurplus => Government.Taxes.CurrentRevenue - Government.Welfare.CurrentExpenses;

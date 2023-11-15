@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EconSimVisual.Extensions
 {
-    internal static class StatsExtensions
+    internal static class Stats
     {
         public static double Gini(this IEnumerable<double> list)
         {
@@ -24,15 +24,16 @@ namespace EconSimVisual.Extensions
             var mean = list.Average();
             return list.Sum(x => x - mean) / list.Sum() / 2;
         }
-        public static double WeightedAverage<T>(this IEnumerable<T> records, Func<T, double> value, Func<T, double> weight)
+        public static double WeightedMean<T>(this IEnumerable<T> records, Func<T, double> value, Func<T, double> weight)
         {
             var weightedValueSum = records.Sum(x => value(x) * weight(x));
-            var weightSum = records.Sum(x => weight(x));
+            var weightSum = records.Sum(weight);
 
             if (weightSum != 0)
                 return weightedValueSum / weightSum;
             return double.NaN;
         }
+
         #region Median
         /// <summary>
         /// Partitions the given list around a pivot element such that all elements on left of pivot are <= pivot

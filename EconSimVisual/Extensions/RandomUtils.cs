@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using RandomNameGenerator;
 using EconSimVisual.Simulation.Agents;
+using System.Linq;
 
 namespace EconSimVisual.Extensions
 {
@@ -22,18 +23,11 @@ namespace EconSimVisual.Extensions
         {
             return NameGenerator.GenerateLastName().FormatName();
         }
-        public static double GetRandomDouble()
-        {
-            return Rnd.NextDouble();
-        }
-        public static double GetRandomInteger(int min, int max)
-        {
-            return Rnd.Next(min, max);
-        }
         public static SolidColorBrush GetRandomBackgroundColor()
         {
             return new SolidColorBrush(Color.FromRgb((byte)(255 - Rnd.Next(75)), (byte)(255 - Rnd.Next(50)), (byte)(255 - Rnd.Next(25))));
         }
+
         public static T GetRandom<T>(this T[] array)
         {
             return array[Rnd.Next(array.Length)];
@@ -55,6 +49,17 @@ namespace EconSimVisual.Extensions
                 newList[n] = value;
             }
             return newList;
+        }
+        public static IList<T> Sample<T>(this IList<T> list, int size)
+        {
+            var count = list.Count;
+            var nums = new HashSet<int>();
+            while (nums.Count < size)
+                nums.Add(Rnd.Next(count));
+            IList<T> elements = new List<T>();
+            foreach (var num in nums)
+                elements.Add(list[num]);
+            return elements;
         }
     }
 }

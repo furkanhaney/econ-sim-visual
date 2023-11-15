@@ -7,6 +7,7 @@ using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Instruments
 {
+    [Serializable]
     internal class Instrument
     {
 

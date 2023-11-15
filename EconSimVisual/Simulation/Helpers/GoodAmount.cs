@@ -1,5 +1,8 @@
-﻿namespace EconSimVisual.Simulation.Helpers
+﻿using System;
+
+namespace EconSimVisual.Simulation.Helpers
 {
+    [Serializable]
     /// <summary>
     /// Immutable
     /// </summary>

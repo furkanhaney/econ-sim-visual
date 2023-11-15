@@ -6,6 +6,7 @@ using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Extensions
 {
+    [Serializable]
     internal class Logger
     {
         private readonly List<Log> _logs = new List<Log>();
@@ -34,6 +35,7 @@ namespace EconSimVisual.Extensions
         }
     }
 
+    [Serializable]
     internal class Log
     {
         public string Message { get; set; }

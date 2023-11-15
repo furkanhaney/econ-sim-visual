@@ -18,7 +18,7 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class ChartsPanel : IPanel
     {
-        public static IEnumerable<int> TimeFrames => new[] { 30, 90, 360 };
+        public static IEnumerable<int> TimeFrames => new[] { 30, 90, 360, 1800 };
         public IEnumerable<PropertyInfo> GetProperties<T>() => typeof(T).GetProperties().Where(o => o.PropertyType == typeof(double));
         public List<ChartPoint> GoodsChartPoints { get; set; } = new List<ChartPoint>();
         public List<ChartPoint> EconomicsChartPoints { get; set; } = new List<ChartPoint>();
@@ -44,11 +44,15 @@ namespace EconSimVisual.Panels
 
         private static ChartValues<double> GetGoodValues(Good good, PropertyInfo prop, int days = 30)
         {
-            return new ChartValues<double>(SimulationScreen.Town.Trade.TradeLogs.Select(o => (double)prop.GetValue(o.First(k => k.Good == good), null)).Reverse().Take(days).Reverse());
+            return new ChartValues<double>(SimulationScreen.Polity.Trade.TradeLogs.Select(o => (double)prop.GetValue(o.Summaries[good], null)).Reverse().Take(days).Reverse());
         }
         private static ChartValues<double> GetEconomicValues(PropertyInfo prop, int days = 30)
         {
-            return new ChartValues<double>(SimulationScreen.Town.Economy.EconomicReports.Select(o => (double)prop.GetValue(o, null)).Reverse().Take(days).Reverse());
+            var vals = SimulationScreen.Polity.Economy.EconomicReports.Select(o => (double)prop.GetValue(o, null)).Reverse().Take(days).Reverse().ToList();
+            var newVals = new List<double>();
+            for (int i = 0; i < vals.Count; i += days / 30)
+                newVals.Add(vals[i]);
+            return new ChartValues<double>(newVals);
         }
         private static List<string> CreateChartLabels(int maxCount)
         {
@@ -84,11 +88,15 @@ namespace EconSimVisual.Panels
         }
         private static double GetGoodValue(Good good, PropertyInfo prop)
         {
-            return (double)prop.GetValue(SimulationScreen.Town.Trade.TradeLogs.Last().First(o => o.Good == good), null);
+            var logs = SimulationScreen.Polity.Trade.TradeLogs;
+            if (logs.Count > 0)
+                return (double)prop.GetValue(logs.Last().Summaries[good], null);
+            return 0;
         }
         private static double GetEconomicValue(PropertyInfo prop)
         {
-            return (double)prop.GetValue(SimulationScreen.Town.Economy.EconomicReports.Last(), null);
+            return 0;
+            return (double)prop.GetValue(SimulationScreen.Polity.Economy.EconomicReports.Last(), null);
         }
 
         public void ReadGoodInputs(out Good good, out PropertyInfo prop, out int timeFrame)
@@ -164,7 +172,7 @@ namespace EconSimVisual.Panels
             AxisEconomyY.LabelFormatter = value => value.FormatMoney();
             AxisEconomyX.Labels = new List<string>();
         }
-        private void ResetGoodsChart()
+        public void ResetGoodsChart()
         {
             ReadGoodInputs(out var good, out var prop, out var timeFrame);
             ChartGoods.Series[0] = CreateLineSeries(prop.Name.SplitCamelCase() + ":", GetGoodValues(good, prop, timeFrame));
@@ -172,7 +180,7 @@ namespace EconSimVisual.Panels
             AxisGoodsY.Title = prop.Name.SplitCamelCase();
             AxisGoodsY.LabelFormatter = GetLabelFormatter(prop);
         }
-        private void ResetEconomicsChart()
+        public void ResetEconomicsChart()
         {
             ReadEconomicInputs(out var prop, out var timeFrame);
             ChartEconomy.Series[0] = CreateLineSeries(prop.Name.SplitCamelCase() + ":", GetEconomicValues(prop, timeFrame));

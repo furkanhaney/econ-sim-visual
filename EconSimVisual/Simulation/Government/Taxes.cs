@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using EconSimVisual.Extensions;
@@ -8,6 +9,7 @@ namespace EconSimVisual.Simulation.Government
 {
     internal enum TaxType { Corporate, Income, Dividend, Sales, Property, CapitalGains, Estate }
 
+    [Serializable]
     internal class Taxes : Entity
     {
         public Taxes()

@@ -1,49 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Accounting;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Instruments.Loans;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Simulation.Banks
 {
-    internal class CentralBank : Agent, IBank, ILender
+
+    [Serializable]
+    internal class CentralBank : Agent, IDepository, ILender
     {
+
+        public override Town Town
+        {
+            get => base.Town;
+            set
+            {
+                base.Town = value;
+            }
+        }
+
         public CentralBank()
         {
             BalanceSheet = new CentralBankBalanceSheet(this);
             Loans = new Loans(this);
+            Deposits = new Deposits(this);
         }
 
-        public void Tick()
+        public override void FirstTick()
         {
+            base.FirstTick();
             Loans.Tick();
         }
 
         public Loans Loans { get; set; }
+        public Deposits Deposits { get; }
+
         protected override string DefaultName => "CentralBank";
-        public Dictionary<Agent, BankAccount> Accounts { get; } = new Dictionary<Agent, BankAccount>();
-        public double Deposits => Accounts.Values.GetPositives().Sum(o => o.Balance);
-        public double Loans1 => -Accounts.Values.GetNegatives().Sum(o => o.Balance);
-        public double ReserveRatio { get; set; } = 0.2;
-
-        public void OpenAccount(Agent agent)
-        {
-            var account = new BankAccount
-            {
-                Bank = this,
-                Owner = agent,
-                Balance = 0
-            };
-            Accounts.Add(agent, account);
-            agent.BankAccounts.Add(account);
-        }
-
-        public bool HasAccount(Agent agent)
-        {
-            return Accounts.ContainsKey(agent);
-        }
+        public double RequiredReserveRatio { get; set; } = 0.1;
 
         public override bool CanPay(double amount) => true;
         public override bool CanPayCash(double amount) => true;

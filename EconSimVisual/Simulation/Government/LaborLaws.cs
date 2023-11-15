@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EconSimVisual.Simulation.Government
 {
+    [Serializable]
     internal class LaborLaws
     {
         public double MinimumWage { get; set; }

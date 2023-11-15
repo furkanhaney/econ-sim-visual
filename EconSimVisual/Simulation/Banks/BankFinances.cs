@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EconSimVisual.Simulation.Banks
 {
+    [Serializable]
     internal class BankFinances
     {
         public BankFinances(CommercialBank bank)

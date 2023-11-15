@@ -9,6 +9,7 @@ using EconSimVisual.Simulation.Instruments.Securities;
 
 namespace EconSimVisual.Simulation.Accounting
 {
+    [Serializable]
     internal class CentralBankBalanceSheet : IBalanceSheet
     {
         // Constructors
@@ -26,10 +27,10 @@ namespace EconSimVisual.Simulation.Accounting
         // Assets
         public double Securities => Bank.OwnedAssets.Where(o => o is Security).Sum(o => o.Value);
         public double OtherAssets => Bank.OwnedAssets.Where(o => !(o is Security)).Sum(o => o.Value);
-        public double Loans => Bank.Loans1;
+        public double Loans => Bank.Loans.MadeLoans.Sum(o => o.Principal);
 
         // Liabilities
-        public double Deposits => Bank.Deposits;
+        public double Deposits => Bank.Deposits.Total;
         public double CashEquivalents => Bank.Town.Economy.TotalCash;
     }
 }

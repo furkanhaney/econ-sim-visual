@@ -9,9 +9,10 @@ using MoreLinq;
 
 namespace EconSimVisual.Managers.Helpers
 {
+    [Serializable]
     internal class LaborManager : Manager
     {
-        private LaborLaws Laws => Manufacturer.Town.Agents.Government.LaborLaws;
+        private LaborLaws Laws => Manufacturer.Government.LaborLaws;
 
         public LaborManager(Manufacturer manufacturer)
         {
@@ -35,7 +36,7 @@ namespace EconSimVisual.Managers.Helpers
                 return;
             }
 
-            var pay = Math.Max(Laws.MinimumWage, Manufacturer.MarginalRevenueLabor);
+            var pay = Math.Max(Laws.MinimumWage, Manufacturer.MarginalRevenueLabor * 0.8);
             UpdateJobOffer(pay);
         }
 
@@ -49,9 +50,13 @@ namespace EconSimVisual.Managers.Helpers
         private void UpdateJobOffer(double pay)
         {
             if (Town.JobsAvailable.Count(o => o.Business == Manufacturer) == 0)
-                Town.JobsAvailable.Add(new JobListing { Business = Manufacturer, GrossPay = pay });
+                Town.JobsAvailable.Add(new JobListing { Town = Town, Business = Manufacturer, GrossPay = pay });
             else
-                Town.JobsAvailable.First(o => o.Business == Manufacturer).GrossPay = pay;
+            {
+                var listing = Town.JobsAvailable.First(o => o.Business == Manufacturer);
+                listing.GrossPay = pay;
+                listing.Positions = 5;
+            }
         }
 
         private void HandleOverPaidWorkers()

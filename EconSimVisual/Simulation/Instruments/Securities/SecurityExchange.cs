@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
+    [Serializable]
     internal class SecurityExchange<T> where T : Security
     {
         public SecurityExchange()

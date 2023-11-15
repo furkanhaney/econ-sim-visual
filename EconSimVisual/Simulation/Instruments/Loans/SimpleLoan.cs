@@ -1,9 +1,11 @@
 ﻿using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
+using System;
 
 namespace EconSimVisual.Simulation.Instruments.Loans
 {
+    [Serializable]
     internal class SimpleLoan : Loan
     {
         public double Principal { get; set; }

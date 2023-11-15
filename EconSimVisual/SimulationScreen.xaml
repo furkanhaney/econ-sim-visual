@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:EconSimVisual"
         xmlns:panels="clr-namespace:EconSimVisual.Panels"
         mc:Ignorable="d"
-        Title="EconSim 0.1.0" FontSize="24" Height="763.634" Width="1625.266" WindowState="Maximized" x:ClassModifier="internal" Closing="Window_Closing">
+        Title="EconSim 0.1.0" FontSize="22" Height="763.634" Width="1625.266" WindowState="Maximized" x:ClassModifier="internal" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,23 +32,24 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Width="240"  x:Name="LblDay" Margin="10" DockPanel.Dock="Left">Day 1</Label>
-            <Label Grid.Column="1" Width="240" x:Name="LblPopulation" Margin="10" DockPanel.Dock="Left">Population:</Label>
-            <Label Grid.Column="2" Width="240"  x:Name="LblGdp" Margin="10" DockPanel.Dock="Left">GDP:</Label>
-            <Label Grid.Column="3" Width="240" x:Name="LblDebt" Margin="10" DockPanel.Dock="Left">Land:</Label>
-            <Label Grid.Column="4" Width="240" x:Name="LblTreasury" Margin="10" DockPanel.Dock="Left">Treasury:</Label>
-            <Button Grid.Column="6" x:Name="BtnProgress" Margin="10" DockPanel.Dock="Right" Content="   Progress   " Click="BtnProgress_Click"/>
-            <ComboBox x:Name="CmbSimDays" Grid.Column="7" Width="120" SelectedIndex="0">
+            <Label Grid.Column="0" Width="220"  x:Name="LblDay" Margin="10" DockPanel.Dock="Left">Day 1</Label>
+            <Label Grid.Column="1" Width="220" x:Name="LblPopulation" Margin="10" DockPanel.Dock="Left">Population:</Label>
+            <Label Grid.Column="2" Width="220"  x:Name="LblGdp" Margin="10" DockPanel.Dock="Left">GDP:</Label>
+            <Label Grid.Column="3" Width="220" x:Name="LblDebt" Margin="10" DockPanel.Dock="Left">Land:</Label>
+            <Label Grid.Column="4" Width="220" x:Name="LblTreasury" Margin="10" DockPanel.Dock="Left">Treasury:</Label>
+            <Button Grid.Column="5" x:Name="BtnProgress" Margin="10" DockPanel.Dock="Right" Content="   Progress   " Click="BtnProgress_Click"/>
+            <ComboBox x:Name="CmbSimDays" Grid.Column="6" Width="120" SelectedIndex="0">
                 <ComboBox.Items>
                     <ComboBoxItem>1 Day</ComboBoxItem>
                     <ComboBoxItem>7 Days</ComboBoxItem>
                     <ComboBoxItem>30 Days</ComboBoxItem>
                     <ComboBoxItem>90 Days</ComboBoxItem>
+                    <ComboBoxItem Content="360 Days"/>
                 </ComboBox.Items>
             </ComboBox>
         </Grid>
         <DockPanel DockPanel.Dock="Left">
-            <Label x:Name="LblJobs" Content="Available Jobs:" DockPanel.Dock="Top"></Label>
+            <ComboBox x:Name="CmbPolity"  DockPanel.Dock="Top" SelectionChanged="CmbPolity_SelectionChanged"></ComboBox>
             <Label x:Name="LblAvgIncome" Content="Average Income:" DockPanel.Dock="Top"></Label>
             <Label x:Name="LblAvgWealth" Content="Average Wealth:" DockPanel.Dock="Top"></Label>
             <Label x:Name="LblAvgHunger" Content="Average Hunger:" DockPanel.Dock="Top"></Label>
@@ -69,17 +70,17 @@
             <TabItem Header="Charts">
                 <panels:ChartsPanel x:Name="ChartsPanel"></panels:ChartsPanel>
             </TabItem>
-            <TabItem Header="Government">
-                <panels:GovernmentPanel x:Name="GovernmentPanel"></panels:GovernmentPanel>
+            <TabItem x:Name="tabGovernment" Header="Government">
+                <panels:GovernmentPanel></panels:GovernmentPanel>
             </TabItem>
-            <TabItem Header="Central Bank">
-                <panels:CentralBankPanel x:Name="CentralBankPanel"></panels:CentralBankPanel>
+            <TabItem x:Name="tabCentralBank" Header="Central Bank">
+                <panels:CentralBankPanel></panels:CentralBankPanel>
             </TabItem>
-            <TabItem Header="Logs">
-                <panels:LogsPanel x:Name="LogsPanel"></panels:LogsPanel>
+            <TabItem Header="News">
+                <panels:LogsPanel></panels:LogsPanel>
             </TabItem>
-            <TabItem Header="Technical">
-                <panels:TechnicalPanel x:Name="TechnicalPanel"></panels:TechnicalPanel>
+            <TabItem Header="Debug">
+                <panels:Debug></panels:Debug>
             </TabItem>
         </TabControl>
     </DockPanel>

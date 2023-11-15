@@ -29,7 +29,7 @@
             <TabItem Header="Businesses">
                 <DataGrid x:Name="GridBusinesses" ColumnWidth="*">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="Auto" Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Money" Binding="{Binding Money, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Assets" Binding="{Binding BalanceSheet.TotalAssets, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
@@ -48,7 +48,7 @@
                 <DataGrid x:Name="GridManufacturers" ColumnWidth="*">
                     <DataGrid.Columns>
                         <!-- Sales Columns -->
-                        <DataGridTextColumn Header="Goods" Binding="{Binding GoodsUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Width="Auto" Binding="{Binding Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="UnitPrices" Binding="{Binding PricesUI}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Sales" Binding="{Binding SalesUI}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Stocks" Binding="{Binding StocksUI, StringFormat='0.00'}"></DataGridTextColumn>
@@ -65,7 +65,7 @@
             <TabItem Header="Grocers">
                 <DataGrid x:Name="GridGrocers" ColumnWidth="*">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="2.5*" Header="Goods" Binding="{Binding GoodsUI}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Width="Auto" Binding="{Binding Name}"></DataGridTextColumn>
                         <DataGridTextColumn Width="2.5*" Header="UnitPrices" Binding="{Binding PricesUI}"></DataGridTextColumn>
                         <DataGridTextColumn Width="2.5*"  Header="Sales" Binding="{Binding SalesUI}"></DataGridTextColumn>
                         <DataGridTextColumn Width="2.5*"  Header="Stocks" Binding="{Binding StocksUI, StringFormat='0.00'}"></DataGridTextColumn>
@@ -75,12 +75,11 @@
             <TabItem Header="Commercial Banks">
                 <DataGrid x:Name="GridPrivateBanks" ColumnWidth="*">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Accounts" Binding="{Binding Accounts.Count}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Deposits" Binding="{Binding Deposits, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Loans" Binding="{Binding Loans, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Width="Auto" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Accounts" Binding="{Binding Deposits.Accounts.Count}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Deposits" Binding="{Binding Deposits.Total, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Reserves" Binding="{Binding Reserves, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Res. Ratio" Binding="{Binding ReserveRatio, StringFormat=0.00%}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Reserve Ratio" Binding="{Binding ReserveRatio, StringFormat=0.00%}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
@@ -120,6 +119,20 @@
                             <DataGridTextColumn Header="Dividends" Binding="{Binding TotalDividends, Converter={StaticResource MoneyConverter}}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Income Statement">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ComboBox Name="ComboBoxBusinesses2" Margin="10" SelectionChanged="ComboBoxBusinesses2_SelectionChanged"></ComboBox>
+                    <local:IncomeStatementView x:Name="IncomeStatementView" Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></local:IncomeStatementView>
                 </Grid>
             </TabItem>
         </TabControl>

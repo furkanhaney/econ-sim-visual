@@ -10,7 +10,7 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class AgentsPanel : IPanel
     {
-        private static PolityAgents Agents => SimulationScreen.Town.Agents;
+        private static PolityAgents Agents => SimulationScreen.Polity.Agents;
 
         public AgentsPanel()
         {
@@ -21,12 +21,14 @@ namespace EconSimVisual.Panels
         {
             GridCitizens.SetData(Agents.Population);
             GridBusinesses.SetData(Agents.Businesses);
-            GridManufacturers.SetData(Agents.Manufacturers);
+            GridManufacturers.SetData(Agents.AllManufacturers);
             GridGrocers.SetData(Agents.Grocers);
             GridPrivateBanks.SetData(Agents.Banks);
             BalanceSheetAgent.Update();
-            ComboBoxAgents.SetData(Agents.All);
+            ComboBoxAgents.SetData(Agents.Businesses);
             ComboBoxBusinesses.SetData(Agents.Businesses);
+            ComboBoxBusinesses2.SetData(Agents.Businesses);
+            IncomeStatementView.Update();
         }
 
         public void Initialize()
@@ -35,14 +37,25 @@ namespace EconSimVisual.Panels
 
         private void ComboBoxAgents_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            BalanceSheetAgent.Sheet = (Simulation.Accounting.BalanceSheet)((Agent)ComboBoxAgents.SelectedItem).BalanceSheet;
-            BalanceSheetAgent.Update();
+            if (ComboBoxAgents.SelectedItem != null)
+            {
+                BalanceSheetAgent.Sheet = (Simulation.Accounting.BalanceSheet)((Agent)ComboBoxAgents.SelectedItem).BalanceSheet;
+                BalanceSheetAgent.Update();
+            }
         }
 
         private void ComboBoxBusinesses_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var business = (Business)ComboBoxBusinesses.SelectedItem;
-            GridStocks.SetData(business.Owners.IssuedStocks);
+            if (ComboBoxBusinesses.SelectedItem != null)
+            {
+                var business = (Business)ComboBoxBusinesses.SelectedItem;
+                GridStocks.SetData(business.Owners.IssuedStocks);
+            }
+        }
+
+        private void ComboBoxBusinesses2_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            IncomeStatementView.Business = (Business)ComboBoxBusinesses2.SelectedItem;
         }
     }
 }

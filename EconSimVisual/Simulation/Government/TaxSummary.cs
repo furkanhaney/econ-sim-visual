@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EconSimVisual.Simulation.Government
 {
+    [Serializable]
     internal class TaxSummary
     {
         public int Day { get; set; }

@@ -1,7 +1,9 @@
 ﻿using EconSimVisual.Simulation.Base;
+using System;
 
 namespace EconSimVisual.Simulation.Instruments.Loans
 {
+    [Serializable]
     internal abstract class Loan : Entity, IAsset
     {
         public Agent Borrower { get; set; }

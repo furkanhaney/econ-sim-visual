@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Simulation.Base;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
+    [Serializable]
     internal class Bonds
     {
         public Bonds(Agent agent)
@@ -22,25 +24,35 @@ namespace EconSimVisual.Simulation.Instruments.Securities
         }
 
         public Agent Agent { get; }
-        public SecurityExchange<Bond> Exchange { get; set; }
+        public SecurityExchange<Bond> Exchange => Agent.Town.Trade.BondExchange;
         public List<Bond> Issued { get; }
         public Bond Current { get; }
         public double TotalAmount => Issued.Sum(o => o.Count * o.FaceValue);
+
         public void Tick()
         {
-            if (Exchange == null)
-                return;
-            Exchange.All.RemoveAll(o => o.Issuer == Agent && !o.IsIssued);
-            if (Current.Count == 0)
-                return;
+            UpdateIssuedBonds();
+            UpdateOfferedBonds();
+        }
 
-            Exchange.All.Add((Bond)Current.Clone());
+        private void UpdateIssuedBonds()
+        {
             foreach (var bond in Issued.ToList())
             {
                 bond.MaturityDays--;
                 if (bond.MaturityDays == 0)
                     bond.Mature();
             }
+        }
+
+        private void UpdateOfferedBonds()
+        {
+            if (Exchange == null)
+                return;
+            Exchange.All.RemoveAll(o => o.Issuer == Agent && !o.IsIssued);
+            if (Current.Count == 0)
+                return;
+            Exchange.All.Add((Bond)Current.Clone());
         }
     }
 }

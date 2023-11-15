@@ -1,7 +1,9 @@
 ﻿using EconSimVisual.Simulation.Base;
+using System;
 
 namespace EconSimVisual.Simulation.Government.SocialPrograms
 {
+    [Serializable]
     internal abstract class SocialProgram : Entity
     {
         public double LastExpenses { get; set; }

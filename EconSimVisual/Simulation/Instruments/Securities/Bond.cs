@@ -1,8 +1,10 @@
 ﻿using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Helpers;
+using System;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
+    [Serializable]
     internal class Bond : Security
     {
         public double FaceValue { get; set; }

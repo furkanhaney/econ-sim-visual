@@ -1,36 +1,95 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Windows;
 using EconSimVisual.Extensions;
+using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
-using log4net;
 
 namespace EconSimVisual.Simulation.Polities
 
 {
+    [Serializable]
     // Smallest political structure
     internal class Town : Polity
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public Town(ITownInitializer initializer)
         {
-            Agents = initializer.GetAgents();
             Economy = new PolityEconomy(this);
-            Trade = new TradeManager(this);
-            TownLogger = new Logger();
-        }
+            Trade = new TownTrade(this);
+            Agents = initializer.GetAgents();
+            Agents.Polity = this;
+            foreach (var a in Agents.All)
+            {
+                a.Town = this;
+                if (!(a.Manager is null))
+                    a.Manager.Town = this;
+            }
 
-        public Logger TownLogger { get; }
-        public TradeManager Trade { get; }
+        }
 
         public List<JobListing> JobsAvailable { get; set; } = new List<JobListing>();
 
         public override void Tick()
         {
             Trade.FirstTick();
-            base.Tick();
+            Agents.Tick();
             Trade.LastTick();
+            Economy.Tick();
         }
+
+        private int lastUpdated = int.MinValue;
+        public List<FoodInfo> Foods = new List<FoodInfo>();
+
+        public void SortJobs()
+        {
+            JobsAvailable = JobsAvailable.OrderByDescending(o => o.NetPay).ToList();
+        }
+
+        public void TryBuyFood(Person person)
+        {
+            if (Entity.Day > lastUpdated)
+            {
+                lastUpdated = Entity.Day;
+                Foods.Clear();
+                foreach (var food in Entity.Foods)
+                    foreach (var grocer in Agents.Grocers)
+                        Foods.Add(new FoodInfo()
+                        {
+                            Good = food,
+                            Seller = grocer,
+                            Price = grocer.Prices[food]
+                        });
+                Foods = Foods.OrderBy(o => o.Price).ToList();
+            }
+            while (Foods.Count > 0 && Foods[0].Seller.Goods[Foods[0].Good] <= 1)
+                Foods.RemoveAt(0);
+            if (Foods.Count == 0)
+                return;
+            if (person.CanPay(Foods[0].Price) && person.Hunger > 0)
+            {
+                (Trade as TownTrade).BuyGood(person, Foods[0].Seller, Foods[0].Good, 1);
+                if (person.Goods[Foods[0].Good] >= 1)
+                    person.Eat(Foods[0].Good);
+            } else
+                return;
+            if (person.Hunger > 0)
+                TryBuyFood(person);
+        }
+
+        private double GetLowestFoodPrice(Grocer grocer)
+        {
+            return grocer.Prices.Where(j => Entity.Foods.Contains(j.Key)).Min(o => o.Value);
+        }
+    }
+
+    [Serializable]
+    struct FoodInfo
+    {
+        public Grocer Seller { get; set; }
+        public Good Good { get; set; }
+        public double Price { get; set; }
     }
 }

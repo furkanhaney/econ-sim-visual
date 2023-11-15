@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="EconSimVisual.Panels.Debug"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EconSimVisual.Panels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Simulation">
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Margin="10" Grid.Row="0" Grid.Column="0">Total Cash:</Label>
+                    <Label Margin="10,0,10,10" Grid.Row="1" Grid.Column="0">Central Bank Cash:</Label>
+                    <Label Margin="10,0,10,10" Grid.Row="2" Grid.Column="0">Monetary Base:</Label>
+                    <Label Margin="10,0,10,10" Grid.Row="3" Grid.Column="0">Money Multiplier:</Label>
+                    <TextBox Name="txtSaveName" Margin="10,0,10,10" Grid.Row="4" Grid.Column="0"></TextBox>
+
+                    <Label Margin="10" Name="LblTotalCash" Grid.Row="0" Grid.Column="1">0</Label>
+                    <Label Margin="10,0,10,10" Name="LblCentralBankCash" Grid.Row="1" Grid.Column="1">0</Label>
+                    <Label Margin="10,0,10,10" Name="LblMonetaryBase" Grid.Row="2" Grid.Column="1">0</Label>
+                    <Label Margin="10,0,10,10" Name="LblMoneyMultiplier" Grid.Row="3" Grid.Column="1">0</Label>
+                    <Button x:Name="btnSave" Margin="10.2,0,9.6,10" Content="Save" Grid.Row="3" Grid.Column="1" Click="btnSave_Click" Height="19" Grid.RowSpan="2" VerticalAlignment="Bottom"></Button>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Technical">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Margin="10"  Grid.Row="0" Grid.Column="0"  Content="Last Update Time: "></Label>
+                    <Label Margin="10,0,10,10" Grid.Row="1" Grid.Column="0" Content="Total Entities: "></Label>
+                    <Label Margin="10,0,10,10" Grid.Row="2" Grid.Column="0" Content="Used Memory: "></Label>
+
+                    <Label Margin="10" Grid.Row="0" Grid.Column="1" x:Name="LblUpdateTime"></Label>
+                    <Label Margin="10,0,10,10" Grid.Row="1" Grid.Column="1" x:Name="LblTotalEntities"></Label>
+                    <Label Margin="10,0,10,10" Grid.Row="2" Grid.Column="1" x:Name="LblRamUsage"></Label>
+                    <Button x:Name="Test" Grid.Row="3" Grid.Column="0" Content="Test" Margin="10" Click="Test_Click"></Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

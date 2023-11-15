@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Government.SocialPrograms;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Simulation.Government
 {
-    internal class Welfare
+    [Serializable]
+    internal class Welfare : Entity
     {
         public WageProgram UnemploymentWage, UniversalIncome;
         public LowIncomeWage LowIncomeWage;
@@ -12,6 +16,26 @@ namespace EconSimVisual.Simulation.Government
 
         public double CurrentExpenses => AllWelfarePrograms.Sum(o => o.CurrentExpenses);
         public double LastExpenses => AllWelfarePrograms.Sum(o => o.LastExpenses);
+
+        public override Town Town
+        {
+            get => base.Town; set
+            {
+                base.Town = value;
+                foreach (var prg in AllWelfarePrograms)
+                    prg.Town = value;
+            }
+        }
+
+        public override Polity Polity
+        {
+            get => base.Polity; set
+            {
+                base.Polity = value;
+                foreach (var prg in AllWelfarePrograms)
+                    prg.Polity = value;
+            }
+        }
 
         public Welfare()
         {

@@ -1,7 +1,9 @@
 ﻿using EconSimVisual.Extensions;
+using System;
 
 namespace EconSimVisual.Simulation.Instruments.Securities
 {
+    [Serializable]
     internal class CouponBond : Bond
     {
         public int PaymentFrequency { get; set; }

@@ -14,22 +14,22 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class CentralBankPanel : IPanel
     {
-        private PolityAgents Agents => SimulationScreen.Town.Agents;
+        private PolityAgents Agents => SimulationScreen.Polity.Agents;
 
         public CentralBankPanel()
         {
             InitializeComponent();
         }
 
-        private static CentralBank CentralBank => SimulationScreen.Town.Agents.CentralBank;
+        private static CentralBank CentralBank => SimulationScreen.Polity.Agents.CentralBank;
 
         public void Update()
         {
-            GridBankReserves.SetData(CentralBank.Accounts.Values);
+            GridBankReserves.SetData(CentralBank.Deposits.Accounts.Values);
             GridLoans.SetData(CentralBank.Loans.MadeLoans);
-            LblCash.Content = "Cash: " + SimulationScreen.Town.Economy.TotalCash.FormatMoney();
-            LblDeposits.Content = "Deposits: " + SimulationScreen.Town.Economy.TotalDeposits.FormatMoney();
-            LblMoney.Content = "Money: " + SimulationScreen.Town.Economy.MoneySupply.FormatMoney();
+            LblCash.Content = "Cash: " + SimulationScreen.Polity.Economy.TotalCash.FormatMoney();
+            LblDeposits.Content = "Deposits: " + "0";
+            LblMoney.Content = "Money: " + SimulationScreen.Polity.Economy.MoneySupply.FormatMoney();
             UpdateCharts();
         }
 
@@ -63,32 +63,38 @@ namespace EconSimVisual.Panels
 
         }
 
-        private void DoubleUpDownReserveRequirements_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
-        {
-            var upDown = (DoubleUpDown)sender;
-            if (upDown.Value is null)
-                return;
-            Agents.CentralBank.ReserveRatio = (double)upDown.Value;
-        }
-
         private void DoubleUpDown_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
             var upDown = (DoubleUpDown)sender;
             if (upDown.Value is null)
                 return;
-            foreach (var account in Agents.CentralBank.Accounts.Values)
+            foreach (var account in Agents.CentralBank.Deposits.Accounts.Values)
                 if (account.Owner is CommercialBank)
                     account.SavingsRate = (double)upDown.Value;
-
         }
 
-        private void DoubleUpDown_ValueChanged_1(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        private void DoubleUpDownReserveRequirements_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            Agents.CentralBank.RequiredReserveRatio = (double)upDown.Value;
+        }
+
+        private void DoubleUpDownReserveRate_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (DoubleUpDown)sender;
+            if (upDown.Value is null)
+                return;
+            CentralBank.Deposits.InterestRate = (double)upDown.Value;
+        }
+
+        private void DoubleUpDownDiscountRate_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
             var upDown = (DoubleUpDown)sender;
             if (upDown.Value is null)
                 return;
             CentralBank.Loans.InterestRate = (double)upDown.Value;
-
         }
     }
 }

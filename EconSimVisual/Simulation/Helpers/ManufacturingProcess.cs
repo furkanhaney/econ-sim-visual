@@ -6,11 +6,12 @@
 
     using Extensions;
 
-    public enum Good { Capital, Potato, Squash, Beer, Wine, Land}
+    public enum Good { Capital, Potato, Squash, Wheat, Flour, Bread, Beer, Wine, Land }
 
+    [Serializable]
     public class ManufacturingProcess
     {
-        private static readonly List<ManufacturingProcess> Processes = GetProcesses();
+        public static readonly List<ManufacturingProcess> Processes = GetProcesses();
 
         public string Name { get; set; }
         public List<GoodAmount> Inputs { get; set; } = new List<GoodAmount>();
@@ -37,7 +38,7 @@
 
         private static List<ManufacturingProcess> GetProcesses()
         {
-            return Serializer.Deserialize<List<ManufacturingProcess>>("processes.xml");
+            return Serializer.XmlDeserialize<List<ManufacturingProcess>>("processes.xml");
         }
     }
 }

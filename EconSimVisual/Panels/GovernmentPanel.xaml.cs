@@ -21,7 +21,7 @@ namespace EconSimVisual.Panels
     /// </summary>
     public partial class GovernmentPanel : IPanel
     {
-        private Government Government => SimulationScreen.Town.Agents.Government;
+        private Government Government => SimulationScreen.Polity.Agents.Government;
 
         public GovernmentPanel()
         {
@@ -103,7 +103,7 @@ namespace EconSimVisual.Panels
             var name = ((DoubleUpDown)sender).Name;
             var value = (double)((DoubleUpDown)sender).Value;
             var taxType = name.Substring(6, name.Length - 13).ToEnum<TaxType>();
-            SimulationScreen.Town.Agents.Government.Taxes.Rates[taxType] = value;
+            SimulationScreen.Polity.Agents.Government.Taxes.Rates[taxType] = value;
         }
 
         private void UpdateTaxPieChart()
@@ -112,7 +112,7 @@ namespace EconSimVisual.Panels
             foreach (var taxType in EnumUtils.GetValues<TaxType>())
             {
                 var name = taxType.ToString().SplitCamelCase();
-                var value = SimulationScreen.Town.Agents.Government.Taxes.LastRevenues[taxType];
+                var value = SimulationScreen.Polity.Agents.Government.Taxes.LastRevenues[taxType];
                 list.Add(new PieChartPoint { Name = name, Value = value });
             }
             PieChartTaxes.Update(list);
@@ -133,7 +133,7 @@ namespace EconSimVisual.Panels
         {
             var label = (Label)FindName("Lbl" + taxType + "TaxLast");
             if (label != null)
-                label.Content = SimulationScreen.Town.Agents.Government.Taxes.LastRevenues[taxType]
+                label.Content = SimulationScreen.Polity.Agents.Government.Taxes.LastRevenues[taxType]
                     .FormatMoney();
         }
 
@@ -141,7 +141,7 @@ namespace EconSimVisual.Panels
         {
             var label = (Label)FindName("Lbl" + taxType + "TaxCurrent");
             if (label != null)
-                label.Content = SimulationScreen.Town.Agents.Government.Taxes.CurrentRevenues[taxType]
+                label.Content = SimulationScreen.Polity.Agents.Government.Taxes.CurrentRevenues[taxType]
                     .FormatMoney();
         }
 

@@ -31,14 +31,14 @@ namespace EconSimVisual.Panels
         {
             var filters = FilterComboBox.SelectedItems;
             var timeFrame = (int)CmbLogsTimeFrame.SelectedItem;
-            var logs = SimulationScreen.Town.TownLogger.GetLogs(filters, timeFrame);
+            var logs = SimulationScreen.Polity.TownLogger.GetLogs(filters, timeFrame);
             GridLogs.SetData(logs);
-            BtnClearLogs.Content = "Clear (" + SimulationScreen.Town.TownLogger.Count.ToString("###,##0") + ")";
+            BtnClearLogs.Content = "Clear (" + SimulationScreen.Polity.TownLogger.Count.ToString("###,##0") + ")";
         }
 
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
-            SimulationScreen.Town.TownLogger.Clear();
+            SimulationScreen.Polity.TownLogger.Clear();
             UpdateLogs(null, null);
         }
     }

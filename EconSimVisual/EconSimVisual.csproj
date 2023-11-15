@@ -40,9 +40,6 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MoreLinq, Version=2.8.21218.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.2.8.0\lib\net40\MoreLinq.dll</HintPath>
@@ -97,13 +94,23 @@
     <Compile Include="BalanceSheet.xaml.cs">
       <DependentUpon>BalanceSheet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Benchmark.xaml.cs">
+      <DependentUpon>Benchmark.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\EnumUtils.cs" />
     <Compile Include="Extensions\FormatUtils.cs" />
-    <Compile Include="Extensions\LoggerHelper.cs" />
     <Compile Include="Extensions\RandomUtils.cs" />
     <Compile Include="Extensions\WPFUtils.cs" />
+    <Compile Include="IncomeStatementView.xaml.cs">
+      <DependentUpon>IncomeStatementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Initializers\SmallWorldInitializer.cs" />
     <Compile Include="Initializers\TownInitializer.cs" />
-    <Compile Include="Initializers\WorldInitializer.cs" />
+    <Compile Include="Initializers\MediumWorldInitializer.cs" />
+    <Compile Include="Managers\BondFundManager.cs" />
+    <Compile Include="Managers\FundManager.cs" />
+    <Compile Include="Managers\IManaged.cs" />
+    <Compile Include="Managers\TradeHubManager.cs" />
     <Compile Include="Panels\AgentsPanel.xaml.cs">
       <DependentUpon>AgentsPanel.xaml</DependentUpon>
     </Compile>
@@ -116,6 +123,9 @@
     <Compile Include="DoubleToMoneyConverter.cs" />
     <Compile Include="Extensions\Finance.cs" />
     <Compile Include="Extensions\Serializer.cs" />
+    <Compile Include="Panels\Debug.xaml.cs">
+      <DependentUpon>Debug.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\GovernmentPanel.xaml.cs">
       <DependentUpon>GovernmentPanel.xaml</DependentUpon>
     </Compile>
@@ -126,17 +136,19 @@
     <Compile Include="Panels\MarketsPanel.xaml.cs">
       <DependentUpon>MarketsPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\TechnicalPanel.xaml.cs">
-      <DependentUpon>TechnicalPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PieChart.xaml.cs">
       <DependentUpon>PieChart.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimRunner.cs" />
     <Compile Include="Simulation\Accounting\CentralBankBalanceSheet.cs" />
     <Compile Include="Simulation\Accounting\IBalanceSheet.cs" />
     <Compile Include="Simulation\Accounting\BalanceSheet.cs" />
+    <Compile Include="Simulation\Accounting\IncomeStatement.cs" />
     <Compile Include="Simulation\Agents\IManager.cs.cs" />
+    <Compile Include="Simulation\Agents\MutualFund.cs" />
+    <Compile Include="Simulation\Agents\TradeHub.cs" />
     <Compile Include="Simulation\Banks\BankFinances.cs" />
+    <Compile Include="Simulation\Banks\Deposits.cs" />
     <Compile Include="Simulation\Government\LaborLaws.cs" />
     <Compile Include="Simulation\Helpers\FinancialRatios.cs" />
     <Compile Include="Simulation\Helpers\IBondIssuer.cs" />
@@ -150,10 +162,14 @@
     <Compile Include="Managers\Helpers\LaborManager.cs" />
     <Compile Include="Managers\Helpers\IBondEvaluator.cs" />
     <Compile Include="Managers\PersonalManager.cs" />
-    <Compile Include="Managers\Helpers\BondManager.cs" />
+    <Compile Include="Managers\Helpers\SecurityManager.cs" />
+    <Compile Include="Simulation\Polities\ProperPolityTrade.cs" />
+    <Compile Include="Simulation\Polities\TradeLog.cs" />
     <Compile Include="Simulation\Polities\ITownInitializer.cs" />
     <Compile Include="Simulation\Polities\PolityAgents.cs" />
+    <Compile Include="Simulation\Polities\PolityTrade.cs" />
     <Compile Include="Simulation\Polities\ProperPolity.cs" />
+    <Compile Include="Simulation\Polities\ProperPolityEconomy.cs" />
     <Compile Include="Simulation\Polities\TownAgents.cs" />
     <Compile Include="Simulation\Polities\World.cs" />
     <Compile Include="Simulation\Government\GovernmentFinances.cs" />
@@ -163,7 +179,7 @@
     <Compile Include="Simulation\Instruments\Securities\SecurityExchange.cs" />
     <Compile Include="Managers\Manager.cs" />
     <Compile Include="Simulation\Base\Agent.cs" />
-    <Compile Include="Simulation\Banks\IBank.cs" />
+    <Compile Include="Simulation\Banks\IDepository.cs" />
     <Compile Include="Simulation\Instruments\Securities\SecurityPurchase.cs" />
     <Compile Include="Simulation\Polities\ProperPolityAgents.cs" />
     <Compile Include="Simulation\Banks\BankAccount.cs" />
@@ -174,7 +190,7 @@
     <Compile Include="Simulation\Helpers\Labor.cs" />
     <Compile Include="Simulation\Helpers\Owners.cs" />
     <Compile Include="Simulation\Government\TaxSummary.cs" />
-    <Compile Include="Simulation\Polities\TradeManager.cs" />
+    <Compile Include="Simulation\Polities\TownTrade.cs" />
     <Compile Include="Simulation\Government\Welfare.cs" />
     <Compile Include="Managers\CommercialBankManager.cs" />
     <Compile Include="Managers\GrocerManager.cs" />
@@ -202,7 +218,7 @@
     <Compile Include="SimulationScreen.xaml.cs">
       <DependentUpon>SimulationScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\StatsExtensions.cs" />
+    <Compile Include="Extensions\Stats.cs" />
     <Compile Include="Simulation\Instruments\Securities\Security.cs" />
     <Compile Include="Simulation\Instruments\Securities\Stock.cs" />
     <Compile Include="Simulation\Government\Taxes.cs" />
@@ -216,6 +232,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Benchmark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IncomeStatementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\AgentsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -225,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\ChartsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Debug.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,10 +277,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Panels\MarketsPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Panels\TechnicalPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

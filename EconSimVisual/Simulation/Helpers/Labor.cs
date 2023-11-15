@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
@@ -7,6 +8,7 @@ using EconSimVisual.Simulation.Government;
 
 namespace EconSimVisual.Simulation.Helpers
 {
+    [Serializable]
     internal class Labor : Entity
     {
         public static void Test()
@@ -72,6 +74,7 @@ namespace EconSimVisual.Simulation.Helpers
         private void PayWage(Worker worker)
         {
             // Current wage
+            Business.Income.Wages += worker.Wage;
             if (Business.CanPay(worker.Wage))
                 PayWageAmount(worker, worker.Wage);
             else

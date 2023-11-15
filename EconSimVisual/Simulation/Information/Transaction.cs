@@ -1,8 +1,10 @@
 ﻿using EconSimVisual.Simulation.Base;
 using EconSimVisual.Simulation.Helpers;
+using System;
 
 namespace EconSimVisual.Simulation.Information
 {
+    [Serializable]
     internal class Transaction
     {
         public GoodAmount Goods { get; set; }

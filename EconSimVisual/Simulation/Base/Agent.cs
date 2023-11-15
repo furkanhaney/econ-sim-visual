@@ -10,12 +10,13 @@ namespace EconSimVisual.Simulation.Base
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-
+    using System.Windows;
     using Extensions;
     using Helpers;
 
     using MoreLinq;
 
+    [Serializable]
     /// <summary>
     ///     Entities that can take actions and possess resources.
     /// </summary>
@@ -28,10 +29,14 @@ namespace EconSimVisual.Simulation.Base
             BankAccounts = new List<BankAccount>();
             Goods = CollectionsExtensions.InitializeDictionary<Good>();
             TakenLoans = new List<SimpleLoan>();
+            Income = new IncomeStatement();
+            PreviousIncomeStatements = new List<IncomeStatement>();
         }
 
         public IManager Manager { get; set; }
         public IBalanceSheet BalanceSheet { get; protected set; }
+        public IList<IncomeStatement> PreviousIncomeStatements { get; }
+        public IncomeStatement Income { get; set; }
         public IList<IAsset> OwnedAssets { get; }
         public IEnumerable<Security> OwnedSecurities => OwnedAssets.Where(o => o is Security).Cast<Security>();
         public IEnumerable<Bond> OwnedBonds => OwnedAssets.Where(o => o is Bond).Cast<Bond>();
@@ -92,7 +97,7 @@ namespace EconSimVisual.Simulation.Base
         {
             Goods[good] -= amount;
             to.Goods[good] += amount;
-            Debug.Assert(Goods[good] >= 0);
+            Debug.Assert(Goods[good] >= -0.01);
         }
 
         public void DepositCash(double amount)

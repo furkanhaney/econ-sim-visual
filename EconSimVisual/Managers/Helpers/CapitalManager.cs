@@ -2,9 +2,11 @@
 using EconSimVisual.Extensions;
 using EconSimVisual.Simulation.Agents;
 using EconSimVisual.Simulation.Helpers;
+using EconSimVisual.Simulation.Polities;
 
 namespace EconSimVisual.Managers.Helpers
 {
+    [Serializable]
     internal class CapitalManager : Manager
     {
         public CapitalManager(Manufacturer manufacturer)
@@ -18,7 +20,7 @@ namespace EconSimVisual.Managers.Helpers
         {
             get
             {
-                var price = Manufacturer.Town.Trade.GetLastPrice(Good.Capital);
+                var price = (Manufacturer.Town.Trade as TownTrade).GetUnitPrice(Good.Capital);
                 var production = Manufacturer.MarginalRevenueCapital;
                 var depr = 1 - Manufacturer.CapitalDepreciationRate;
 
@@ -40,7 +42,7 @@ namespace EconSimVisual.Managers.Helpers
 
         private bool ShouldGetCapital()
         {
-            if (Manufacturer.Produces(Good.Capital) && Manufacturer.Goods[Good.Capital] < 200)
+            if (Manufacturer.MainGood == Good.Capital && Manufacturer.Goods[Good.Capital] < 200)
                 return false;
             return CapitalReturn > 0 &&
                    Manufacturer.NetMoney > 100 * K;
@@ -53,7 +55,7 @@ namespace EconSimVisual.Managers.Helpers
 
         private bool CanBuyCapital()
         {
-            return Town.Trade.CanBuyGood(Manufacturer, Good.Capital);
+            return (Town.Trade as TownTrade).CanBuyGood(Manufacturer, Good.Capital);
         }
     }
 }
